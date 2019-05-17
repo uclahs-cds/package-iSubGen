@@ -1,0 +1,132 @@
+%\VignetteEngine{knitr::knitr_notangle}
+%\VignetteIndexEntry{Guide for using ISOpureR}
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[sc]{mathpazo}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{color}
+\usepackage{tikz}
+%\usetikzlibrary{bayesnet}
+%\usetikzlibrary{arrows,shapes,calc}
+usepackage[unicode=true,pdfusetitle,
+bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+{hyperref}
+\hypersetup{
+pdfstartview={XYZ null null 1}}
+
+\begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+# set global chunk options
+opts_chunk$set(fig.path='figure/minimal-', fig.align='center', fig.show='hold')
+options(formatR.arrow=TRUE,width=90)
+@
+\title{A guide to using \emph{iSubGen}}
+\author{Natalie S. Fox}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Overview}
+
+\begin{figure}[!h]
+	\centering
+		\includegraphics[width = 0.8\textwidth]{iSubGen_figure_methodology_overview.pdf}
+		\caption{\textbf{iSubGen overview.}}
+		\label{fig:isopure}
+\end{figure}
+
+\section{Feature reduction}
+
+\subsection{Autoencoders}
+
+\begin{figure}[!h]
+	\centering
+		\includegraphics[width = 0.8\textwidth]{iSubGen_figure_methodolody_autoencoders.pdf}
+		\caption{\textbf{iSubGen overview.}}
+		\label{fig:isopure}
+\end{figure}
+
+
+
+\section{Similarity Matrix}
+
+\subsection{Corrlation Matrix}
+
+\begin{figure}[!h]
+	\centering
+		\includegraphics[width = 0.8\textwidth]{iSubGen_figure_methodolody_correlations.pdf}
+		\caption{\textbf{iSubGen overview.}}
+		\label{fig:isopure}
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Applying {\emph{iSubGen}} to a small example}
+\label{small-example}
+
+We will show how to use \emph{ISOpureR} with a small example dataset. 
+
+\subsection{Load and format data}
+
+The first step is to load the data and make sure that both the tumor data and the normal data are in matrix form, with the required dimensions.  
+
+<<load-data>>=
+# Load the library and the data included with the package
+library(iSubGen);
+path.to.data <- paste0(path.package('iSubGen'),'/exdata/');
+molecular.data <- list();
+for(i in c('cna','csnvs','methy')) {
+	molecular.data[[i]] <- load.molecular.aberration.data(paste0(example.molecular.data.dir,i,'_profiles.txt'),patients=c(paste0('EP00',1:9),paste0('EP0',10:30)));
+}
+
+# Check what the data looks like
+str(molecular.data);
+@
+
+\subsection{Create the correlation matrix}
+
+<<corrlation-matrix, eval=FALSE>>=
+# Calculate the correlation matrix
+corr.matrix <- calculate.integrated.correlation.matrix(
+	data.types=names(molecular.data),
+	data.matrices=molecular.data,
+	dist.metrics=list(
+		cna='euclidean',
+		csnvs='euclidean',
+		methy='euclidean'
+	)
+);
+@
+
+\end{document}
