@@ -21,7 +21,7 @@ calculate.integrative.correlation.matrix(data.types, data.matrices, dist.metrics
 \author{Natalie Fox}
 \examples{
 
-example.molecular.data.dir <- paste0(path.package('BoutrosLab.subtype.assessment'),'/exdata/');
+example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 
 molecular.data <- list();
 for(i in c('cna','csnvs','methy')) {

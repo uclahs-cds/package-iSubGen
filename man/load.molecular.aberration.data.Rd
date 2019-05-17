@@ -20,7 +20,7 @@ load.molecular.aberration.data(
 \examples{
 
 example.aberration.data <- paste0(
-	path.package('BoutrosLab.subtype.assessment'),
+	path.package('iSubCan'),
 	'/exdata/cna_profiles.txt'
 	);
 

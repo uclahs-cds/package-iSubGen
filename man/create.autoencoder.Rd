@@ -20,7 +20,7 @@ create.autoencoder(data.type, data.matrix, decoding.layer.node.num=c(15,2), auto
 \author{Natalie Fox}
 \examples{
 
-example.molecular.data.dir <- paste0(path.package('BoutrosLab.subtype.assessment'),'/exdata/');
+example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 
  ae.result <- create.autoencoder(
 	data.type='cna',
