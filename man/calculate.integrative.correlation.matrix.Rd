@@ -35,7 +35,8 @@ corr.matrix <- calculate.integrative.correlation.matrix(
 		cna='euclidean',
 		csnvs='euclidean',
 		methy='euclidean'
-	)
+	),
+	autoencoders=NA
 );
 
 corr.matrix2 <- calculate.integrative.correlation.matrix(
@@ -47,7 +48,8 @@ corr.matrix2 <- calculate.integrative.correlation.matrix(
 		methy='euclidean'
 	),
 	patients.to.return=paste0('EP00',1:9),
-	patients.for.correlations=paste0('EP0',10:30)
+	patients.for.correlations=paste0('EP0',10:30),
+	autoencoders=NA
 );
 
 corr.matrix3 <- calculate.integrative.correlation.matrix(
@@ -59,10 +61,8 @@ corr.matrix3 <- calculate.integrative.correlation.matrix(
 		methy='euclidean'
 	)[c(1,3)],
 	patients.to.return=paste0('EP00',1:9),
-	patients.for.correlations=paste0('EP0',10:30)
+	patients.for.correlations=paste0('EP0',10:30),
+	autoencoders=NA
 );
-
-
-
 
 }

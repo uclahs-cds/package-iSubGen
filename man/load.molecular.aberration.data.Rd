@@ -20,7 +20,7 @@ load.molecular.aberration.data(
 \examples{
 
 example.aberration.data <- paste0(
-	path.package('iSubCan'),
+	path.package('iSubGen'),
 	'/exdata/cna_profiles.txt'
 	);
 
