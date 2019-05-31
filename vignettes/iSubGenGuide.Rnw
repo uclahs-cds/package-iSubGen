@@ -15,7 +15,7 @@
 \usepackage{tikz}
 %\usetikzlibrary{bayesnet}
 %\usetikzlibrary{arrows,shapes,calc}
-usepackage[unicode=true,pdfusetitle,
+\usepackage[unicode=true,pdfusetitle,
 bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
 breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 {hyperref}
@@ -59,7 +59,7 @@ options(formatR.arrow=TRUE,width=90)
 
 \begin{figure}[!h]
 	\centering
-		\includegraphics[width = 0.8\textwidth]{iSubGen_figure_methodology_overview.pdf}
+		\includegraphics[width = 0.8\textwidth]{Figures/iSubGen_figure_methodology_overview.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
@@ -70,7 +70,7 @@ options(formatR.arrow=TRUE,width=90)
 
 \begin{figure}[!h]
 	\centering
-		\includegraphics[width = 0.8\textwidth]{iSubGen_figure_methodolody_autoencoders.pdf}
+		\includegraphics[width = 0.8\textwidth]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
@@ -83,7 +83,7 @@ options(formatR.arrow=TRUE,width=90)
 
 \begin{figure}[!h]
 	\centering
-		\includegraphics[width = 0.8\textwidth]{iSubGen_figure_methodolody_correlations.pdf}
+		\includegraphics[width = 0.8\textwidth]{Figures/iSubGen_figure_methodolody_correlations.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
@@ -104,10 +104,13 @@ The first step is to load the data and make sure that both the tumor data and th
 <<load-data>>=
 # Load the library and the data included with the package
 library(iSubGen);
-path.to.data <- paste0(path.package('iSubGen'),'/exdata/');
+path.to.data <- '~/iSubGen/inst/exdata/';
 molecular.data <- list();
 for(i in c('cna','csnvs','methy')) {
-	molecular.data[[i]] <- load.molecular.aberration.data(paste0(example.molecular.data.dir,i,'_profiles.txt'),patients=c(paste0('EP00',1:9),paste0('EP0',10:30)));
+  molecular.data[[i]] <- load.molecular.aberration.data(
+    paste0(path.to.data,i,'_profiles.txt'),
+    patients=c(paste0('EP00',1:9),paste0('EP0',10:30))
+  );
 }
 
 # Check what the data looks like
@@ -119,13 +122,13 @@ str(molecular.data);
 <<corrlation-matrix, eval=FALSE>>=
 # Calculate the correlation matrix
 corr.matrix <- calculate.integrated.correlation.matrix(
-	data.types=names(molecular.data),
-	data.matrices=molecular.data,
-	dist.metrics=list(
-		cna='euclidean',
-		csnvs='euclidean',
-		methy='euclidean'
-	)
+  data.types=names(molecular.data),
+  data.matrices=molecular.data,
+  dist.metrics=list(
+    cna='euclidean',
+    csnvs='euclidean',
+    methy='euclidean'
+  )
 );
 @
 
