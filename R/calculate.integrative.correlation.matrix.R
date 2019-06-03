@@ -2,7 +2,7 @@ calculate.integrative.correlation.matrix <- function(
 	data.types,
 	data.matrices,
 	dist.metrics,
-	autoencoders,
+	autoencoders=NA,
 	correlation.method='spearman',
 	data.quantiles.files=NULL,
 	number.of.layers.in.decode=2,
