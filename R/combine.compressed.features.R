@@ -111,4 +111,4 @@ combine.compressed.features <- function(
 		reduced.features.weights = reduced.features.weights,
 		pairwise.similiarity.features.weights = pairwise.similiarity.features.weights
 		));
-	}
+}
