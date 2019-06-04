@@ -99,11 +99,11 @@ combine.compressed.features <- function(
 	}
 
 	# combine the matrices into one matrix
-	compressed.feature.matrix <- cbind(reduced.features,per.patient.data.type.corr);
+	compressed.feature.matrix <- cbind(reduced.features,pairwise.similiarity.features);
 
 	# return the re-scaling and re-weighting parameter along with the compressed.feature.matrix for the matrix can be reproduced
 	return(list(
-		compressed.feature.matrix = compressed.feature.matrix
+		compressed.feature.matrix = compressed.feature.matrix,
 		reduced.features.rescale.recenter = reduced.features.rescale.recenter,
 		pairwise.similiarity.features.rescale.recenter = pairwise.similiarity.features.rescale.recenter,
 		reduced.features.rescale.denominator = reduced.features.rescale.denominator,

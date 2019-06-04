@@ -1,7 +1,7 @@
 create.compressed.autoencoder.feature.matrix <- function(
 	data.types,
 	data.matrices,
-	autoencoders
+	autoencoders,
 	number.of.layers.in.decode=2,
 	filter.to.common.patients=FALSE,
 	patients.to.return=NULL

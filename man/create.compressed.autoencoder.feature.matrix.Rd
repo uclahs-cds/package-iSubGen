@@ -26,14 +26,14 @@ for(i in c('cna','csnvs','methy')) {
 		paste0(example.molecular.data.dir,i,'_profiles.txt'),
 		patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
 	);
-	ae.result <- create.autoencoder(
+	ae.result[[i]] <- create.autoencoder(
 		data.type = i,
 		data.matrix = molecular.data[[i]]
 	);
 }
 
 compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
-    data.types = names(molecular.data),
+	data.types = names(molecular.data),
 	data.matrices = molecular.data,
 	autoencoders = ae.result
 );

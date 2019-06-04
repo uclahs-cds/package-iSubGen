@@ -42,9 +42,9 @@ compressed.feature.matrix <- combine.compressed.features(
 
 compressed.feature.matrix.rescaled.result <- combine.compressed.features(
 	reduced.feature.matrix,
-	pairwise.similiarity.feature.matrix
+	pairwise.similiarity.feature.matrix,
 	reduced.features.rescale.recenter='mean',
-	pairwise.similiarity.features.rescale.recenter='mean'
+	pairwise.similiarity.features.rescale.recenter='mean',
 	reduced.features.rescale.denominator='sd',
 	pairwise.similiarity.features.rescale.denominator='sd'
 	);
