@@ -8,8 +8,8 @@ create.compressed.autoencoder.feature.matrix(data.types, data.matrices, autoenco
 \arguments{
   \item{data.types}{a vector of the ids for the different data types that are the names of the lists for the data.matrices and dist.metrics}
   \item{data.matrices}{a list of the matrices of omics features (rows) by patients (coloumns)}
-  \item{autoencoders}{}
-  \item{number.of.layers.in.decode}{}
+  \item{autoencoders}{a list of an autoencoder corresponding to eat data type.}
+  \item{number.of.layers.in.decode}{number of layers to decode in the autoencoder}
   \item{filter.to.common.patients}{A boolean whether to remove patients that don't have all data types}
   \item{patients.to.return}{patients to return correlations for. If NULL all patients/columns will be used.}
 }
@@ -35,7 +35,7 @@ for(i in c('cna','csnvs','methy')) {
 compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
     data.types = names(molecular.data),
 	data.matrices = molecular.data,
-	autoencoders=ae.result
+	autoencoders = ae.result
 );
 
 }
