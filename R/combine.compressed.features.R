@@ -19,7 +19,7 @@ combine.compressed.features <- function(
 	# check for the right length and adjust by each parameter
 	if(!is.na(reduced.features.rescale.recenter)) {
 		if(length(reduced.features.rescale.recenter) == 1 && reduced.features.rescale.recenter == 'mean') {
-			reduced.features.rescale.recenter <- apply(reduced.features.rescale.recenter,2,mean);
+			reduced.features.rescale.recenter <- apply(reduced.features,2,mean);
 		}
 		if(length(reduced.features.rescale.recenter) == 1) {
 			reduced.features <- reduced.features - reduced.features.rescale.recenter;
@@ -33,7 +33,7 @@ combine.compressed.features <- function(
 	}
 	if(!is.na(pairwise.similiarity.features.rescale.recenter)) {
 		if(length(pairwise.similiarity.features.rescale.recenter) == 1 && pairwise.similiarity.features.rescale.recenter == 'mean') {
-			pairwise.similiarity.features.rescale.recenter <- apply(pairwise.similiarity.features.rescale.recenter,2,mean);
+			pairwise.similiarity.features.rescale.recenter <- apply(pairwise.similiarity.features,2,mean);
 		}
 		if(length(pairwise.similiarity.features.rescale.recenter) == 1) {
 			pairwise.similiarity.features <- pairwise.similiarity.features - pairwise.similiarity.features.rescale.recenter;
@@ -47,7 +47,7 @@ combine.compressed.features <- function(
 	}
 	if(!is.na(reduced.features.rescale.denominator)) {
 		if(length(reduced.features.rescale.denominator) == 1 && reduced.features.rescale.denominator == 'sd') {
-			reduced.features.rescale.recenter <- apply(reduced.features.rescale.recenter,2,sd);
+			reduced.features.rescale.recenter <- apply(reduced.features,2,sd);
 		}
 		if(length(reduced.features.rescale.denominator) == 1) {
 			reduced.features <- reduced.features/reduced.features.rescale.denominator;
@@ -61,7 +61,7 @@ combine.compressed.features <- function(
 	}
 	if(!is.na(pairwise.similiarity.features.rescale.denominator)) {
 		if(length(pairwise.similiarity.features.rescale.denominator) == 1 && pairwise.similiarity.features.rescale.denominator == 'sd') {
-			pairwise.similiarity.features.rescale.recenter <- apply(pairwise.similiarity.features.rescale.recenter,2,sd);
+			pairwise.similiarity.features.rescale.recenter <- apply(pairwise.similiarity.features,2,sd);
 		}
 		if(length(pairwise.similiarity.features.rescale.denominator) == 1) {
 			pairwise.similiarity.features <- pairwise.similiarity.features/pairwise.similiarity.features.rescale.denominator;
