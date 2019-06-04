@@ -1,12 +1,12 @@
 combine.compressed.features <- function(
 	reduced.features,
 	pairwise.similiarity.features,
-	reduced.features.rescale.recenter=NA,
-	pairwise.similiarity.features.rescale.recenter=NA,
-	reduced.features.rescale.denominator=NA,
-	pairwise.similiarity.features.rescale.denominator=NA,
-	reduced.features.weights=rep(1,ncol(reduced.features)),
-	pairwise.similiarity.features.weights=rep(1,ncol(pairwise.similiarity.features))
+	reduced.features.rescale.recenter = NA,
+	pairwise.similiarity.features.rescale.recenter = NA,
+	reduced.features.rescale.denominator = NA,
+	pairwise.similiarity.features.rescale.denominator = NA,
+	reduced.features.weights = rep(1,ncol(reduced.features)),
+	pairwise.similiarity.features.weights = rep(1,ncol(pairwise.similiarity.features))
 	) { 
 
 	# check that the matrices have the same rows

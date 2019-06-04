@@ -1,4 +1,4 @@
-collect.compressed.autoencoder.feature.matrix <- function(
+create.compressed.autoencoder.feature.matrix <- function(
 	data.types,
 	data.matrices,
 	autoencoders
@@ -28,9 +28,11 @@ collect.compressed.autoencoder.feature.matrix <- function(
 		patients.to.return <- intersect(patients.to.return,patients);
 	}
 
+	# go through each data type and get the corresponding compressed autoencoder features
 	autoencoder.results <- NULL;
 	for(data.type in data.types) {
 		if(data.type %in% names(autoencoders)) {
+			# load the neural net for the data type
 			model <- autoencoders[[data.type]];
 			if(is.character(autoencoders[[data.type]]) && grep('hdf5$',autoencoders[[data.type]]) == 1) {
 				model <- load_model_hdf5(
@@ -38,25 +40,12 @@ collect.compressed.autoencoder.feature.matrix <- function(
 					compile = FALSE);
 			}
 
-			autoencoder.data <- data.matrices[[data.type]];
-
-			if(!is.null(data.quantiles.files[[data.type]])) {
-				data.quantiles <- read.table(
-					data.quantiles.files[[data.type]],
-					header=TRUE,
-					sep='\t');
-				autoencoder.data <- sapply(1:nrow(autoencoder.data),function(x) {as.numeric(autoencoder.data[x,] > data.quantiles[x,2]) - as.numeric(autoencoder.data[x,] < data.quantiles[x,1])});
-				autoencoder.data <- t(as.matrix(autoencoder.data));
-				rownames(autoencoder.data) <- rownames(data.matrices[[data.type]]);
-				colnames(autoencoder.data) <- colnames(data.matrices[[data.type]]);
-			}
-
-			autoencoder.data <- t(autoencoder.data);
-
+			# remove the decoding layers
 			for(i in 1:number.of.layers.in.decode) {
 				pop_layer(model);
 			}
 
+			autoencoder.data <- t(data.matrices[[data.type]]);
 			reduced.features.autoencoder.predictions <- predict(model, x = autoencoder.data);
 			rownames(reduced.features.autoencoder.predictions) <- rownames(autoencoder.data);
 			colnames(reduced.features.autoencoder.predictions) <- paste0(data.type,1:ncol(reduced.features.autoencoder.predictions));
@@ -66,4 +55,4 @@ collect.compressed.autoencoder.feature.matrix <- function(
 	}
 
 	return(autoencoder.results);
-	}
+}

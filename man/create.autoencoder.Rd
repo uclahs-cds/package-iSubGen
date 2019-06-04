@@ -22,11 +22,11 @@ create.autoencoder(data.type, data.matrix, decoding.layer.node.num=c(15,2), auto
 
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 
- ae.result <- create.autoencoder(
-	data.type='cna',
-	data.matrix=load.molecular.aberration.data(
+ae.result <- create.autoencoder(
+	data.type = 'cna',
+	data.matrix = load.molecular.aberration.data(
 		paste0(example.molecular.data.dir,'cna_profiles.txt'),
-		patients=c(paste0('EP00',1:9),paste0('EP0',10:30))
+		patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
 	)
 );
 

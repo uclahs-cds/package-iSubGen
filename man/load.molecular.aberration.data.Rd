@@ -5,8 +5,8 @@
 \usage{
 load.molecular.aberration.data(
 	file,
-	patients=NULL,
-	annotation.fields=NULL
+	patients = NULL,
+	annotation.fields = NULL
 	);
 }
 \arguments{
@@ -22,16 +22,15 @@ load.molecular.aberration.data(
 example.aberration.data <- paste0(
 	path.package('iSubGen'),
 	'/exdata/cna_profiles.txt'
-	);
+);
 
 cna.profiles <- load.molecular.aberration.data(
 	example.aberration.data,
-	patients=c(paste0('EP00',1:9),paste0('EP0',10:30))
-	);
+	patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
+);
 
 cna.annotation <- load.molecular.aberration.data(
 	example.aberration.data,
-	annotation.fields=c('gene','start','end')
-	);
-
+	annotation.fields = c('gene','start','end')
+);
 }
