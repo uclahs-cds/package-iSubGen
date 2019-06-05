@@ -15,7 +15,7 @@ create.autoencoder <- function(
 	# create an empty neural net and add the first/input layer
 	model <- keras_model_sequential();
 	model %>%
-		layer_dense(units = decoding.layer.node.num[1], activation = autoencoder.activation[i], input_shape = nrow(data.matrix));
+		layer_dense(units = decoding.layer.node.num[1], activation = autoencoder.activation[1], input_shape = nrow(data.matrix));
 
 	# add the rest of the neural net layers
 	if(length(decoding.layer.node.num) > 1) {

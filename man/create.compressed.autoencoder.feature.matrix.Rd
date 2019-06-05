@@ -29,7 +29,7 @@ for(i in c('cna','csnvs','methy')) {
 	ae.result[[i]] <- create.autoencoder(
 		data.type = i,
 		data.matrix = molecular.data[[i]]
-	);
+	)$autoencoder;
 }
 
 compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
