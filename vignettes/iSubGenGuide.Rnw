@@ -122,7 +122,7 @@ str(molecular.data);
 
 <<corrlation-matrix>>=
 # Calculate the correlation matrix
-corr.matrix <- calculate.integrated.correlation.matrix(
+corr.matrix <- calculate.integrative.correlation.matrix(
   data.types=names(molecular.data),
   data.matrices=molecular.data,
   dist.metrics=list(
@@ -131,6 +131,9 @@ corr.matrix <- calculate.integrated.correlation.matrix(
     methy='euclidean'
   )
 );
+
+# Check what the data looks like
+str(corr.matrix);
 @
 
 \subsection{Create the compressed autoencoder features}
@@ -138,7 +141,7 @@ corr.matrix <- calculate.integrated.correlation.matrix(
 <<ae-matrix>>=
 autoencoders <- list();
 for(i in data.types) {
-  autoencodered[[i]] <- create.autoencoder(
+  autoencoders[[i]] <- create.autoencoder(
     data.type = i,
     data.matrix = molecular.data[[i]]
   )$autoencoder;
@@ -150,6 +153,8 @@ compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
   autoencoders = autoencoders
 );
 
+# Check what the data looks like
+str(compressed.feature.matrix);
 @
 
 \subsection{Combine integrative features}
@@ -160,5 +165,7 @@ integrative.features.matrix <- combine.compressed.features(
   corr.matrix
 )$compressed.feature.matrix;
 
+# Check what the data looks like
+str(integrative.features.matrix);
 @
 \end{document}
