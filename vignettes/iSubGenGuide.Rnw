@@ -105,8 +105,9 @@ The first step is to load the data and make sure that both the tumor data and th
 # Load the library and the data included with the package
 library(iSubGen);
 path.to.data <- '~/iSubGen/inst/exdata/';
+data.types <- c('cna','csnvs','methy');
 molecular.data <- list();
-for(i in c('cna','csnvs','methy')) {
+for(i in data.types) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(path.to.data,i,'_profiles.txt'),
     patients=c(paste0('EP00',1:9),paste0('EP0',10:30))
@@ -119,7 +120,7 @@ str(molecular.data);
 
 \subsection{Create the correlation matrix}
 
-<<corrlation-matrix, eval=FALSE>>=
+<<corrlation-matrix>>=
 # Calculate the correlation matrix
 corr.matrix <- calculate.integrated.correlation.matrix(
   data.types=names(molecular.data),
@@ -132,4 +133,32 @@ corr.matrix <- calculate.integrated.correlation.matrix(
 );
 @
 
+\subsection{Create the compressed autoencoder features}
+
+<<ae-matrix>>=
+autoencoders <- list();
+for(i in data.types) {
+  autoencodered[[i]] <- create.autoencoder(
+    data.type = i,
+    data.matrix = molecular.data[[i]]
+  )$autoencoder;
+}
+
+compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
+  autoencoders = autoencoders
+);
+
+@
+
+\subsection{Combine integrative features}
+
+<<integrative-matrix>>=
+integrative.features.matrix <- combine.compressed.features(
+  compressed.feature.matrix,
+  corr.matrix
+)$compressed.feature.matrix;
+
+@
 \end{document}
