@@ -59,7 +59,7 @@ options(formatR.arrow=TRUE,width=90)
 
 \begin{figure}[!h]
 	\centering
-		\includegraphics[width = 0.8\textwidth]{Figures/iSubGen_figure_methodology_overview.pdf}
+		\includegraphics[width = 0.7\textwidth]{Figures/iSubGen_figure_methodology_overview.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
@@ -70,7 +70,7 @@ options(formatR.arrow=TRUE,width=90)
 
 \begin{figure}[!h]
 	\centering
-		\includegraphics[width = 0.8\textwidth]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
+		\includegraphics[width = 0.7\textwidth]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
@@ -83,7 +83,7 @@ options(formatR.arrow=TRUE,width=90)
 
 \begin{figure}[!h]
 	\centering
-		\includegraphics[width = 0.8\textwidth]{Figures/iSubGen_figure_methodolody_correlations.pdf}
+		\includegraphics[width = 0.7\textwidth]{Figures/iSubGen_figure_methodolody_correlations.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
