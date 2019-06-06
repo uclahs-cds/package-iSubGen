@@ -173,6 +173,7 @@ str(corr.matrix);
 \subsection{Combine integrative features}
 
 <<integrative-matrix>>=
+# Combine autoencoder compressed features and the correlation matrix into one matrix
 integrative.features.matrix <- combine.compressed.features(
   compressed.feature.matrix,
   corr.matrix
@@ -184,5 +185,20 @@ head(integrative.features.matrix);
 @
 
 \subsection{Find patterns in integrative features}
+
+<<cluster>>=
+# Perform consensus clustering to get integrative subtypes
+subtyping.results <- subtype.by.h.clustering(
+  data.matrix=integrative.features.matrix,
+  distance.metric='euclidean',
+  parent.output.dir='./',
+  new.result.dir='vignettes_subtypes',
+  max.num.subtypes=6,
+  clustering.reps=50
+  );
+
+# Check subtyping results
+str(subtyping.results);
+@
 
 \end{document}
