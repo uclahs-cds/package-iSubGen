@@ -1,7 +1,7 @@
 create.autoencoder <- function(
 	data.type,
 	data.matrix,
-	decoding.layer.node.num = c(15,2),
+	encoder.layers.node.nums = c(15,2),
 	autoencoder.activation = 'tanh',
 	optimization.loss.function = 'mean_squared_error',
 	model.file.output.dir = '.'
@@ -9,25 +9,25 @@ create.autoencoder <- function(
 
 	# if the same activation function is going to be used for all layers expand it to a vector
 	if(length(autoencoder.activation) == 1) {
-		autoencoder.activation <- rep(autoencoder.activation,length(decoding.layer.node.num));
+		autoencoder.activation <- rep(autoencoder.activation,length(encoder.layers.node.nums));
 	}
 
 	# create an empty neural net and add the first/input layer
 	model <- keras_model_sequential();
 	model %>%
-		layer_dense(units = decoding.layer.node.num[1], activation = autoencoder.activation[1], input_shape = nrow(data.matrix));
+		layer_dense(units = encoder.layers.node.nums[1], activation = autoencoder.activation[1], input_shape = nrow(data.matrix));
 
 	# add the rest of the neural net layers
-	if(length(decoding.layer.node.num) > 1) {
+	if(length(encoder.layers.node.nums) > 1) {
 		# encoding layers
-		for(i in 2:length(decoding.layer.node.num)) {
+		for(i in 2:length(encoder.layers.node.nums)) {
 			model %>%
-				layer_dense(units = decoding.layer.node.num[i], activation = autoencoder.activation[i]);
+				layer_dense(units = encoder.layers.node.nums[i], activation = autoencoder.activation[i]);
 		}
 		# decoding layers
-		for(i in (length(decoding.layer.node.num)-1):1) {
+		for(i in (length(encoder.layers.node.nums)-1):1) {
 			model %>%
-				layer_dense(units = decoding.layer.node.num[i], activation = autoencoder.activation[i]);
+				layer_dense(units = encoder.layers.node.nums[i], activation = autoencoder.activation[i]);
 		}
 		
 		# output layer

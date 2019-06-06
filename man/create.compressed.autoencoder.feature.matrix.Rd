@@ -8,7 +8,7 @@ create.compressed.autoencoder.feature.matrix(data.types, data.matrices, autoenco
 \arguments{
   \item{data.types}{a vector of the ids for the different data types that are the names of the lists for the data.matrices and dist.metrics}
   \item{data.matrices}{a list of the matrices of omics features (rows) by patients (coloumns)}
-  \item{autoencoders}{a list of an autoencoder corresponding to eat data type.}
+  \item{autoencoders}{a list of an autoencoder corresponding to each data type. Can be either an keras autoencoder object or the file where the autoencoder was saved.}
   \item{number.of.layers.in.decode}{number of layers to decode in the autoencoder}
   \item{filter.to.common.patients}{A boolean whether to remove patients that don't have all data types}
   \item{patients.to.return}{patients to return correlations for. If NULL all patients/columns will be used.}
