@@ -13,6 +13,7 @@
 \usepackage{url}
 \usepackage{color}
 \usepackage{tikz}
+\usepackage{float}
 %\usetikzlibrary{bayesnet}
 %\usetikzlibrary{arrows,shapes,calc}
 \usepackage[unicode=true,pdfusetitle,
@@ -57,57 +58,28 @@ options(formatR.arrow=TRUE,width=90)
 
 \section{Overview}
 
-\begin{figure}[!h]
+\begin{figure}[H]
 	\centering
-		\includegraphics[width = 0.7\textwidth]{Figures/iSubGen_figure_methodology_overview.pdf}
+		\includegraphics[width = \textwidth]{Figures/iSubGen_figure_methodology_overview.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
 
-\section{Feature reduction}
-
-\subsection{Autoencoders}
-
-\begin{figure}[!h]
-	\centering
-		\includegraphics[width = 0.7\textwidth]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
-		\caption{\textbf{iSubGen overview.}}
-		\label{fig:isopure}
-\end{figure}
-
-
-
-\section{Similarity Matrix}
-
-\subsection{Corrlation Matrix}
-
-\begin{figure}[!h]
-	\centering
-		\includegraphics[width = 0.7\textwidth]{Figures/iSubGen_figure_methodolody_correlations.pdf}
-		\caption{\textbf{iSubGen overview.}}
-		\label{fig:isopure}
-\end{figure}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Applying {\emph{iSubGen}} to a small example}
+\subsection{Applying {\emph{iSubGen}} to a small example}
 \label{small-example}
 
 We will show how to use \emph{ISOpureR} with a small example dataset. 
 
 \subsection{Load and format data}
 
-The first step is to load the data and make sure that both the tumor data and the normal data are in matrix form, with the required dimensions.  
+The first step is to load the data.  
 
 <<load-data>>=
 # Load the library and the data included with the package
 library(iSubGen);
 path.to.data <- '~/iSubGen/inst/exdata/';
-data.types <- c('cna','csnvs','methy');
 molecular.data <- list();
-for(i in data.types) {
+for(i in c('cna','methy','csnvs')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(path.to.data,i,'_profiles.txt'),
     patients=c(paste0('EP00',1:9),paste0('EP0',10:30))
@@ -117,6 +89,66 @@ for(i in data.types) {
 # Check what the data looks like
 str(molecular.data);
 @
+
+\section{Feature reduction}
+
+\subsection{Autoencoders}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=10cm]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
+		\caption{\textbf{iSubGen overview.}}
+		\label{fig:isopure}
+\end{figure}
+
+\subsection{Create the compressed autoencoder features}
+
+<<ae-matrix>>=
+# Create a list to store the autoencoders
+autoencoders <- list();
+
+# Create and train an autoencoder using CNA data
+autoencoders[['cna']] <- create.autoencoder(
+  data.type = 'cna',
+  data.matrix = molecular.data$cna,
+  encoder.layers.node.nums = c(20,2)
+)$autoencoder;
+
+# Create and train an autoencoder using methylation data
+autoencoders[['methy']] <- create.autoencoder(
+  data.type = 'methy',
+  data.matrix = molecular.data$methy,
+  encoder.layers.node.nums = c(15,1)
+)$autoencoder;
+
+# Create and train an autoencoder using coding SNV data
+autoencoders[['csnvs']] <- create.autoencoder(
+  data.type = 'csnvs',
+  data.matrix = molecular.data$csnvs,
+  encoder.layers.node.nums = c(15,1)
+)$autoencoder;
+
+# Get the compressed features from the autoencoders
+compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
+  autoencoders = autoencoders
+);
+
+# Check what the data looks like
+str(compressed.feature.matrix);
+@
+
+\section{Similarity Matrix}
+
+\subsection{Corrlation Matrix}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=10cm]{Figures/iSubGen_figure_methodolody_correlations.pdf}
+		\caption{\textbf{iSubGen overview.}}
+		\label{fig:isopure}
+\end{figure}
 
 \subsection{Create the correlation matrix}
 
@@ -136,26 +168,7 @@ corr.matrix <- calculate.integrative.correlation.matrix(
 str(corr.matrix);
 @
 
-\subsection{Create the compressed autoencoder features}
-
-<<ae-matrix>>=
-autoencoders <- list();
-for(i in data.types) {
-  autoencoders[[i]] <- create.autoencoder(
-    data.type = i,
-    data.matrix = molecular.data[[i]]
-  )$autoencoder;
-}
-
-compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
-  data.types = names(molecular.data),
-  data.matrices = molecular.data,
-  autoencoders = autoencoders
-);
-
-# Check what the data looks like
-str(compressed.feature.matrix);
-@
+\section{Combine features and create integrative subtypes}
 
 \subsection{Combine integrative features}
 
@@ -167,5 +180,9 @@ integrative.features.matrix <- combine.compressed.features(
 
 # Check what the data looks like
 str(integrative.features.matrix);
+head(integrative.features.matrix);
 @
+
+\subsection{Find patterns in integrative features}
+
 \end{document}

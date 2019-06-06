@@ -17,7 +17,7 @@ combine.compressed.features <- function(
 		stop('reduced.features and pairwise.similiarity.features matrices rownames do not match');
 	}
 	# check for the right length and adjust by each parameter
-	if(!is.na(reduced.features.rescale.recenter)) {
+	if(length(reduced.features.rescale.recenter) != 1 || !is.na(reduced.features.rescale.recenter)) {
 		if(length(reduced.features.rescale.recenter) == 1 && reduced.features.rescale.recenter == 'mean') {
 			reduced.features.rescale.recenter <- apply(reduced.features,2,mean);
 		}
@@ -31,7 +31,7 @@ combine.compressed.features <- function(
 			warning('reduced.features.rescale.recenter is not a valid length so no recentering was completed for reduced.features');
 		}
 	}
-	if(!is.na(pairwise.similiarity.features.rescale.recenter)) {
+	if(length(pairwise.similiarity.features.rescale.recenter) != 1 || !is.na(pairwise.similiarity.features.rescale.recenter)) {
 		if(length(pairwise.similiarity.features.rescale.recenter) == 1 && pairwise.similiarity.features.rescale.recenter == 'mean') {
 			pairwise.similiarity.features.rescale.recenter <- apply(pairwise.similiarity.features,2,mean);
 		}
@@ -45,7 +45,7 @@ combine.compressed.features <- function(
 			warning('pairwise.similiarity.features.rescale.recenter is not a valid length so no recentering was completed for pairwise.similiarity.features');
 		}
 	}
-	if(!is.na(reduced.features.rescale.denominator)) {
+	if(length(reduced.features.rescale.denominator) != 1 || !is.na(reduced.features.rescale.denominator)) {
 		if(length(reduced.features.rescale.denominator) == 1 && reduced.features.rescale.denominator == 'sd') {
 			reduced.features.rescale.denominator <- apply(reduced.features,2,sd);
 		}
@@ -59,7 +59,7 @@ combine.compressed.features <- function(
 			warning('reduced.features.rescale.denominator is not a valid length so no rescaling was completed for reduced.features');
 		}
 	}
-	if(!is.na(pairwise.similiarity.features.rescale.denominator)) {
+	if(length(pairwise.similiarity.features.rescale.denominator) != 1 ||  !is.na(pairwise.similiarity.features.rescale.denominator)) {
 		if(length(pairwise.similiarity.features.rescale.denominator) == 1 && pairwise.similiarity.features.rescale.denominator == 'sd') {
 			pairwise.similiarity.features.rescale.denominator <- apply(pairwise.similiarity.features,2,sd);
 		}
@@ -73,7 +73,7 @@ combine.compressed.features <- function(
 			warning('pairwise.similiarity.features.rescale.denominator is not a valid length so no rescaling was completed for pairwise.similiarity.features');
 		}
 	}
-	if(!is.na(reduced.features.weights)) {
+	if(length(reduced.features.weights) != 1 || !is.na(reduced.features.weights)) {
 		if(length(reduced.features.weights) == 1) {
 			reduced.features.weights <- rep(reduced.features.weights,ncol(reduced.features));
 		}
@@ -85,7 +85,7 @@ combine.compressed.features <- function(
 			warning('reduced.features.weights is not a valid length so a weight of 1 was used compared to pairwise.similiarity.features.weights');
 		}
 	}
-	if(!is.na(pairwise.similiarity.features.weights)) {
+	if(length(pairwise.similiarity.features.weights) != 1 || !is.na(pairwise.similiarity.features.weights)) {
 		if(length(pairwise.similiarity.features.weights) == 1) {
 			pairwise.similiarity.features.weights <- rep(pairwise.similiarity.features.weights,ncol(pairwise.similiarity.features));
 		}
