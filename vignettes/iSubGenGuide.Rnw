@@ -193,12 +193,14 @@ subtyping.results <- subtype.by.h.clustering(
   distance.metric='euclidean',
   parent.output.dir='./',
   new.result.dir='vignettes_subtypes',
-  max.num.subtypes=6,
-  clustering.reps=50
+  max.num.subtypes=5,
+  clustering.reps=50,
+  consensus.cluster.write.table=FALSE
   );
 
 # Check subtyping results
-str(subtyping.results);
+str(subtyping.results$subtype_table);
+head(subtyping.results$subtype_table);
 @
 
 \end{document}

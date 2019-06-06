@@ -33,16 +33,16 @@ subtype.by.h.clustering <- function(
 
 		# run ConsensusCluster Plus and have it output the analysis plots to a pdf
 		results <- ConsensusClusterPlus(
-			d=data.matrix,
+			d=t(data.matrix),
 			plot='pdf',
 			maxK=max.num.subtypes,
 			distance=distance.metric,
-			verbose=TRUE,
-			writeTable=TRUE,
+			verbose=verbose,
+			writeTable=consensus.cluster.write.table,
 			title=new.result.dir,
 			seed=17,
-			finalLinkage='ward',
-			innerLinkage='ward',
+			finalLinkage='ward.D',
+			innerLinkage='ward.D',
 			clusterAlg=ifelse(any(is.na(data.matrix)),'dianaHook','hc'),
 			pFeature=pFeature,
 			pItem=pItem,

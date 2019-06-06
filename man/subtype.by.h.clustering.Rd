@@ -19,7 +19,7 @@ subtype.by.h.clustering(
 	);
 }
 \arguments{
-  \item{data.matrix}{A matrix of omics features (rows) by patients (columns)}
+  \item{data.matrix}{A matrix of patients (rows) by features (columns)}
   \item{distance.metric}{The distance metric for comparing patient profiles. ex. eucliean, jaccard}
   \item{parent.output.dir}{The directory where the consensus clustering function will create a directory of results}
   \item{new.result.dir}{The name of the directory for results that the consensus clustering function will create}
