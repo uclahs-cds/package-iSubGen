@@ -8,7 +8,9 @@ subtype.by.h.clustering <- function(
 	max.num.subtypes=12,
 	clustering.reps=1000,
 	pFeature=0.8,
-	pItem=0.8
+	pItem=0.8,
+	verbose=FALSE,
+	consensus.cluster.write.table=TRUE
 	) {
 
 	# move to the directory that we want the plots output to

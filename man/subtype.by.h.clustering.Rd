@@ -13,7 +13,9 @@ subtype.by.h.clustering(
 	max.num.subtypes = 12,
 	clustering.reps = 1000,
 	pFeature=0.8,
-	pItem=0.8
+	pItem=0.8,
+	verbose=FALSE,
+	consensus.cluster.write.table=TRUE
 	);
 }
 \arguments{
@@ -27,6 +29,8 @@ subtype.by.h.clustering(
   \item{clustering.reps}{Number of subsamples for consensus clustering function}
   \item{pFeature}{the proportion of features to sample for each clustering iteration}
   \item{pItem}{the proportion of patients to sample for each clustering iteration}
+  \item{verbose}{a boolean specifying whether to print messages to the screen to indicate progress}
+  \item{consensus.cluster.write.table}{a boolean specifying consensus cluster output}
 }
 \value{
   \item{consensus_cluster_result}{the consensus clustering function return value}
