@@ -3,7 +3,9 @@
 \title{Create an autoencoder for dimensionality reduction}
 \description{Create an autoencoder for dimensionality reduction using keras and tensorflow packages}
 \usage{
-create.autoencoder(data.type, data.matrix, encoder.layers.node.nums=c(15,2), autoencoder.activation='tanh', optimization.loss.function='mean_squared_error', model.file.output.dir='.')
+create.autoencoder(data.type, data.matrix, encoder.layers.node.nums = c(15,2),
+autoencoder.activation = 'tanh', optimization.loss.function = 'mean_squared_error', 
+model.file.output.dir = '.')
 }
 \arguments{
   \item{data.type}{the id of the different data type -  will be used for naming the output file}
@@ -23,11 +25,11 @@ create.autoencoder(data.type, data.matrix, encoder.layers.node.nums=c(15,2), aut
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 
 ae.result <- create.autoencoder(
-	data.type = 'cna',
-	data.matrix = load.molecular.aberration.data(
-		paste0(example.molecular.data.dir,'cna_profiles.txt'),
-		patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
-	)
+  data.type = 'cna',
+  data.matrix = load.molecular.aberration.data(
+    paste0(example.molecular.data.dir,'cna_profiles.txt'),
+    patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
+  )
 );
 
 }

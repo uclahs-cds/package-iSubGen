@@ -3,11 +3,7 @@
 \title{Load molecular aberration data}
 \description{Load the molecular aberration profiles/feature annotation}
 \usage{
-load.molecular.aberration.data(
-	file,
-	patients = NULL,
-	annotation.fields = NULL
-	);
+load.molecular.aberration.data(file, patients = NULL, annotation.fields = NULL);
 }
 \arguments{
   \item{file}{the file name of the matrix containing molecular and annotation data}
@@ -20,17 +16,17 @@ load.molecular.aberration.data(
 \examples{
 
 example.aberration.data <- paste0(
-	path.package('iSubGen'),
-	'/exdata/cna_profiles.txt'
+  path.package('iSubGen'),
+  '/exdata/cna_profiles.txt'
 );
 
 cna.profiles <- load.molecular.aberration.data(
-	example.aberration.data,
-	patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
+  example.aberration.data,
+  patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
 );
 
 cna.annotation <- load.molecular.aberration.data(
-	example.aberration.data,
-	annotation.fields = c('gene','start','end')
+  example.aberration.data,
+  annotation.fields = c('gene','start','end')
 );
 }

@@ -3,7 +3,11 @@
 \title{Combine compressed features}
 \description{Combine a reduced features matrix (ex. from autoencoders) and pairwise similarity matrices into one compressed feature matrix.}
 \usage{
-combine.compressed.features(reduced.features,pairwise.similiarity.features,reduced.features.rescale.recenter=NA,pairwise.similiarity.features.rescale.recenter=NA,reduced.features.rescale.denominator=NA,pairwise.similiarity.features.rescale.denominator=NA,reduced.features.weights=rep(1,ncol(reduced.features)),pairwise.similiarity.features.weights=rep(1,ncol(pairwise.similiarity.features)))
+combine.compressed.features(reduced.features, pairwise.similiarity.features,
+reduced.features.rescale.recenter = NA, pairwise.similiarity.features.rescale.recenter = NA, 
+reduced.features.rescale.denominator = NA, pairwise.similiarity.features.rescale.denominator = NA,
+reduced.features.weights = rep(1,ncol(reduced.features)), 
+pairwise.similiarity.features.weights = rep(1,ncol(pairwise.similiarity.features)) )
 }
 \arguments{
   \item{reduced.features}{a matrix of a limited amount of multi-omics features with patients as rows and features as columns}
@@ -30,31 +34,31 @@ The recenter values determine the how column centering is performed. If NA, no r
 \author{Natalie Fox}
 \examples{
 
-reduced.feature.matrix <- matrix(runif(25*4),ncol=4);
-rownames(reduced.feature.matrix) <- c(paste0('EP00',1:9),paste0('EP0',10:25));
-pairwise.similiarity.feature.matrix <- matrix(runif(25*6),ncol=6);
-rownames(pairwise.similiarity.feature.matrix) <- c(paste0('EP00',1:9),paste0('EP0',10:25));
+reduced.feature.matrix <- matrix(runif(25*4), ncol = 4);
+rownames(reduced.feature.matrix) <- c(paste0('EP00',1:9), paste0('EP0',10:25));
+pairwise.similiarity.feature.matrix <- matrix(runif(25*6), ncol=6);
+rownames(pairwise.similiarity.feature.matrix) <- c(paste0('EP00',1:9), paste0('EP0',10:25));
 
 compressed.feature.matrix <- combine.compressed.features(
-	reduced.feature.matrix,
-	pairwise.similiarity.feature.matrix
-	)$compressed.feature.matrix;
+  reduced.feature.matrix,
+  pairwise.similiarity.feature.matrix
+  )$compressed.feature.matrix;
 
 compressed.feature.matrix.rescaled.result <- combine.compressed.features(
-	reduced.feature.matrix,
-	pairwise.similiarity.feature.matrix,
-	reduced.features.rescale.recenter='mean',
-	pairwise.similiarity.features.rescale.recenter='mean',
-	reduced.features.rescale.denominator='sd',
-	pairwise.similiarity.features.rescale.denominator='sd'
-	);
+  reduced.feature.matrix,
+  pairwise.similiarity.feature.matrix,
+  reduced.features.rescale.recenter = 'mean',
+  pairwise.similiarity.features.rescale.recenter = 'mean',
+  reduced.features.rescale.denominator = 'sd',
+  pairwise.similiarity.features.rescale.denominator = 'sd'
+  );
 compressed.feature.matrix.rescaled <- compressed.feature.matrix.rescaled.result$compressed.feature.matrix;
 
 compressed.feature.matrix.reweighted.result <- combine.compressed.features(
-	reduced.feature.matrix,
-	pairwise.similiarity.feature.matrix,
-	reduced.features.weights=1/4,
-	pairwise.similiarity.features.weights=1/6
-	);
+  reduced.feature.matrix,
+  pairwise.similiarity.feature.matrix,
+  reduced.features.weights = 1/4,
+  pairwise.similiarity.features.weights = 1/6
+  );
 compressed.feature.matrix.reweighted <- compressed.feature.matrix.reweighted.result$compressed.feature.matrix;
 }

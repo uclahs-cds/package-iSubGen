@@ -3,7 +3,9 @@
 \title{Calculate integrative correlation matrix}
 \description{Calculate pairwise correlations between patient distances}
 \usage{
-calculate.integrative.correlation.matrix(data.types, data.matrices, dist.metrics, correlation.method = "spearman", filter.to.common.patients = FALSE, patients.to.return = NULL, patients.for.correlations = NULL)
+calculate.integrative.correlation.matrix(data.types, data.matrices, dist.metrics,
+correlation.method = "spearman", filter.to.common.patients = FALSE, 
+patients.to.return = NULL, patients.for.correlations = NULL)
 }
 \arguments{
   \item{data.types}{a vector of the ids for the different data types that are the names of the lists for the data.matrices and dist.metrics}
@@ -22,44 +24,44 @@ example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 
 molecular.data <- list();
 for(i in c('cna','csnvs','methy')) {
-	molecular.data[[i]] <- load.molecular.aberration.data(
-		paste0(example.molecular.data.dir,i,'_profiles.txt'),
-		patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
-	);
+  molecular.data[[i]] <- load.molecular.aberration.data(
+    paste0(example.molecular.data.dir,i,'_profiles.txt'),
+    patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
+  );
 }
 
 corr.matrix <- calculate.integrative.correlation.matrix(
-	data.types = names(molecular.data),
-	data.matrices = molecular.data,
-	dist.metrics = list(
-		cna = 'euclidean',
-		csnvs = 'euclidean',
-		methy = 'euclidean'
-	)
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
+  dist.metrics = list(
+    cna = 'euclidean',
+    csnvs = 'euclidean',
+    methy = 'euclidean'
+  )
 );
 
 corr.matrix2 <- calculate.integrative.correlation.matrix(
-	data.types = names(molecular.data),
-	data.matrices = molecular.data,
-	dist.metrics = list(
-		cna = 'euclidean',
-		csnvs = 'euclidean',
-		methy = 'euclidean'
-	),
-	patients.to.return = paste0('EP00',1:9),
-	patients.for.correlations = paste0('EP0',10:30)
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
+  dist.metrics = list(
+    cna = 'euclidean',
+    csnvs = 'euclidean',
+    methy = 'euclidean'
+  ),
+  patients.to.return = paste0('EP00',1:9),
+  patients.for.correlations = paste0('EP0',10:30)
 );
 
 corr.matrix3 <- calculate.integrative.correlation.matrix(
-	data.types=names(molecular.data)[c(1,3)],
-	data.matrices=molecular.data[c(1,3)],
-	dist.metrics=list(
-		cna='euclidean',
-		csnvs='euclidean',
-		methy='euclidean'
-	)[c(1,3)],
-	patients.to.return=paste0('EP00',1:9),
-	patients.for.correlations=paste0('EP0',10:30)
+  data.types=names(molecular.data)[c(1,3)],
+  data.matrices=molecular.data[c(1,3)],
+  dist.metrics=list(
+    cna='euclidean',
+    csnvs='euclidean',
+    methy='euclidean'
+  )[c(1,3)],
+  patients.to.return=paste0('EP00',1:9),
+  patients.for.correlations=paste0('EP0',10:30)
 );
 
 }

@@ -3,20 +3,10 @@
 \title{Subtype by heirarchial clustering}
 \description{Runs consensus cluster using heirachial clustering to get patient groups based on the -omics data passed in.}
 \usage{
-subtype.by.h.clustering(
-	data.matrix,
-	distance.metric,
-	parent.output.dir,
-	new.result.dir,
-	subtype.table.file=NULL,
-	renumbered.subtype.table.file=NULL,
-	max.num.subtypes = 12,
-	clustering.reps = 1000,
-	pFeature=0.8,
-	pItem=0.8,
-	verbose=FALSE,
-	consensus.cluster.write.table=TRUE
-	);
+subtype.by.h.clustering(data.matrix, distance.metric, parent.output.dir,
+new.result.dir, subtype.table.file = NULL, renumbered.subtype.table.file = NULL,
+max.num.subtypes = 12, clustering.reps = 1000, pFeature = 0.8, pItem = 0.8,
+verbose = FALSE, consensus.cluster.write.table = TRUE);
 }
 \arguments{
   \item{data.matrix}{A matrix of patients (rows) by features (columns)}
@@ -42,31 +32,31 @@ subtype.by.h.clustering(
 set.seed(5);
 ex.matrix <- matrix(
   c(
-    sample(c(0,1),30,replace=TRUE),rep(1,75),rep(0,25),
-    sample(c(0,1),30,replace=TRUE),rep(1,75),rep(0,25),
-    sample(c(0,1),30,replace=TRUE),rep(1,75),rep(0,25),
-    sample(c(0,1),30,replace=TRUE),rep(1,100),
-    sample(c(0,1),30,replace=TRUE),rep(1,100),
-    sample(c(0,1),30,replace=TRUE),rep(1,100),
-    sample(c(0,1),30,replace=TRUE),rep(0,100),
-    sample(c(0,1),30,replace=TRUE),rep(0,100),
-    sample(c(0,1),30,replace=TRUE),rep(0,100),
-    sample(c(0,1),30,replace=TRUE),rep(0,75),rep(1,25),
-    sample(c(0,1),30,replace=TRUE),rep(0,75),rep(1,25),
-    sample(c(0,1),30,replace=TRUE),rep(0,75),rep(1,25)
+    sample(c(0,1), 30, replace = TRUE), rep(1,75), rep(0,25),
+    sample(c(0,1), 30, replace = TRUE), rep(1,75), rep(0,25),
+    sample(c(0,1), 30, replace = TRUE), rep(1,75), rep(0,25),
+    sample(c(0,1), 30, replace = TRUE), rep(1,100),
+    sample(c(0,1), 30, replace = TRUE), rep(1,100),
+    sample(c(0,1), 30, replace = TRUE), rep(1,100),
+    sample(c(0,1), 30, replace = TRUE), rep(0,100),
+    sample(c(0,1), 30, replace = TRUE), rep(0,100),
+    sample(c(0,1), 30, replace = TRUE), rep(0,100),
+    sample(c(0,1), 30, replace = TRUE), rep(0,75), rep(1,25),
+    sample(c(0,1), 30, replace = TRUE), rep(0,75), rep(1,25),
+    sample(c(0,1), 30, replace = TRUE), rep(0,75), rep(1,25)
     ),
   nrow=130);
 rownames(ex.matrix) <- paste0('gene',1:130);
 colnames(ex.matrix) <- paste0('patient',LETTERS[1:12]); 
 
 subtypeing.results <- subtype.by.h.clustering(
-  data.matrix=ex.matrix,
-  distance.metric='jaccard',
-  parent.output.dir='./',
-  new.result.dir='example_subtyping',
-  subtype.table.file='example_subtyping_assignment.txt',
-  max.num.subtypes=6,
-  clustering.reps=50
+  data.matrix = ex.matrix,
+  distance.metric = 'jaccard',
+  parent.output.dir = './',
+  new.result.dir = 'example_subtyping',
+  subtype.table.file = 'example_subtyping_assignment.txt',
+  max.num.subtypes = 6,
+  clustering.reps = 50
 );
 	
 }
