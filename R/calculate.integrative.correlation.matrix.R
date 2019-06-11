@@ -1,6 +1,6 @@
 calculate.integrative.correlation.matrix <- function(
-	data.types,
-	data.matrices,
+	aberration.types,
+	aberration.matrices,
 	dist.metrics,
 	correlation.method = 'spearman',
 	filter.to.common.patients = FALSE,
@@ -10,16 +10,16 @@ calculate.integrative.correlation.matrix <- function(
 
 	# pull out the patients to use
 	patients <- NULL;
-	for(data.type in data.types) {
+	for(aberration.type in aberration.types) {
 		if(filter.to.common.patients) {
 			if(is.null(patients)) {
-				patients <- colnames(data.matrices[[data.type]])[grep('\\d',colnames(data.matrices[[data.type]]))];
+				patients <- colnames(aberration.matrices[[aberration.type]])[grep('\\d',colnames(aberration.matrices[[aberration.type]]))];
 			} else {
-				patients <- intersect(patients,colnames(data.matrices[[data.type]])[grep('\\d',colnames(data.matrices[[data.type]]))]);
+				patients <- intersect(patients,colnames(aberration.matrices[[aberration.type]])[grep('\\d',colnames(aberration.matrices[[aberration.type]]))]);
 			}
 		} else {
 			# assume patient ids have at least one number in them and annotation columns don't
-			patients <- union(patients,colnames(data.matrices[[data.type]]));
+			patients <- union(patients,colnames(aberration.matrices[[aberration.type]]));
 		}
 	}
 	patients <- sort(patients);
@@ -37,13 +37,13 @@ calculate.integrative.correlation.matrix <- function(
 	patients <- sort(unique(c(patients.to.return,patients.for.correlations)));
 
 	# calculate pair-wise distances
-	sample.paired.dists <- list();
-	sample.paired.dists.matrix <- matrix(NA, ncol = length(data.types), nrow = length(patient.pairs));
-	colnames(sample.paired.dists.matrix) <- data.types;
-	rownames(sample.paired.dists.matrix) <- patient.pairs;
-	for(data.type in data.types) {
+	patient.paired.dists <- list();
+	patient.paired.dists.matrix <- matrix(NA, ncol = length(aberration.types), nrow = length(patient.pairs));
+	colnames(patient.paired.dists.matrix) <- aberration.types;
+	rownames(patient.paired.dists.matrix) <- patient.pairs;
+	for(aberration.type in aberration.types) {
 		# filter to required patients 
-		data.matrices[[data.type]] <- data.matrices[[data.type]][,sort(colnames(data.matrices[[data.type]])[colnames(data.matrices[[data.type]]) %in% patients])];
+		aberration.matrices[[aberration.type]] <- aberration.matrices[[aberration.type]][,sort(colnames(aberration.matrices[[aberration.type]])[colnames(aberration.matrices[[aberration.type]]) %in% patients])];
 
 		# set up the matrix of distance pairs that are required
 		dist.matrix <- matrix(NA, ncol = length(patients.for.correlations), nrow = length(patients.to.return));
@@ -68,63 +68,63 @@ calculate.integrative.correlation.matrix <- function(
 
 		# calculate distances and fill in matrix
 		for(dist.op in 1:length(dist.calc.operations)) {
-			if(class(dist.metrics[[data.type]]) == 'character') {
-				if(dist.metrics[[data.type]] %in% c('pearson','spearman')) {
+			if(class(dist.metrics[[aberration.type]]) == 'character') {
+				if(dist.metrics[[aberration.type]] %in% c('pearson','spearman')) {
 					dist.result <- as.dist(
-						1 - cor(data.matrices[[data.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))],
+						1 - cor(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))],
 						use = 'pairwise',
-						method = dist.metrics[[data.type]])
+						method = dist.metrics[[aberration.type]])
 						);
 				}
 				else {
 					dist.result <- BoutrosLab.dist.overload::dist(
-						t(data.matrices[[data.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))]),
-						method = dist.metrics[[data.type]]
+						t(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))]),
+						method = dist.metrics[[aberration.type]]
 						);
 				}
-			} else if(class(dist.metrics[[data.type]]) == 'function') {
-				dist.result <- as.dist((dist.metrics[[data.type]])(t(data.matrices[[data.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))])));
+			} else if(class(dist.metrics[[aberration.type]]) == 'function') {
+				dist.result <- as.dist((dist.metrics[[aberration.type]])(t(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))])));
 			} else {
-				stop(paste0('invalid option for ',data.type,' distance metric: ',dist.metrics[[data.type]]));
+				stop(paste0('invalid option for ',aberration.type,' distance metric: ',dist.metrics[[aberration.type]]));
 			}
 			dist.matrix[dist.calc.operations[dist.op][[1]],patients.for.correlations] <- as.matrix(dist.result)[dist.calc.operations[dist.op][[1]],patients.for.correlations];
 		}
 
-		sample.paired.dists[[data.type]] <- dist.matrix;
+		patient.paired.dists[[aberration.type]] <- dist.matrix;
 		patient.pairs <- as.character(sapply(1:(ncol(dist.matrix)),function(x) {paste0(colnames(dist.matrix)[x],':',rownames(dist.matrix))}));
-		sample.paired.dists.matrix[patient.pairs,data.type] <- as.numeric(dist.matrix);
+		patient.paired.dists.matrix[patient.pairs,aberration.type] <- as.numeric(dist.matrix);
 	}
-	sample.paired.dists.matrix <- sample.paired.dists.matrix[apply(sample.paired.dists.matrix,1,function(x) {sum(!is.na(x))}) >= 2,];
+	patient.paired.dists.matrix <- patient.paired.dists.matrix[apply(patient.paired.dists.matrix,1,function(x) {sum(!is.na(x))}) >= 2,];
 
-	split.rownames <- strsplit(rownames(sample.paired.dists.matrix),':');
+	split.rownames <- strsplit(rownames(patient.paired.dists.matrix),':');
 	pair.patient1 <- sapply(1:length(split.rownames),function(i) {split.rownames[[i]][1]});
 	pair.patient2 <- sapply(1:length(split.rownames),function(i) {split.rownames[[i]][2]});
 
 	# calculate distance correlations between date types
-	per.patient.data.type.corr <- matrix(NA, nrow = length(patients.to.return), ncol = length(data.types)*(length(data.types)-1)/2);
-	rownames(per.patient.data.type.corr) <- patients.to.return;
-	colnames(per.patient.data.type.corr) <- seq(1,ncol(per.patient.data.type.corr));
-	data.type.pair.counter <- 0;
-	for(i in 1:(length(data.types)-1)) {
-		for(j in (i+1):length(data.types)) {
+	per.patient.aberration.type.corr <- matrix(NA, nrow = length(patients.to.return), ncol = length(aberration.types)*(length(aberration.types)-1)/2);
+	rownames(per.patient.aberration.type.corr) <- patients.to.return;
+	colnames(per.patient.aberration.type.corr) <- seq(1,ncol(per.patient.aberration.type.corr));
+	aberration.type.pair.counter <- 0;
+	for(i in 1:(length(aberration.types)-1)) {
+		for(j in (i+1):length(aberration.types)) {
 
-			data.type.pair.counter <- data.type.pair.counter +1;
-			colnames(per.patient.data.type.corr)[data.type.pair.counter] <- paste0(data.types[i],':',data.types[j]);
-			not.na.rows <- (!is.na(sample.paired.dists.matrix[,i])) & (!is.na(sample.paired.dists.matrix[,j]));
+			aberration.type.pair.counter <- aberration.type.pair.counter +1;
+			colnames(per.patient.aberration.type.corr)[aberration.type.pair.counter] <- paste0(aberration.types[i],':',aberration.types[j]);
+			not.na.rows <- (!is.na(patient.paired.dists.matrix[,i])) & (!is.na(patient.paired.dists.matrix[,j]));
 
-			for(patient in rownames(per.patient.data.type.corr)) {
+			for(patient in rownames(per.patient.aberration.type.corr)) {
 				rows.to.use <- which(pair.patient2 == patient & not.na.rows);
 				if(length(rows.to.use) > 1) {
-					per.patient.data.type.corr[patient,data.type.pair.counter] <- cor(
-						c(0,sample.paired.dists.matrix[rows.to.use,i]),
-						c(0,sample.paired.dists.matrix[rows.to.use,j]),
+					per.patient.aberration.type.corr[patient,aberration.type.pair.counter] <- cor(
+						c(0,patient.paired.dists.matrix[rows.to.use,i]),
+						c(0,patient.paired.dists.matrix[rows.to.use,j]),
 						method = correlation.method
 						);
 				}
 			}
 		}
 	}
-	per.patient.data.type.corr <- per.patient.data.type.corr[which(apply(per.patient.data.type.corr,1,function(x) { sum(!is.na(x)) }) > 0),];
+	per.patient.aberration.type.corr <- per.patient.aberration.type.corr[which(apply(per.patient.aberration.type.corr,1,function(x) { sum(!is.na(x)) }) > 0),];
 
-	return(per.patient.data.type.corr);
+	return(per.patient.aberration.type.corr);
 }

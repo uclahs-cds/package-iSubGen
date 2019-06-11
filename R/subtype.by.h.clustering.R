@@ -1,5 +1,5 @@
 subtype.by.h.clustering <- function(
-	data.matrix,
+	aberration.matrix,
 	distance.metric,
 	parent.output.dir,
 	new.result.dir,
@@ -17,15 +17,15 @@ subtype.by.h.clustering <- function(
 	curr.dir <- getwd();
 	setwd(parent.output.dir);
 
-	if(nrow(data.matrix) > 1) {
+	if(nrow(aberration.matrix) > 1) {
 		dianaHook <- function(this_dist,k) {
 			num.patients <- nrow(as.matrix(this_dist));
 			assignment <- rep(NA,num.patients);
-			missing.sample <- apply(is.na(as.matrix(this_dist)),1,sum) == (num.patients - 1);
-			if(sum(!missing.sample) >= 2) {
-				tmp <- diana(as.dist(as.matrix(this_dist)[!missing.sample,!missing.sample]),metric=distance.metric);
-				if(sum(!missing.sample) >= k) {
-					assignment[!missing.sample] <- cutree(tmp,k);
+			missing.patient <- apply(is.na(as.matrix(this_dist)),1,sum) == (num.patients - 1);
+			if(sum(!missing.patient) >= 2) {
+				tmp <- diana(as.dist(as.matrix(this_dist)[!missing.patient,!missing.patient]),metric=distance.metric);
+				if(sum(!missing.patient) >= k) {
+					assignment[!missing.patient] <- cutree(tmp,k);
 					}
 				}
 			return(assignment);
@@ -33,7 +33,7 @@ subtype.by.h.clustering <- function(
 
 		# run ConsensusCluster Plus and have it output the analysis plots to a pdf
 		results <- ConsensusClusterPlus(
-			d=t(data.matrix),
+			d=t(aberration.matrix),
 			plot='pdf',
 			maxK=max.num.subtypes,
 			distance=distance.metric,
@@ -43,7 +43,7 @@ subtype.by.h.clustering <- function(
 			seed=17,
 			finalLinkage='ward.D',
 			innerLinkage='ward.D',
-			clusterAlg=ifelse(any(is.na(data.matrix)),'dianaHook','hc'),
+			clusterAlg=ifelse(any(is.na(aberration.matrix)),'dianaHook','hc'),
 			pFeature=pFeature,
 			pItem=pItem,
 			reps=clustering.reps
@@ -56,8 +56,8 @@ subtype.by.h.clustering <- function(
 			}
 		subtype.table <- as.data.frame(subtype.list);
 
-	} else if(nrow(data.matrix) == 1){
-		results <- diana(t(data.matrix));
+	} else if(nrow(aberration.matrix) == 1){
+		results <- diana(t(aberration.matrix));
 
 		# create a table of the subtypes determined for each number of clusters
 		subtype.list <- list();
@@ -65,7 +65,7 @@ subtype.by.h.clustering <- function(
 			subtype.list[[paste('num_subtypes_',i,sep='')]] <- cutree(results,i);
 			}
 		subtype.table <- as.data.frame(subtype.list);
-		rownames(subtype.table) <- colnames(data.matrix);
+		rownames(subtype.table) <- colnames(aberration.matrix);
 		}
 
 	setwd(curr.dir);
@@ -84,7 +84,7 @@ subtype.by.h.clustering <- function(
 	if(!is.null(renumbered.subtype.table.file)) {
 		# reorder the subtypes and save to file
 		write.table(
-			renumber.subtypes(subtype.table,t(data.matrix)),
+			renumber.subtypes(subtype.table,t(aberration.matrix)),
 			file=renumbered.subtype.table.file,
 			sep='\t',
 			row.names=TRUE,
