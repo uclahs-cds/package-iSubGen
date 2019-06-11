@@ -3,19 +3,19 @@
 \title{Create matrix of compressed autoencoder features}
 \description{Create matrix of compressed autoencoder features}
 \usage{
-create.compressed.autoencoder.feature.matrix(data.types, data.matrices,
+create.compressed.autoencoder.feature.matrix(aberration.types, aberration.matrices,
 autoencoders, number.of.layers.in.decode = 2, filter.to.common.patients = FALSE,
 patients.to.return = NULL)
 }
 \arguments{
-  \item{data.types}{a vector of the ids for the different data types that are the names of the lists for the data.matrices and dist.metrics}
-  \item{data.matrices}{a list of the matrices of omics features (rows) by patients (coloumns)}
-  \item{autoencoders}{a list of an autoencoder corresponding to each data type. Can be either an keras autoencoder object or the file where the autoencoder was saved.}
+  \item{aberration.types}{a vector of the ids for the different aberration types that are the names of the lists for the aberration.matrices and dist.metrics}
+  \item{aberration.matrices}{a list of the matrices of omics features (rows) by patients (coloumns)}
+  \item{autoencoders}{a list of an autoencoder corresponding to each aberration type. Can be either an keras autoencoder object or the file where the autoencoder was saved.}
   \item{number.of.layers.in.decode}{number of layers to decode in the autoencoder}
-  \item{filter.to.common.patients}{A boolean whether to remove patients that don't have all data types}
+  \item{filter.to.common.patients}{A boolean whether to remove patients that don't have all aberration types}
   \item{patients.to.return}{patients to return correlations for. If NULL all patients/columns will be used.}
 }
-\value{matrix where rows are patients and columns are pairs of data types}
+\value{matrix where rows are patients and columns are pairs of aberration types}
 \author{Natalie Fox}
 \examples{
 
@@ -29,14 +29,14 @@ for(i in c('cna','csnvs','methy')) {
     patients = c(paste0('EP00',1:9),paste0('EP0',10:30))
     );
   ae.result[[i]] <- create.autoencoder(
-    data.type = i,
-    data.matrix = molecular.data[[i]]
+    aberration.type = i,
+    aberration.matrix = molecular.data[[i]]
     )$autoencoder;
 }
 
 compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
-  data.types = names(molecular.data),
-  data.matrices = molecular.data,
+  aberration.types = names(molecular.data),
+  aberration.matrices = molecular.data,
   autoencoders = ae.result
 );
 

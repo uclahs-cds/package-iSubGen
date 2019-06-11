@@ -3,20 +3,20 @@
 \title{Calculate integrative correlation matrix}
 \description{Calculate pairwise correlations between patient distances}
 \usage{
-calculate.integrative.correlation.matrix(data.types, data.matrices, dist.metrics,
+calculate.integrative.correlation.matrix(aberration.types, aberration.matrices, dist.metrics,
 correlation.method = "spearman", filter.to.common.patients = FALSE, 
 patients.to.return = NULL, patients.for.correlations = NULL)
 }
 \arguments{
-  \item{data.types}{a vector of the ids for the different data types that are the names of the lists for the data.matrices and dist.metrics}
-  \item{data.matrices}{a list of the matrices of omics features (rows) by patients (coloumns)}
+  \item{aberration.types}{a vector of the ids for the different aberration types that are the names of the lists for the aberration.matrices and dist.metrics}
+  \item{aberration.matrices}{a list of the matrices of omics features (rows) by patients (coloumns)}
   \item{dist.metrics}{a list of the distance metrics for comparing patient profiles. ex. eucliean, jaccard}
   \item{correlation.method}{Specifies the type of correlation. Options are pearson, spearman or kendall.}
-  \item{filter.to.common.patients}{A boolean whether to remove patients that don't have all data types}
+  \item{filter.to.common.patients}{A boolean whether to remove patients that don't have all aberration types}
   \item{patients.to.return}{patients to return correlations for. If NULL all patients/columns will be used.}
   \item{patients.for.correlations}{patients to use to calculare the correlations. If NULL all patients/columns will be used.}
 }
-\value{matrix where rows are patients and columns are pairs of data types}
+\value{matrix where rows are patients and columns are pairs of aberration types}
 \author{Natalie Fox}
 \examples{
 
@@ -31,8 +31,8 @@ for(i in c('cna','csnvs','methy')) {
 }
 
 corr.matrix <- calculate.integrative.correlation.matrix(
-  data.types = names(molecular.data),
-  data.matrices = molecular.data,
+  aberration.types = names(molecular.data),
+  aberration.matrices = molecular.data,
   dist.metrics = list(
     cna = 'euclidean',
     csnvs = 'euclidean',
@@ -41,8 +41,8 @@ corr.matrix <- calculate.integrative.correlation.matrix(
 );
 
 corr.matrix2 <- calculate.integrative.correlation.matrix(
-  data.types = names(molecular.data),
-  data.matrices = molecular.data,
+  aberration.types = names(molecular.data),
+  aberration.matrices = molecular.data,
   dist.metrics = list(
     cna = 'euclidean',
     csnvs = 'euclidean',
@@ -53,8 +53,8 @@ corr.matrix2 <- calculate.integrative.correlation.matrix(
 );
 
 corr.matrix3 <- calculate.integrative.correlation.matrix(
-  data.types=names(molecular.data)[c(1,3)],
-  data.matrices=molecular.data[c(1,3)],
+  aberration.types=names(molecular.data)[c(1,3)],
+  aberration.matrices=molecular.data[c(1,3)],
   dist.metrics=list(
     cna='euclidean',
     csnvs='euclidean',
