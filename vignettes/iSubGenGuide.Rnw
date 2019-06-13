@@ -109,29 +109,29 @@ autoencoders <- list();
 
 # Create and train an autoencoder using CNA data
 autoencoders[['cna']] <- create.autoencoder(
-  data.type = 'cna',
-  data.matrix = molecular.data$cna,
+  aberration.type = 'cna',
+  aberration.matrix = molecular.data$cna,
   encoder.layers.node.nums = c(20,2)
 )$autoencoder;
 
 # Create and train an autoencoder using methylation data
 autoencoders[['methy']] <- create.autoencoder(
-  data.type = 'methy',
-  data.matrix = molecular.data$methy,
+  aberration.type = 'methy',
+  aberration.matrix = molecular.data$methy,
   encoder.layers.node.nums = c(15,1)
 )$autoencoder;
 
 # Create and train an autoencoder using coding SNV data
 autoencoders[['csnvs']] <- create.autoencoder(
-  data.type = 'csnvs',
-  data.matrix = molecular.data$csnvs,
+  aberration.type = 'csnvs',
+  aberration.matrix = molecular.data$csnvs,
   encoder.layers.node.nums = c(15,1)
 )$autoencoder;
 
 # Get the compressed features from the autoencoders
 compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
-  data.types = names(molecular.data),
-  data.matrices = molecular.data,
+  aberration.types = names(molecular.data),
+  aberration.matrices = molecular.data,
   autoencoders = autoencoders
 );
 
@@ -155,9 +155,9 @@ str(compressed.feature.matrix);
 <<corrlation-matrix>>=
 # Calculate the correlation matrix
 corr.matrix <- calculate.integrative.correlation.matrix(
-  data.types=names(molecular.data),
-  data.matrices=molecular.data,
-  dist.metrics=list(
+  aberration.types=names(molecular.data),
+  aberration.matrices=molecular.data,
+  aberration.metrics=list(
     cna='euclidean',
     csnvs='euclidean',
     methy='euclidean'
@@ -189,7 +189,7 @@ head(integrative.features.matrix);
 <<cluster>>=
 # Perform consensus clustering to get integrative subtypes
 subtyping.results <- subtype.by.h.clustering(
-  data.matrix=integrative.features.matrix,
+  aberration.matrix=integrative.features.matrix,
   distance.metric='euclidean',
   parent.output.dir='./',
   new.result.dir='vignettes_subtypes',
