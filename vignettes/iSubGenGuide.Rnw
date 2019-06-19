@@ -52,11 +52,15 @@ options(formatR.arrow=TRUE,width=90)
 
 \tableofcontents
 
-\newpage
+%\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Overview}
+
+The purpose of integrative subtype generation (iSubGen) is to discover subtypes 
+based on the relationships between molecular aberration profiles without filtering
+to known genes or relationships.
 
 \begin{figure}[H]
 	\centering
@@ -68,7 +72,7 @@ options(formatR.arrow=TRUE,width=90)
 \subsection{Applying {\emph{iSubGen}} to a small example}
 \label{small-example}
 
-We will show how to use \emph{ISOpureR} with a small example dataset. 
+We will show how to use \emph{iSubGen} with a small example dataset. 
 
 \subsection{Load and format data}
 
