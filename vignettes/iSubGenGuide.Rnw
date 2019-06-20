@@ -76,7 +76,7 @@ We will show how to use \emph{iSubGen} with a small example dataset.
 The example has has copy number (CNA) profiles, methylation profiles and coding single nucleotide variant (SNV) data for 30 patients.
 The CNA data is gene based with -1 for a deletion, 0 for neutral and 1 for a gain.
 The methylation data is probe based and is continuous values between -1 and 1.
-The coding SNV data is gene based wit 0 if there is no SNVs in the gene and 1 if there is 1 or more SNV(s) in the gene. 
+The coding SNV data is gene based with 0 if there is no SNVs in the gene and 1 if there is 1 or more SNV(s) in the gene. 
 
 \subsection{Load and format data}
 
@@ -96,14 +96,19 @@ for(i in c('cna','methy','csnvs')) {
 
 # Check what the data looks like
 str(molecular.data);
-head(molecular.data$cna);
-head(molecular.data$methy);
-head(molecular.data$csnvs);
+molecular.data$cna[1:5,1:5];
+molecular.data$methy[1:5,1:5];
+molecular.data$csnvs[1:5,1:5];
 @
 
 \section{Feature reduction}
 
 \subsection{Autoencoders}
+
+To be able to emphasize the main patterns in the individual aberration profies, 
+we reduced features that should capture the overarching patterns of each aberration type.
+In this case, we use autoencoders to reduce the features to a handful of compressed features representing the main patterns of each aberration type.
+Autoencoders are beneficial because they can capture non linear reasonships.
 
 \begin{figure}[H]
 	\centering
