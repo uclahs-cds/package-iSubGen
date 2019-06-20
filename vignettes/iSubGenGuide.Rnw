@@ -75,6 +75,7 @@ Here we will describe using correlations to compare the distances between patien
 		\label{fig:isopure}
 \end{figure}
 
+\newpage
 \subsection{Applying {\emph{iSubGen}} to a small example}
 \label{small-example}
 
@@ -106,6 +107,7 @@ molecular.data$methy[1:5,1:5];
 molecular.data$csnvs[1:5,1:5];
 @
 
+
 \section{Feature reduction}
 
 \subsection{Autoencoders}
@@ -122,6 +124,7 @@ Autoencoders are beneficial because they can capture non-linear relationships.
 		\label{fig:isopure}
 \end{figure}
 
+\newpage
 \subsection{Create the compressed autoencoder features}
 
 We create autoencoders individually for each aberration type.
@@ -163,7 +166,8 @@ compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
 str(compressed.feature.matrix);
 @
 
-\section{Similarity Matrix}
+\newpage
+\section{Pairwise similarity Matrix}
 
 \subsection{Corrlation Matrix}
 
