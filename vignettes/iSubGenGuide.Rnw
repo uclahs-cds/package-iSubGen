@@ -58,9 +58,15 @@ options(formatR.arrow=TRUE,width=90)
 
 \section{Overview}
 
-The purpose of integrative subtype generation (iSubGen) is to discover subtypes 
+The purpose of integrative subtype generation (iSubGen) is to provide a framework to discover subtypes 
 based on the relationships between molecular aberration profiles without filtering
-to known genes or relationships.
+to known genes or relationships. ISubGen performs pattern discovery on a combination of
+two types of compressed features. 
+First, we use a collection of reduced features to allow emphasis of obvious patterns in the individual aberration types. 
+The reduced features could be a small number of compressed features from autoencoders or the top principle components or even a handful of selected importnant characteristics of the profiles.
+The second type of compressed feature is pairwise comparion of the aberration types.
+This will allow patient classification based on whether the same relationships are observed in the different aberration types.
+Here we will describe using correlations to compare the distances between patient profiles, but any similarity measure could be substituted.
 
 \begin{figure}[H]
 	\centering
@@ -96,7 +102,6 @@ for(i in c('cna','methy','csnvs')) {
 
 # Check what the data looks like
 str(molecular.data);
-molecular.data$cna[1:5,1:5];
 molecular.data$methy[1:5,1:5];
 molecular.data$csnvs[1:5,1:5];
 @
@@ -108,7 +113,7 @@ molecular.data$csnvs[1:5,1:5];
 To be able to emphasize the main patterns in the individual aberration profies, 
 we reduced features that should capture the overarching patterns of each aberration type.
 In this case, we use autoencoders to reduce the features to a handful of compressed features representing the main patterns of each aberration type.
-Autoencoders are beneficial because they can capture non linear reasonships.
+Autoencoders are beneficial because they can capture non-linear relationships.
 
 \begin{figure}[H]
 	\centering
@@ -118,6 +123,9 @@ Autoencoders are beneficial because they can capture non linear reasonships.
 \end{figure}
 
 \subsection{Create the compressed autoencoder features}
+
+We create autoencoders individually for each aberration type.
+The create.autoencoder function is a wrapper function to create an autoencoder using the keras package.
 
 <<ae-matrix>>=
 # Create a list to store the autoencoders
@@ -159,6 +167,13 @@ str(compressed.feature.matrix);
 
 \subsection{Corrlation Matrix}
 
+Importantly, iSubGen assesses variation between aberration types.
+The correlation matrix is created by first creating the distance matrix for each aberration type.
+This is the standard first steps for clustering based on a single aberration type.
+However instead of clustering each distance matrix, the distances from a single patient to the other patients is correlated between aberration types.
+This provides an assessment of how similar the relationships between patients are in the different aberration types 
+and might elucidate whether there is different biological regulation subgroups of the cancers.
+
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=10cm]{Figures/iSubGen_figure_methodolody_correlations.pdf}
@@ -188,6 +203,11 @@ str(corr.matrix);
 
 \subsection{Combine integrative features}
 
+Depending on where you want the emphasis for your subtype discovery, features may need to be reweighted when combined into one matrix. 
+There may also need to be rescaling performed if the feature reduction and pairwise similarity return features which are not in similar spaces.
+Here we use tanh on our activation function for the autoencoders so that our compressed autoencoder features are in -1 to 1 range. 
+Similarly, correlations return values in the -1 to 1 range.
+
 <<integrative-matrix>>=
 # Combine autoencoder compressed features and the correlation matrix into one matrix
 integrative.features.matrix <- combine.compressed.features(
@@ -201,6 +221,9 @@ head(integrative.features.matrix);
 @
 
 \subsection{Find patterns in integrative features}
+
+Finally, pattern discovery must be performed on the integrative feature matrix to determine cancer subtypes. 
+In this example, we use consensus clustering which iteratively runs hierarchically clustering.
 
 <<cluster>>=
 # Perform consensus clustering to get integrative subtypes
