@@ -166,7 +166,7 @@ compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
 str(compressed.feature.matrix);
 @
 
-\newpage
+
 \section{Pairwise similarity Matrix}
 
 \subsection{Corrlation Matrix}
