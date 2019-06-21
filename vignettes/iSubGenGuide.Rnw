@@ -112,10 +112,18 @@ molecular.data$csnvs[1:5,1:5];
 
 \subsection{Autoencoders}
 
+
 To be able to emphasize the main patterns in the individual aberration profies, 
-we reduced features that should capture the overarching patterns of each aberration type.
-In this case, we use autoencoders to reduce the features to a handful of compressed features representing the main patterns of each aberration type.
-Autoencoders are beneficial because they can capture non-linear relationships.
+we compressed features to smaller set of features that should capture the overarching patterns of each aberration type.
+In this case, we use autoencoders to reduce the features to a handful of compressed features representing the main patterns of each aberration type. \\
+
+
+An autoencoder is a neural net which is trained to output the input it was given. 
+The number of nodes will decrease in the first layers to "encode" the data 
+and then the number of nodes will increase in the following layers to "decode" the data.
+In this way if we take the values from the smallest number of nodes at the interface of the encoding and decoding layers, 
+all the data of the input features should be represented in a smaller number of features.
+A benefit of using autoencoders for compressing features is that autoencoders can capture non-linear relationships.
 
 \begin{figure}[H]
 	\centering
