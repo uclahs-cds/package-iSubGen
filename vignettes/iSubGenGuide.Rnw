@@ -66,7 +66,6 @@ First, we use a collection of reduced features to allow emphasis of obvious patt
 The reduced features could be a small number of compressed features from autoencoders or the top principle components or even a handful of selected importnant characteristics of the profiles.
 The second type of compressed feature is pairwise comparion of the aberration types.
 This will allow patient classification based on whether the same relationships are observed in the different aberration types.
-Here we will describe using correlations to compare the distances between patient profiles, but any similarity measure could be substituted.
 
 \begin{figure}[H]
 	\centering
@@ -127,7 +126,7 @@ A benefit of using autoencoders for compressing features is that autoencoders ca
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=10cm]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
+		\includegraphics[width=9.5cm]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
@@ -177,6 +176,8 @@ str(compressed.feature.matrix);
 
 \section{Pairwise similarity Matrix}
 
+Here we will describe using correlations to compare the distances between patient profiles, but any similarity measure could be substituted.
+
 \subsection{Corrlation Matrix}
 
 Importantly, iSubGen assesses variation between aberration types.
@@ -188,7 +189,7 @@ and might elucidate whether there is different biological regulation subgroups o
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=10cm]{Figures/iSubGen_figure_methodolody_correlations.pdf}
+		\includegraphics[width=9.5cm]{Figures/iSubGen_figure_methodolody_correlations.pdf}
 		\caption{\textbf{iSubGen overview.}}
 		\label{fig:isopure}
 \end{figure}
@@ -200,7 +201,7 @@ and might elucidate whether there is different biological regulation subgroups o
 corr.matrix <- calculate.integrative.correlation.matrix(
   aberration.types=names(molecular.data),
   aberration.matrices=molecular.data,
-  aberration.metrics=list(
+  dist.metrics=list(
     cna='euclidean',
     csnvs='euclidean',
     methy='euclidean'
