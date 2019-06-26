@@ -126,7 +126,7 @@ A benefit of using autoencoders for compressing features is that autoencoders ca
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=9.5cm]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
+		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
 		\caption{\textbf{Schematic for iSubGen feature reduction using autoencoders.}}
 		\label{fig:isopure}
 \end{figure}
@@ -195,11 +195,12 @@ and might elucidate whether there are different biological regulation subgroups 
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=9.5cm]{Figures/iSubGen_figure_methodolody_correlations.pdf}
+		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodolody_correlations.pdf}
 		\caption{\textbf{Schematic for creating iSubGen pairwise similarity measures.}}
 		\label{fig:isopure}
 \end{figure}
 
+\newpage
 \subsection{Create the correlation matrix}
 
 <<correlation-matrix>>=
@@ -263,23 +264,25 @@ head(subtyping.results$subtype_table);
 
 \section{Glossary/Acronyms}
 
-\textbf{Activation function:} defines the output of neural network nodes.
+\noindent \textbf{Activation function:} defines the output of neural network nodes. \\
 
-\textbf{Autoencoder:} an unsupervised approach for neural networks where the neural network tries to reconstruct its input. \\
+\noindent \textbf{Autoencoder:} an unsupervised approach for neural networks where the neural network tries to reconstruct its input. \\
 
-\textbf{CNA:} copy number alteration. A change in the number of copies of a segment of DNA. 
+\noindent \textbf{CNA:} copy number alteration. A change in the number of copies of a segment of DNA. 
 Generally, humans have 2 copies of each gene; one from their mother and one from their father. 
 In cancer, DNA segments can be duplicated so there are more than 2 copies or 
 DNA segments can be deleted so there are less than 2 copies. \\
 
-\textbf{Consensus clustering:} a process of iteratively clustering to essentially bootstrap the clustering result. \url{https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html}
+\noindent \textbf{Consensus clustering:} a process of iteratively clustering to essentially bootstrap the clustering result. \url{https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html} \\
 
-\textbf{Methylation:} a DNA modification where methyl groups of are added to cytosines in DNA to help regulate DNA transcription. \\
+\noindent \textbf{iSubGen:} integrative subtype generation.\\
 
-\textbf{Molecular aberration type (or aberration type):} encapsulates the different changes that occur the DNA, RNA and other biomolecules during cancer. For example: CNAs, SNVs, methylation, mRNA abundance, miRNA abundance.\\
+\noindent \textbf{Keras R package:} \url{https://cran.r-project.org/package=keras} \\ 
 
-\textbf{SNV:} single nucleotide variant. a nucleotide base (A,C,G,T) change in DNA.\\
+\noindent \textbf{Methylation:} a DNA modification where methyl groups of are added to cytosines in DNA to help regulate DNA transcription. \\
 
-\textbf{keras R package:} \url{https://cran.r-project.org/package=keras} \\ 
+\noindent \textbf{Molecular aberration type (or aberration type):} encapsulates the different changes that occur the DNA, RNA and other biomolecules during cancer. For example: CNAs, SNVs, methylation, mRNA abundance, miRNA abundance.\\
+
+\noindent \textbf{SNV:} single nucleotide variant. a nucleotide base (A,C,G,T) change in DNA.\\
 
 \end{document}
