@@ -1,20 +1,20 @@
 combine.compressed.features <- function(
 	reduced.features,
-	pairwise.similiarity.features,
+	pairwise.similarity.features,
 	reduced.features.rescale.recenter = NA,
-	pairwise.similiarity.features.rescale.recenter = NA,
+	pairwise.similarity.features.rescale.recenter = NA,
 	reduced.features.rescale.denominator = NA,
-	pairwise.similiarity.features.rescale.denominator = NA,
+	pairwise.similarity.features.rescale.denominator = NA,
 	reduced.features.weights = rep(1,ncol(reduced.features)),
-	pairwise.similiarity.features.weights = rep(1,ncol(pairwise.similiarity.features))
+	pairwise.similarity.features.weights = rep(1,ncol(pairwise.similarity.features))
 	) { 
 
 	# check that the matrices have the same rows
-	if(nrow(reduced.features) != nrow(pairwise.similiarity.features)) {
-		stop('reduced.features and pairwise.similiarity.features matrices do not have the same number of patients');
+	if(nrow(reduced.features) != nrow(pairwise.similarity.features)) {
+		stop('reduced.features and pairwise.similarity.features matrices do not have the same number of patients');
 	}
-	if(all(rownames(reduced.features) != rownames(pairwise.similiarity.features))) {
-		stop('reduced.features and pairwise.similiarity.features matrices rownames do not match');
+	if(all(rownames(reduced.features) != rownames(pairwise.similarity.features))) {
+		stop('reduced.features and pairwise.similarity.features matrices rownames do not match');
 	}
 	# check for the right length and adjust by each parameter
 	if(length(reduced.features.rescale.recenter) != 1 || !is.na(reduced.features.rescale.recenter)) {
@@ -31,18 +31,18 @@ combine.compressed.features <- function(
 			warning('reduced.features.rescale.recenter is not a valid length so no recentering was completed for reduced.features');
 		}
 	}
-	if(length(pairwise.similiarity.features.rescale.recenter) != 1 || !is.na(pairwise.similiarity.features.rescale.recenter)) {
-		if(length(pairwise.similiarity.features.rescale.recenter) == 1 && pairwise.similiarity.features.rescale.recenter == 'mean') {
-			pairwise.similiarity.features.rescale.recenter <- apply(pairwise.similiarity.features,2,mean);
+	if(length(pairwise.similarity.features.rescale.recenter) != 1 || !is.na(pairwise.similarity.features.rescale.recenter)) {
+		if(length(pairwise.similarity.features.rescale.recenter) == 1 && pairwise.similarity.features.rescale.recenter == 'mean') {
+			pairwise.similarity.features.rescale.recenter <- apply(pairwise.similarity.features,2,mean);
 		}
-		if(length(pairwise.similiarity.features.rescale.recenter) == 1) {
-			pairwise.similiarity.features <- pairwise.similiarity.features - pairwise.similiarity.features.rescale.recenter;
-		} else if(length(pairwise.similiarity.features.rescale.recenter) == ncol(pairwise.similiarity.features)) {
-			for(j in ncol(pairwise.similiarity.features)) {
-				pairwise.similiarity.features[,j] <- pairwise.similiarity.features[,j] - pairwise.similiarity.features.rescale.recenter[j];
+		if(length(pairwise.similarity.features.rescale.recenter) == 1) {
+			pairwise.similarity.features <- pairwise.similarity.features - pairwise.similarity.features.rescale.recenter;
+		} else if(length(pairwise.similarity.features.rescale.recenter) == ncol(pairwise.similarity.features)) {
+			for(j in ncol(pairwise.similarity.features)) {
+				pairwise.similarity.features[,j] <- pairwise.similarity.features[,j] - pairwise.similarity.features.rescale.recenter[j];
 			}
 		} else {
-			warning('pairwise.similiarity.features.rescale.recenter is not a valid length so no recentering was completed for pairwise.similiarity.features');
+			warning('pairwise.similarity.features.rescale.recenter is not a valid length so no recentering was completed for pairwise.similarity.features');
 		}
 	}
 	if(length(reduced.features.rescale.denominator) != 1 || !is.na(reduced.features.rescale.denominator)) {
@@ -59,18 +59,18 @@ combine.compressed.features <- function(
 			warning('reduced.features.rescale.denominator is not a valid length so no rescaling was completed for reduced.features');
 		}
 	}
-	if(length(pairwise.similiarity.features.rescale.denominator) != 1 ||  !is.na(pairwise.similiarity.features.rescale.denominator)) {
-		if(length(pairwise.similiarity.features.rescale.denominator) == 1 && pairwise.similiarity.features.rescale.denominator == 'sd') {
-			pairwise.similiarity.features.rescale.denominator <- apply(pairwise.similiarity.features,2,sd);
+	if(length(pairwise.similarity.features.rescale.denominator) != 1 ||  !is.na(pairwise.similarity.features.rescale.denominator)) {
+		if(length(pairwise.similarity.features.rescale.denominator) == 1 && pairwise.similarity.features.rescale.denominator == 'sd') {
+			pairwise.similarity.features.rescale.denominator <- apply(pairwise.similarity.features,2,sd);
 		}
-		if(length(pairwise.similiarity.features.rescale.denominator) == 1) {
-			pairwise.similiarity.features <- pairwise.similiarity.features/pairwise.similiarity.features.rescale.denominator;
-		} else if(length(pairwise.similiarity.features.rescale.denominator) == ncol(pairwise.similiarity.features)) {
-			for(j in ncol(pairwise.similiarity.features)) {
-				pairwise.similiarity.features[,j] <- pairwise.similiarity.features[,j]/pairwise.similiarity.features.rescale.denominator[j];
+		if(length(pairwise.similarity.features.rescale.denominator) == 1) {
+			pairwise.similarity.features <- pairwise.similarity.features/pairwise.similarity.features.rescale.denominator;
+		} else if(length(pairwise.similarity.features.rescale.denominator) == ncol(pairwise.similarity.features)) {
+			for(j in ncol(pairwise.similarity.features)) {
+				pairwise.similarity.features[,j] <- pairwise.similarity.features[,j]/pairwise.similarity.features.rescale.denominator[j];
 			}
 		} else {
-			warning('pairwise.similiarity.features.rescale.denominator is not a valid length so no rescaling was completed for pairwise.similiarity.features');
+			warning('pairwise.similarity.features.rescale.denominator is not a valid length so no rescaling was completed for pairwise.similarity.features');
 		}
 	}
 	if(length(reduced.features.weights) != 1 || !is.na(reduced.features.weights)) {
@@ -82,33 +82,33 @@ combine.compressed.features <- function(
 				reduced.features[,j] <- reduced.features[,j]*reduced.features.weights[j];
 			}
 		} else {
-			warning('reduced.features.weights is not a valid length so a weight of 1 was used compared to pairwise.similiarity.features.weights');
+			warning('reduced.features.weights is not a valid length so a weight of 1 was used compared to pairwise.similarity.features.weights');
 		}
 	}
-	if(length(pairwise.similiarity.features.weights) != 1 || !is.na(pairwise.similiarity.features.weights)) {
-		if(length(pairwise.similiarity.features.weights) == 1) {
-			pairwise.similiarity.features.weights <- rep(pairwise.similiarity.features.weights,ncol(pairwise.similiarity.features));
+	if(length(pairwise.similarity.features.weights) != 1 || !is.na(pairwise.similarity.features.weights)) {
+		if(length(pairwise.similarity.features.weights) == 1) {
+			pairwise.similarity.features.weights <- rep(pairwise.similarity.features.weights,ncol(pairwise.similarity.features));
 		}
-		if(length(pairwise.similiarity.features.weights) == ncol(pairwise.similiarity.features)) {
-			for(j in ncol(pairwise.similiarity.features)) {
-				pairwise.similiarity.features[,j] <- pairwise.similiarity.features[,j]*pairwise.similiarity.features.weights[j];
+		if(length(pairwise.similarity.features.weights) == ncol(pairwise.similarity.features)) {
+			for(j in ncol(pairwise.similarity.features)) {
+				pairwise.similarity.features[,j] <- pairwise.similarity.features[,j]*pairwise.similarity.features.weights[j];
 			}
 		} else {
-			warning('pairwise.similiarity.features.weights is not a valid length so a weight of 1 was used compared to reduced.features.weights');
+			warning('pairwise.similarity.features.weights is not a valid length so a weight of 1 was used compared to reduced.features.weights');
 		}
 	}
 
 	# combine the matrices into one matrix
-	compressed.feature.matrix <- cbind(reduced.features,pairwise.similiarity.features);
+	compressed.feature.matrix <- cbind(reduced.features,pairwise.similarity.features);
 
 	# return the re-scaling and re-weighting parameter along with the compressed.feature.matrix for the matrix can be reproduced
 	return(list(
 		compressed.feature.matrix = compressed.feature.matrix,
 		reduced.features.rescale.recenter = reduced.features.rescale.recenter,
-		pairwise.similiarity.features.rescale.recenter = pairwise.similiarity.features.rescale.recenter,
+		pairwise.similarity.features.rescale.recenter = pairwise.similarity.features.rescale.recenter,
 		reduced.features.rescale.denominator = reduced.features.rescale.denominator,
-		pairwise.similiarity.features.rescale.denominator = pairwise.similiarity.features.rescale.denominator,
+		pairwise.similarity.features.rescale.denominator = pairwise.similarity.features.rescale.denominator,
 		reduced.features.weights = reduced.features.weights,
-		pairwise.similiarity.features.weights = pairwise.similiarity.features.weights
+		pairwise.similarity.features.weights = pairwise.similarity.features.weights
 		));
 }
