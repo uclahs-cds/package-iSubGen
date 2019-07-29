@@ -36,19 +36,15 @@ calculate.consensus.integrative.correlation.matrix <- function(
 	per.patient.aberration.type.corr <- list(); 
 	for(i in 1:num.iterations) {
 		set.seed(i);
-		selected.patients <- sample(1:length(patients.to.return),round(length(patients.to.return)*patient.proportion));
-		temp.aberration.matrices <- NULL;
-		for(aberration.type in aberration.types) {
-			temp.aberration.matrices <- aberration.matrices[[aberration.type]][sample(1:nrow(aberration.matrices[[aberration.type]]),round(nrow(aberration.matrices[[aberration.type]])*feature.proportion)),selected.patients];
-		}
+		selected.patients <- sample(patients.for.correlations,round(length(patients.for.correlations)*patient.proportion));
 		per.patient.aberration.type.corr[[i]] <- calculate.integrative.correlation.matrix(
 			aberration.types=aberration.types,
-			aberration.matrices=temp.aberration.matrices,
+			aberration.matrices=aberration.matrices,
 			dist.metrics=dist.metrics,
 			correlation.method = correlation.method,
 			filter.to.common.patients = filter.to.common.patients,
 			patients.to.return = patients.to.return,
-			patients.for.correlations = patients.for.correlations
+			patients.for.correlations = selected.patients
 		);
 		if(print.correlation.matrices.to.file) {
 			write.table(
