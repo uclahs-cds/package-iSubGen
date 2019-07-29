@@ -50,6 +50,16 @@ calculate.consensus.integrative.correlation.matrix <- function(
 			patients.to.return = patients.to.return,
 			patients.for.correlations = patients.for.correlations
 		);
+		if(print.correlation.matrices.to.file) {
+			write.table(
+				per.patient.aberration.type.corr[[i]],
+				file=paste0(print.dir,'/',Sys.Date(),'_correlation_matrix_seed_',i,'.txt'),
+				col.names=TRUE,
+				row.names=TRUE,
+				sep='\t',
+				quote=FALSE
+			);
+		}
 	}
 	median.per.patient.aberration.type.corr <- matrix(NA, nrow=nrow(per.patient.aberration.type.corr[[1]]), ncol=ncol(per.patient.aberration.type.corr[[1]]));
 	for(i in 1:nrow(median.per.patient.aberration.type.corr)) {

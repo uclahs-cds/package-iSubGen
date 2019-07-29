@@ -4,9 +4,9 @@
 \description{Runs consensus cluster using heirachial clustering to get patient groups based on the -omics data passed in.}
 \usage{
 subtype.by.h.clustering(aberration.matrix, distance.metric, parent.output.dir,
-new.result.dir, subtype.table.file = NULL, renumbered.subtype.table.file = NULL,
-max.num.subtypes = 12, clustering.reps = 1000, pFeature = 0.8, pItem = 0.8,
-verbose = FALSE, consensus.cluster.write.table = TRUE);
+new.result.dir, subtype.table.file = NULL, max.num.subtypes = 12, 
+clustering.reps = 1000, pFeature = 0.8, pItem = 0.8, verbose = FALSE, 
+consensus.cluster.write.table = TRUE);
 }
 \arguments{
   \item{aberration.matrix}{A matrix of patients (rows) by features (columns)}
@@ -14,7 +14,6 @@ verbose = FALSE, consensus.cluster.write.table = TRUE);
   \item{parent.output.dir}{The directory where the consensus clustering function will create a directory of results}
   \item{new.result.dir}{The name of the directory for results that the consensus clustering function will create}
   \item{subtype.table.file}{Filename for subtype assignment table for different number of clusters}
-  \item{renumbered.subtype.table.file}{Filename for subtype assignment table for classification that have been reordered to associate with aberration.matrix averages by subtype}
   \item{max.num.subtypes}{The maximum number of clusters to separate patients into}
   \item{clustering.reps}{Number of subsamples for consensus clustering function}
   \item{pFeature}{the proportion of features to sample for each clustering iteration}

@@ -4,7 +4,6 @@ subtype.by.h.clustering <- function(
 	parent.output.dir,
 	new.result.dir,
 	subtype.table.file=NULL,
-	renumbered.subtype.table.file=NULL,
 	max.num.subtypes=12,
 	clustering.reps=1000,
 	pFeature=0.8,
@@ -75,17 +74,6 @@ subtype.by.h.clustering <- function(
 		write.table(
 			subtype.table,
 			file=subtype.table.file,
-			sep='\t',
-			row.names=TRUE,
-			col.names=TRUE,
-			quote=FALSE
-			);
-		}
-	if(!is.null(renumbered.subtype.table.file)) {
-		# reorder the subtypes and save to file
-		write.table(
-			renumber.subtypes(subtype.table,t(aberration.matrix)),
-			file=renumbered.subtype.table.file,
 			sep='\t',
 			row.names=TRUE,
 			col.names=TRUE,
