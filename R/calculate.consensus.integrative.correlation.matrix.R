@@ -65,7 +65,6 @@ calculate.consensus.integrative.correlation.matrix <- function(
 	for(i in 1:nrow(median.per.patient.aberration.type.corr)) {
 		for(j in 1:ncol(median.per.patient.aberration.type.corr)) {
 			median.per.patient.aberration.type.corr[i,j] <- median(sapply(per.patient.aberration.type.corr, function(x) {per.patient.aberration.type.corr[[x]][i,j]}));
-			}
 		}
 	}
 

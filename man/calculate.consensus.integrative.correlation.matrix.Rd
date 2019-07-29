@@ -18,6 +18,7 @@ feature.proportion = 0.8,num.iterations=10,print.correlation.matrices.to.file=TR
   \item{patients.for.correlations}{patients to use to calculare the correlations. If NULL all patients/columns will be used.}
   \item{patient.proportion}{proportion of patients.for.correlations to sample for each bootstrap}
   \item{feature.proportion}{proportion of the features to sample for each bootstrap}
+  \item{num.iterations}{number of iterations to take the median from}
   \item{print.correlation.matrices.to.file}{whether to print the sampled correlation matrices to file}
   \item{print.dir}{directory for where to print the correlation matrices to file}
 }
