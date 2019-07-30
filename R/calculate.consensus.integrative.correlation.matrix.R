@@ -60,9 +60,11 @@ calculate.consensus.integrative.correlation.matrix <- function(
 	median.per.patient.aberration.type.corr <- matrix(NA, nrow=nrow(per.patient.aberration.type.corr[[1]]), ncol=ncol(per.patient.aberration.type.corr[[1]]));
 	for(i in 1:nrow(median.per.patient.aberration.type.corr)) {
 		for(j in 1:ncol(median.per.patient.aberration.type.corr)) {
-			median.per.patient.aberration.type.corr[i,j] <- median(sapply(per.patient.aberration.type.corr, function(x) {per.patient.aberration.type.corr[[x]][i,j]}));
+			median.per.patient.aberration.type.corr[i,j] <- median(sapply(per.patient.aberration.type.corr, function(x) {x[i,j]}));
 		}
 	}
+	rownames(median.per.patient.aberration.type.corr) <- rownames(per.patient.aberration.type.corr[[1]]);
+	colnames(median.per.patient.aberration.type.corr) <- colnames(per.patient.aberration.type.corr[[1]]);
 
 	return(median.per.patient.aberration.type.corr);
 }
