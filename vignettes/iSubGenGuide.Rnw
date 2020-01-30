@@ -219,6 +219,28 @@ corr.matrix <- calculate.integrative.correlation.matrix(
 str(corr.matrix);
 @
 
+\subsection{Consensus correlation matrix}
+
+A correlation matrix or a consensus correlation matrix can be used the same.
+A consensus correlation matrix simply includes resampling of the samples while creating the correlation matrix.
+
+<<correlation-matrix>>=
+# Calculate the correlation matrix
+consensus.corr.matrix <- calculate.consensus.integrative.correlation.matrix(
+  aberration.types=names(molecular.data),
+  aberration.matrices=molecular.data,
+  dist.metrics=list(
+    cna='euclidean',
+    csnvs='euclidean',
+    methy='euclidean'
+  )
+);
+
+# Check what the data looks like
+str(consensus.corr.matrix);
+@
+
+
 \section{Combine features and create integrative subtypes}
 
 \subsection{Combine integrative features}
