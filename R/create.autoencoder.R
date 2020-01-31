@@ -44,8 +44,8 @@ create.autoencoder <- function(
 	ae.output.file <- paste0(sub('/$','',model.file.output.dir),'/',aberration.type,'_model.hdf5');
 	checkpoint <- callback_model_checkpoint(
 		filepath = ae.output.file, 
-		save_best_only = TRUE, 
-		period = 1,
+		save_best_only = TRUE,
+#		period = 1,
 		verbose = 1
 		);
 

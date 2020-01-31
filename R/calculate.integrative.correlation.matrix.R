@@ -79,10 +79,11 @@ calculate.integrative.correlation.matrix <- function(
 				else {
 					dist.result <- distance(
 						t(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))]),
-						method = dist.metrics[[aberration.type]]
+						method = dist.metrics[[aberration.type]],
+						use.row.names=TRUE
 						);
-					colnames(dist.result) <- unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations));
-					rownames(dist.result) <- unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations));
+		#			colnames(dist.result) <- unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations));
+		#			rownames(dist.result) <- unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations));
 					
 				}
 			} else if(class(dist.metrics[[aberration.type]]) == 'function') {

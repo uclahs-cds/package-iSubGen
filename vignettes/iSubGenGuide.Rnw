@@ -59,7 +59,7 @@ options(formatR.arrow=TRUE,width=90)
 \section{Overview}
 
 The purpose of integrative subtype generation (iSubGen) is to provide a framework for subtype discovery 
-based on the relationships between molecular aberration profiles (ex. mRNA, single nucleotide variants, copy number alterations, etc)
+based on the relationships between molecular aberration profiles (ex. mRNA, single nucleotide variants, copy number alterations, \textit{etc.})
 without filtering to known genes or relationships.
 ISubGen performs pattern discovery on a combination of two types of compressed features. 
 First, we use a collection of reduced features to allow emphasis of obvious patterns in the individual aberration types. 
@@ -69,7 +69,7 @@ This will allow patient classification based on whether the same relationships a
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = \textwidth]{Figures/iSubGen_figure_methodology_overview.pdf}
+		\includegraphics[width = \textwidth]{Figures/iSubGen_figure_methodology_overview.png}
 		\caption{\textbf{iSubGen overview. Compressed features from feature reduction and pairwise similarity measures are merged into a single matrix for pattern discovery.}}
 		\label{fig:isopure}
 \end{figure}
@@ -78,8 +78,8 @@ This will allow patient classification based on whether the same relationships a
 \subsection{Applying {\emph{iSubGen}} to an example}
 \label{small-example}
 
-We will show how to use \emph{iSubGen} with a small example dataset. 
-The example has has copy number (CNA) profiles, methylation profiles and coding single nucleotide variant (SNV) data for 30 patients.
+We will demonstrate how to use \emph{iSubGen} with a small example dataset. 
+This example has copy number (CNA) profiles, methylation profiles and coding single nucleotide variant (SNV) data for 30 patients.
 The CNA data is gene based with -1 for a deletion, 0 for neutral and 1 for a gain.
 The methylation data is probe based and is continuous values between -1 and 1.
 The coding SNV data is gene based with 0 if there is no SNVs in the gene and 1 if there is 1 or more SNV(s) in the gene. 
@@ -113,20 +113,20 @@ molecular.data$csnvs[1:5,1:5];
 
 
 To be able to emphasize the main patterns in the individual aberration profiles, 
-we compressed features to a smaller set of features that capture the overarching patterns of each aberration type.
+we compressed full set of features to a smaller set that capture the overarching patterns of each aberration type.
 In this case, we use autoencoders to reduce the features to a handful of compressed features representing the main patterns of each aberration type. \\
 
 
-An autoencoder is a neural net which is trained to output the input it was given. 
+An autoencoder is a neural net which is trained to match th output to the input it was given. 
 The number of nodes will decrease in the first layers to "encode" the data 
 and then the number of nodes will increase in the following layers to "decode" the data.
-In this way if we take the values from the smallest number of nodes at the interface of the encoding and decoding layers, 
+In this way, if we take the values from the smallest number of nodes at the interface of the encoding and decoding layers, 
 all the data of the input features should be represented in a smaller number of features.
 A benefit of using autoencoders for compressing features is that autoencoders can capture non-linear relationships.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodolody_autoencoders.pdf}
+		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodolody_autoencoders.png}
 		\caption{\textbf{Schematic for iSubGen feature reduction using autoencoders.}}
 		\label{fig:isopure}
 \end{figure}
@@ -136,6 +136,7 @@ A benefit of using autoencoders for compressing features is that autoencoders ca
 
 We create autoencoders individually for each aberration type.
 The create.autoencoder function is a wrapper function to create an autoencoder using the \href{https://cran.r-project.org/package=keras}{keras} package.
+Here we create 2 compressed features for the CNA feature set and 1 compressed feature for each of the SNV and methylation feature sets.
 
 <<ae-matrix>>=
 # Create a list to store the autoencoders
@@ -165,8 +166,6 @@ autoencoders[['csnvs']] <- create.autoencoder(
   aberration.matrix = molecular.data$csnvs,
   encoder.layers.node.nums = c(15,1)
 )$autoencoder;
-# take a look at the layers/number of nodes in the autoencoder
-str(autoencoders$csnvs);
 
 # Get the compressed features from the autoencoders
 compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
@@ -178,7 +177,6 @@ compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
 # Check what the data looks like
 str(compressed.feature.matrix);
 @
-
 
 \section{Pairwise similarity matrix}
 
@@ -195,7 +193,7 @@ and might elucidate whether there are different biological regulation subgroups 
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodolody_correlations.pdf}
+		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodolody_correlations.png}
 		\caption{\textbf{Schematic for creating iSubGen pairwise similarity measures.}}
 		\label{fig:isopure}
 \end{figure}
@@ -238,6 +236,7 @@ consensus.corr.matrix <- calculate.consensus.integrative.correlation.matrix(
 
 # Check what the data looks like
 str(consensus.corr.matrix);
+
 @
 
 
@@ -248,7 +247,7 @@ str(consensus.corr.matrix);
 Depending on where you want the emphasis for your subtype discovery, features may need to be reweighted when combined into one matrix. 
 There may also need to be rescaling performed if the feature reduction and pairwise similarity return features which are not in similar spaces.
 Here we use tanh on our activation function for the autoencoders so that our compressed autoencoder features are in -1 to 1 range. 
-Similarly, correlations return values in the -1 to 1 range. We use Spearman's correlations.
+Similarly, we use Spearman's correlation and correlations return values in the -1 to 1 range.
 
 <<integrative-matrix>>=
 # Combine autoencoder compressed features and the correlation matrix into one matrix
@@ -265,7 +264,7 @@ head(integrative.features.matrix);
 \subsection{Find patterns in integrative features}
 
 Finally, pattern discovery must be performed on the integrative feature matrix to determine cancer subtypes. 
-In this example, we use \href{https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html}{consensus clustering} which iteratively runs hierarchically clustering.
+In this example, we use \href{https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html}{consensus clustering} to iteratively run hierarchical clustering.
 
 <<cluster>>=
 # Perform consensus clustering to get integrative subtypes
@@ -290,14 +289,14 @@ head(subtyping.results$subtype_table);
 
 \noindent \textbf{Autoencoder:} an unsupervised approach for neural networks where the neural network tries to reconstruct its input. \\
 
-\noindent \textbf{CNA:} copy number alteration. A change in the number of copies of a segment of DNA. 
+\noindent \textbf{CNA:} Copy Number Alteration. A change in the number of copies of a segment of DNA. 
 Generally, humans have 2 copies of each gene; one from their mother and one from their father. 
 In cancer, DNA segments can be duplicated so there are more than 2 copies or 
 DNA segments can be deleted so there are less than 2 copies. \\
 
 \noindent \textbf{Consensus clustering:} a process of iteratively clustering to essentially bootstrap the clustering result. \url{https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html} \\
 
-\noindent \textbf{iSubGen:} integrative subtype generation.\\
+\noindent \textbf{iSubGen:} integrative Subtype Generation. This tool!\\
 
 \noindent \textbf{Keras R package:} \url{https://cran.r-project.org/package=keras} \\ 
 
@@ -305,6 +304,6 @@ DNA segments can be deleted so there are less than 2 copies. \\
 
 \noindent \textbf{Molecular aberration type (or aberration type):} encapsulates the different changes that occur the DNA, RNA and other biomolecules during cancer. For example: CNAs, SNVs, methylation, mRNA abundance, miRNA abundance.\\
 
-\noindent \textbf{SNV:} single nucleotide variant. a nucleotide base (A,C,G,T) change in DNA.\\
+\noindent \textbf{SNV:} Single Nucleotide Variant. a nucleotide base (A,C,G,T) change in DNA.\\
 
 \end{document}
