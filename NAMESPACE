@@ -1,12 +1,8 @@
 exportPattern("^[[:alpha:]]+");
 importFrom("utils", "read.table", "write.table");
-importFrom("stats", "anova", "cor", "cutree", "lm","p.adjust","phyper","as.dist","median","predict","sd","t.test","wilcox.test");
+importFrom("stats", "anova", "cor", "cutree", "lm","p.adjust","phyper","as.dist","median","predict","sd","t.test","wilcox.test","dist");
 importFrom("grDevices", "colorRampPalette");
-importFrom("mclust","adjustedRandIndex");
 importFrom("cluster","diana");
-importFrom("BoutrosLab.dist.overload","dist");
-importFrom("BoutrosLab.plotting.general","covariates.grob","create.boxplot","create.dotmap","create.heatmap","create.multipanelplot","create.multiplot","create.scatterplot","default.colours","legend.grob","create.barplot");
-importFrom("BoutrosLab.plotting.survival","create.km.plot");
-importFrom("ConsensusClusterPlus.custom","ConsensusClusterPlus","calcICL");
-import(survival, lattice, hint);
+importFrom("ConsensusClusterPlus","ConsensusClusterPlus","calcICL");
+importFrom("philentropy","distance");
 import(tensorflow, keras);

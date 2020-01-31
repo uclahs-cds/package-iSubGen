@@ -77,10 +77,13 @@ calculate.integrative.correlation.matrix <- function(
 						);
 				}
 				else {
-					dist.result <- BoutrosLab.dist.overload::dist(
+					dist.result <- distance(
 						t(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))]),
 						method = dist.metrics[[aberration.type]]
 						);
+					colnames(dist.result) <- unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations));
+					rownames(dist.result) <- unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations));
+					
 				}
 			} else if(class(dist.metrics[[aberration.type]]) == 'function') {
 				dist.result <- as.dist((dist.metrics[[aberration.type]])(t(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))])));

@@ -224,7 +224,7 @@ str(corr.matrix);
 A correlation matrix or a consensus correlation matrix can be used the same.
 A consensus correlation matrix simply includes resampling of the samples while creating the correlation matrix.
 
-<<correlation-matrix>>=
+<<consensus-correlation-matrix>>=
 # Calculate the correlation matrix
 consensus.corr.matrix <- calculate.consensus.integrative.correlation.matrix(
   aberration.types=names(molecular.data),

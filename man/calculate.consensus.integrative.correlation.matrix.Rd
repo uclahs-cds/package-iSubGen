@@ -11,7 +11,7 @@ feature.proportion = 0.8,num.iterations=10,print.correlation.matrices.to.file=TR
 \arguments{
   \item{aberration.types}{a vector of the ids for the different aberration types that are the names of the lists for the aberration.matrices and dist.metrics}
   \item{aberration.matrices}{a list of the matrices of omics features (rows) by patients (coloumns)}
-  \item{dist.metrics}{a list of the distance metrics for comparing patient profiles. ex. eucliean, jaccard}
+  \item{dist.metrics}{a list of the distance metrics for comparing patient profiles. ex. euclidean. Options are from philentropy::distance}
   \item{correlation.method}{Specifies the type of correlation. Options are pearson, spearman or kendall.}
   \item{filter.to.common.patients}{A boolean whether to remove patients that don't have all aberration types}
   \item{patients.to.return}{patients to return correlations for. If NULL all patients/columns will be used.}

@@ -10,7 +10,7 @@ consensus.cluster.write.table = TRUE);
 }
 \arguments{
   \item{aberration.matrix}{A matrix of patients (rows) by features (columns)}
-  \item{distance.metric}{The distance metric for comparing patient profiles. ex. eucliean, jaccard}
+  \item{distance.metric}{The distance metric for comparing patient profiles. ex. eucliean}
   \item{parent.output.dir}{The directory where the consensus clustering function will create a directory of results}
   \item{new.result.dir}{The name of the directory for results that the consensus clustering function will create}
   \item{subtype.table.file}{Filename for subtype assignment table for different number of clusters}
@@ -50,7 +50,7 @@ colnames(ex.matrix) <- paste0('patient',LETTERS[1:12]);
 
 subtypeing.results <- subtype.by.h.clustering(
   aberration.matrix = ex.matrix,
-  distance.metric = 'jaccard',
+  distance.metric = 'euclidean',
   parent.output.dir = './',
   new.result.dir = 'example_subtyping',
   subtype.table.file = 'example_subtyping_assignment.txt',

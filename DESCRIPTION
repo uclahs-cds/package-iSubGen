@@ -1,12 +1,12 @@
 Package: iSubGen
 Title: Integrative subtype generation
 Version: 0.0.1
-Date: 2019-07-29
+Date: 2020-01-30
 Author: Natalie Fox
 Maintainer: Natalie Fox <natalie.fox@oicr.on.ca>
 Description: Multi-modal subtyping.
 Depends: R (>= 3.2.3)
-Imports: ConsensusClusterPlus.custom, BoutrosLab.dist.overload (>= 1.0.1), BoutrosLab.plotting.general, BoutrosLab.plotting.survival, survival, lattice (>= 0.20-27), hint, mclust, cluster (>= 1.14.4), keras, tensorflow
+Imports: ConsensusClusterPlus, cluster (>= 1.14.4), keras, tensorflow, philentropy
 Suggests: knitr
 VignetteBuilder: knitr
 License: GPL-2
