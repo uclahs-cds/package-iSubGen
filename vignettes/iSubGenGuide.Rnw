@@ -113,11 +113,11 @@ molecular.data$csnvs[1:5,1:5];
 
 
 To be able to emphasize the main patterns in the individual aberration profiles, 
-we compressed full set of features to a smaller set that capture the overarching patterns of each aberration type.
+we compressed the full sets of features to a smaller set that capture the overarching patterns of each aberration type.
 In this case, we use autoencoders to reduce the features to a handful of compressed features representing the main patterns of each aberration type. \\
 
 
-An autoencoder is a neural net which is trained to match th output to the input it was given. 
+An autoencoder is a neural net which is trained the output to the input it was given generally for the purpose of feature reduction. 
 The number of nodes will decrease in the first layers to "encode" the data 
 and then the number of nodes will increase in the following layers to "decode" the data.
 In this way, if we take the values from the smallest number of nodes at the interface of the encoding and decoding layers, 
@@ -136,7 +136,7 @@ A benefit of using autoencoders for compressing features is that autoencoders ca
 
 We create autoencoders individually for each aberration type.
 The create.autoencoder function is a wrapper function to create an autoencoder using the \href{https://cran.r-project.org/package=keras}{keras} package.
-Here we create 2 compressed features for the CNA feature set and 1 compressed feature for each of the SNV and methylation feature sets.
+Here we create two compressed features for the CNA feature set and one compressed feature for each of the SNV and methylation feature sets.
 
 <<ae-matrix>>=
 # Create a list to store the autoencoders
@@ -186,7 +186,7 @@ In this example, we describe using correlations to compare the distances between
 
 Importantly, iSubGen assesses variation between aberration types.
 The correlation matrix is created by first creating the distance matrix for each aberration type.
-This is the standard first steps for clustering based on a single aberration type.
+This is the standard first step for clustering based on a single aberration type.
 However, instead of clustering each distance matrix, the distances from a single patient to the other patients is correlated between aberration types.
 This provides an assessment of how similar the relationships between patients are in the different aberration types 
 and might elucidate whether there are different biological regulation subgroups of the cancers.
@@ -219,7 +219,7 @@ str(corr.matrix);
 
 \subsection{Consensus correlation matrix}
 
-A correlation matrix or a consensus correlation matrix can be used the same.
+Either a correlation matrix or a consensus correlation matrix can be identically used to create subtypes.
 A consensus correlation matrix simply includes resampling of the samples while creating the correlation matrix.
 
 <<consensus-correlation-matrix>>=
