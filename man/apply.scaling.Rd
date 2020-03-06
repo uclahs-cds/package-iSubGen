@@ -33,4 +33,11 @@ for(i in c('cna','csnvs','methy')) {
 
 scaled.molecular.data <- apply.scaling(molecular.data,scaling.factors);
 
+scaled.molecular.data2 <- apply.scaling(
+	molecular.data[[1]],
+	list(
+		center=scaling.factors$center[[1]],
+		scale=scaling.factors$scale[[1]]
+	)
+);
 }

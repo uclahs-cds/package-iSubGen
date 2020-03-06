@@ -18,4 +18,6 @@ example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 
 scaling.factors <- read.scaling.factors(example.molecular.data.dir,c('cna','csnvs','methy'));
 
+scaling.factors <- read.scaling.factors(example.molecular.data.dir,'cna');
+
 }

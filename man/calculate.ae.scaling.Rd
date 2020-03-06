@@ -25,4 +25,5 @@ for(i in c('cna','csnvs','methy')) {
 
 scaling.factors <- calculate.ae.scaling(molecular.data);
 
+scaling.factors2 <- calculate.ae.scaling(molecular.data[['methy']]);
 }

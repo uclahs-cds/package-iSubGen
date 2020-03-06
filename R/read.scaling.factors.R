@@ -7,7 +7,7 @@ read.scaling.factors <- function(scaling.factor.files.dir, aberration.types) {
 			header=TRUE,
 			check.names=FALSE
 			);
-		scaling.factors$center[[aberration.type]] <- as.numeric(scaling.matrix);
+		scaling.factors$center[[aberration.type]] <- as.numeric(scaling.matrix[1,]);
 		names(scaling.factors$center[[aberration.type]]) <- colnames(scaling.matrix);
 
 		scaling.matrix <- read.table(
@@ -16,7 +16,7 @@ read.scaling.factors <- function(scaling.factor.files.dir, aberration.types) {
 			header=TRUE,
 			check.names=FALSE
 			);
-		scaling.factors$scale[[aberration.type]] <- as.numeric(scaling.matrix);
+		scaling.factors$scale[[aberration.type]] <- as.numeric(scaling.matrix[1,]);
 		names(scaling.factors$scale[[aberration.type]]) <- colnames(scaling.matrix);
 	}
 	return(scaling.factors);

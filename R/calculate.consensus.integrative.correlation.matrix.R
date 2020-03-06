@@ -7,7 +7,7 @@ calculate.consensus.integrative.correlation.matrix <- function(
 	patients.to.return = NULL,
 	patients.for.correlations = NULL,
 	patient.proportion = 0.8,
-	feature.proportion = 0.8,
+	feature.proportion = 1,
 	num.iterations=10,
 	print.correlation.matrices.to.file=TRUE,
 	print.dir='.'
@@ -37,9 +37,19 @@ calculate.consensus.integrative.correlation.matrix <- function(
 	for(i in 1:num.iterations) {
 		set.seed(i);
 		selected.patients <- sample(patients.for.correlations,round(length(patients.for.correlations)*patient.proportion));
+		aberration.matrices.subset <- aberration.matrices;
+		if(feature.proportion != 1) {
+			for(aberration.type in aberration.types) {
+				set.seed(i);
+				selected.features <- sample(rownames(aberration.matrices[[aberration.type]]),ceiling(nrow(aberration.matrices[[aberration.type]])*feature.proportion));
+				aberration.matrices.subset[[aberration.type]] <- aberration.matrices.subset[[aberration.type]][selected.features,];
+			}
+			print('*');
+		}
+		print(str(aberration.matrices.subset));
 		per.patient.aberration.type.corr[[i]] <- calculate.integrative.correlation.matrix(
 			aberration.types=aberration.types,
-			aberration.matrices=aberration.matrices,
+			aberration.matrices=aberration.matrices.subset,
 			dist.metrics=dist.metrics,
 			correlation.method = correlation.method,
 			filter.to.common.patients = filter.to.common.patients,
@@ -57,6 +67,9 @@ calculate.consensus.integrative.correlation.matrix <- function(
 			);
 		}
 	}
+	print(str(per.patient.aberration.type.corr));
+	print(nrow(per.patient.aberration.type.corr[[1]]));
+	print(ncol(per.patient.aberration.type.corr[[1]]));
 	median.per.patient.aberration.type.corr <- matrix(NA, nrow=nrow(per.patient.aberration.type.corr[[1]]), ncol=ncol(per.patient.aberration.type.corr[[1]]));
 	for(i in 1:nrow(median.per.patient.aberration.type.corr)) {
 		for(j in 1:ncol(median.per.patient.aberration.type.corr)) {

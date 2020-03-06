@@ -6,7 +6,7 @@
 calculate.consensus.integrative.correlation.matrix(aberration.types, aberration.matrices, dist.metrics,
 correlation.method = "spearman", filter.to.common.patients = FALSE, 
 patients.to.return = NULL, patients.for.correlations = NULL,patient.proportion = 0.8,
-feature.proportion = 0.8,num.iterations=10,print.correlation.matrices.to.file=TRUE,print.dir='.')
+feature.proportion = 1,num.iterations=10,print.correlation.matrices.to.file=TRUE,print.dir='.')
 }
 \arguments{
   \item{aberration.types}{a vector of the ids for the different aberration types that are the names of the lists for the aberration.matrices and dist.metrics}
@@ -16,8 +16,8 @@ feature.proportion = 0.8,num.iterations=10,print.correlation.matrices.to.file=TR
   \item{filter.to.common.patients}{A boolean whether to remove patients that don't have all aberration types}
   \item{patients.to.return}{patients to return correlations for. If NULL all patients/columns will be used.}
   \item{patients.for.correlations}{patients to use to calculare the correlations. If NULL all patients/columns will be used.}
-  \item{patient.proportion}{proportion of patients.for.correlations to sample for each bootstrap}
-  \item{feature.proportion}{proportion of the features to sample for each bootstrap}
+  \item{patient.proportion}{proportion of patients.for.correlations to sample for each bootstrap (sampled without replacement).}
+  \item{feature.proportion}{proportion of the features to sample for each bootstrap (sampled without replacement).}
   \item{num.iterations}{number of iterations to take the median from}
   \item{print.correlation.matrices.to.file}{whether to print the sampled correlation matrices to file}
   \item{print.dir}{directory for where to print the correlation matrices to file}
@@ -36,7 +36,7 @@ for(i in c('cna','csnvs','methy')) {
   );
 }
 
-corr.matrix <- calculate.integrative.correlation.matrix(
+corr.matrix <- calculate.consensus.integrative.correlation.matrix(
   aberration.types = names(molecular.data),
   aberration.matrices = molecular.data,
   dist.metrics = list(
@@ -46,7 +46,7 @@ corr.matrix <- calculate.integrative.correlation.matrix(
   )
 );
 
-corr.matrix2 <- calculate.integrative.correlation.matrix(
+corr.matrix2 <- calculate.consensus.integrative.correlation.matrix(
   aberration.types = names(molecular.data),
   aberration.matrices = molecular.data,
   dist.metrics = list(
@@ -58,16 +58,17 @@ corr.matrix2 <- calculate.integrative.correlation.matrix(
   patients.for.correlations = paste0('EP0',10:30)
 );
 
-corr.matrix3 <- calculate.integrative.correlation.matrix(
-  aberration.types=names(molecular.data)[c(1,3)],
-  aberration.matrices=molecular.data[c(1,3)],
+corr.matrix3 <- calculate.consensus.integrative.correlation.matrix(
+  aberration.types=names(molecular.data),
+  aberration.matrices=molecular.data,
   dist.metrics=list(
     cna='euclidean',
     csnvs='euclidean',
     methy='euclidean'
-  )[c(1,3)],
+  ),
   patients.to.return=paste0('EP00',1:9),
-  patients.for.correlations=paste0('EP0',10:30)
+  patients.for.correlations=paste0('EP0',10:30),
+  feature.proportion=0.6
 );
 
 }
