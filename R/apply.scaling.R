@@ -17,7 +17,7 @@ apply.scaling <- function(aberration.matrices, scaling.factors) {
 		return(aberration.matrices);
 	}
 	for(aberration.type in names(aberration.matrices)) {
-		for(i in 1:6) {#nrow(aberration.matrices[[aberration.type]])) {
+		for(i in 1:nrow(aberration.matrices[[aberration.type]])) {
 			center.adjustment <- scaling.factors$center[[aberration.type]][rownames(aberration.matrices[[aberration.type]])[i]];
 			scale.adjustment <- 1;
 			if(scaling.factors$scale[[aberration.type]][rownames(aberration.matrices[[aberration.type]])[i]] > 0) {
