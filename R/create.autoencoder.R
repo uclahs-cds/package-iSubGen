@@ -20,10 +20,11 @@ create.autoencoder <- function(
 	# add the rest of the neural net layers
 	if(length(encoder.layers.node.nums) > 1) {
 		# encoding layers
-		for(i in 2:length(encoder.layers.node.nums)) {
+		for(i in 2:(length(encoder.layers.node.nums)-1)) {
 			model %>%
 				layer_dense(units = encoder.layers.node.nums[i], activation = autoencoder.activation[i]);
 		}
+		model %>% layer_dense(units = encoder.layers.node.nums[length(encoder.layers.node.nums)], activation = autoencoder.activation[length(encoder.layers.node.nums)],name='bottleneck');
 		# decoding layers
 		for(i in (length(encoder.layers.node.nums)-1):1) {
 			model %>%

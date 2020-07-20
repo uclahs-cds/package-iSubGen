@@ -4,7 +4,7 @@ apply.scaling <- function(aberration.matrices, scaling.factors) {
 			scaling.factors$center <- scaling.factors$center[[1]];
 		}
 		if(class(scaling.factors$scale) == 'list') {
-			scaling.factors$center <- scaling.factors$scale[[1]];
+			scaling.factors$scale <- scaling.factors$scale[[1]];
 		}	
 		for(i in 1:nrow(aberration.matrices)) {
 			center.adjustment <- scaling.factors$center[rownames(aberration.matrices)[i]];
