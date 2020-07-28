@@ -71,14 +71,14 @@ calculate.integrative.correlation.matrix <- function(
 			if(class(dist.metrics[[aberration.type]]) == 'character') {
 				if(dist.metrics[[aberration.type]] %in% c('pearson','spearman')) {
 					dist.result <- as.dist(
-						1 - cor(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))],
+						1 - cor(aberration.matrices[[aberration.type]][,intersect(colnames(aberration.matrices[[aberration.type]]),unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations)))],
 						use = 'pairwise',
 						method = dist.metrics[[aberration.type]])
 						);
 				}
 				else {
 					dist.result <- distance(
-						t(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))]),
+						t(aberration.matrices[[aberration.type]][,intersect(colnames(aberration.matrices[[aberration.type]]),unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations)))]),
 						method = dist.metrics[[aberration.type]],
 						use.row.names=TRUE
 						);
@@ -87,11 +87,17 @@ calculate.integrative.correlation.matrix <- function(
 					
 				}
 			} else if(class(dist.metrics[[aberration.type]]) == 'function') {
-				dist.result <- as.dist((dist.metrics[[aberration.type]])(t(aberration.matrices[[aberration.type]][,unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations))])));
+				dist.result <- as.dist((dist.metrics[[aberration.type]])(t(aberration.matrices[[aberration.type]][,intersect(colnames(dist.metrics[[aberration.type]]),unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations)))])));
 			} else {
 				stop(paste0('invalid option for ',aberration.type,' distance metric: ',dist.metrics[[aberration.type]]));
 			}
-			dist.matrix[dist.calc.operations[dist.op][[1]],patients.for.correlations] <- as.matrix(dist.result)[dist.calc.operations[dist.op][[1]],patients.for.correlations];
+			dist.matrix[
+				intersect(colnames(aberration.matrices[[aberration.type]]),dist.calc.operations[dist.op][[1]]),
+				intersect(colnames(aberration.matrices[[aberration.type]]),patients.for.correlations)
+				] <- as.matrix(dist.result)[
+					intersect(colnames(aberration.matrices[[aberration.type]]),dist.calc.operations[dist.op][[1]]),
+					intersect(colnames(aberration.matrices[[aberration.type]]),patients.for.correlations)
+					];
 		}
 
 		patient.paired.dists[[aberration.type]] <- dist.matrix;

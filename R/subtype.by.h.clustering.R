@@ -21,6 +21,11 @@ subtype.by.h.clustering <- function(
 			num.patients <- nrow(as.matrix(this_dist));
 			assignment <- rep(NA,num.patients);
 			missing.patient <- apply(is.na(as.matrix(this_dist)),1,sum) == (num.patients - 1);
+			missing.idx <- (num.patients - 1);
+			while(any(is.na(as.matrix(this_dist)[!missing.patient,!missing.patient]))) {
+				missing.patient <- apply(is.na(as.matrix(this_dist)),1,sum) >= missing.idx;
+				missing.idx <- missing.idx - 1;
+				}
 			if(sum(!missing.patient) >= 2) {
 				tmp <- diana(as.dist(as.matrix(this_dist)[!missing.patient,!missing.patient]),metric=distance.metric);
 				if(sum(!missing.patient) >= k) {
