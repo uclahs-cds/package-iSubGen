@@ -134,7 +134,7 @@ calculate.integrative.correlation.matrix <- function(
 			}
 		}
 	}
-	per.patient.aberration.type.corr <- per.patient.aberration.type.corr[which(apply(per.patient.aberration.type.corr,1,function(x) { sum(!is.na(x)) }) > 0),];
+	per.patient.aberration.type.corr <- per.patient.aberration.type.corr[which(apply(per.patient.aberration.type.corr,1,function(x) { sum(!is.na(x)) }) > 0),,drop=FALSE];
 
 	return(per.patient.aberration.type.corr);
 }
