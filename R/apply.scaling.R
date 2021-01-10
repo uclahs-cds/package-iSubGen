@@ -1,30 +1,80 @@
-apply.scaling <- function(aberration.matrices, scaling.factors) {
-	if(class(aberration.matrices) == 'matrix') {
+apply.scaling <- function(data.matrices, scaling.factors) {
+	# check that data.matrices is the correct class
+	if(! class(data.matrices) %in% c('matrix','list')) {
+		stop('data.matrices needs to be a matrix or a list of matrices');
+		}
+
+	# check that scaling.factors is the correct format
+	if(all(! names(scaling.factors) %in% c('center','scale'))) {
+		stop('scaling.factor needs to be a list with center and scale ');
+		}
+
+	# data.matrices can be a single matrix or a list of matrices
+	# if the data is a single matrix then the class will be 'matrix'
+	if(class(data.matrices) == 'matrix') {
+		
+		# check that scaling.factors are the correct format
+		if(length(scaling.factors$center) != nrow(data.matrices)) {
+			stop('scaling.factors$center match the number of rows in data.matrices');
+			}
+		if(length(scaling.factors$scale) != nrow(data.matrices)) {
+			stop('scaling.factors$scale match the number of rows in data.matrices');
+			}
+
+		# if necessary adjust the format of the scaling factors for a single matrix
 		if(class(scaling.factors$center) == 'list') {
 			scaling.factors$center <- scaling.factors$center[[1]];
-		}
+			warning('the first item from the scaling.factor$center list was used for scaling');
+			}
 		if(class(scaling.factors$scale) == 'list') {
 			scaling.factors$scale <- scaling.factors$scale[[1]];
-		}	
-		for(i in nrow(aberration.matrices)) {
-			center.adjustment <- scaling.factors$center[rownames(aberration.matrices)[i]];
-			scale.adjustment <- 1;
-			if(scaling.factors$scale[rownames(aberration.matrices)[i]] > 0) {
-				scale.adjustment <- scaling.factors$scale[rownames(aberration.matrices)[i]];
+			warning('the first item from the scaling.factor$scale list was used for scaling');
 			}
-			aberration.matrices[i,] <- (aberration.matrices[i,] - center.adjustment)/scale.adjustment;
-		}
-		return(aberration.matrices);
-	}
-	for(aberration.type in names(aberration.matrices)) {
-		for(i in 1:nrow(aberration.matrices[[aberration.type]])) {
-			center.adjustment <- scaling.factors$center[[aberration.type]][rownames(aberration.matrices[[aberration.type]])[i]];
+		
+		# scale each row in the matrix by the corresponding scaling factors
+		for(i in nrow(data.matrices)) {
+			center.adjustment <- scaling.factors$center[rownames(data.matrices)[i]];
 			scale.adjustment <- 1;
-			if(scaling.factors$scale[[aberration.type]][rownames(aberration.matrices[[aberration.type]])[i]] > 0) {
-				scale.adjustment <- scaling.factors$scale[[aberration.type]][rownames(aberration.matrices[[aberration.type]])[i]];
+			if(scaling.factors$scale[rownames(data.matrices)[i]] > 0) {
+				scale.adjustment <- scaling.factors$scale[rownames(data.matrices)[i]];
+				}
+			data.matrices[i,] <- (data.matrices[i,] - center.adjustment)/scale.adjustment;
 			}
-			aberration.matrices[[aberration.type]][i,] <- (aberration.matrices[[aberration.type]][i,] - center.adjustment)/scale.adjustment;
+
+		# return the scaled single matrix
+		return(data.matrices);
 		}
-	}
-	return(aberration.matrices);
-}	
+
+	# check that scaling.factors are the correct format
+	if(any(sort(names(data.matrices)) != sort(names(scaling.factors$center)))) {
+		stop('the scaling.factors$center list needs to have the same names as the data.matrices list');
+		}
+	if(any(sort(names(data.matrices)) != sort(names(scaling.factors$scale)))) {
+		stop('the scaling.factors$scale list needs to have the same names as the data.matrices list');
+		}
+
+	# if you get to this point then data.matrices is a list of matrices
+	for(data.type in names(data.matrices)) {
+
+		# check that scaling.factors are the correct format
+		if(length(scaling.factors$center[[data.type]]) != nrow(data.matrices[[data.type]])) {
+			stop(paste0('scaling.factors$center$',data.type,' match the number of rows in data.matrices$',data.type));
+			}
+		if(length(scaling.factors$scale[[data.type]]) != nrow(data.matrices[[data.type]])) {
+			stop(paste0('scaling.factors$scale$',data.type,' match the number of rows in data.matrices$',data.type));
+			}
+
+		# scale each row in each matrix by the corresponding scaling factors
+		for(i in 1:nrow(data.matrices[[data.type]])) {
+			center.adjustment <- scaling.factors$center[[data.type]][rownames(data.matrices[[data.type]])[i]];
+			scale.adjustment <- 1;
+			if(scaling.factors$scale[[data.type]][rownames(data.matrices[[data.type]])[i]] > 0) {
+				scale.adjustment <- scaling.factors$scale[[data.type]][rownames(data.matrices[[data.type]])[i]];
+				}
+			data.matrices[[data.type]][i,] <- (data.matrices[[data.type]][i,] - center.adjustment)/scale.adjustment;
+			}
+		}
+
+	# return the scaled list of matrices
+	return(data.matrices);
+	}	

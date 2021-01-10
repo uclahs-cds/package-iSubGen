@@ -1,21 +1,21 @@
 \name{subtype.by.h.clustering}
 \alias{subtype.by.h.clustering}
-\title{Subtype by heirarchial clustering}
-\description{Runs consensus cluster using heirachial clustering to get patient groups based on the -omics data passed in.}
+\title{Subtype by hierarchical clustering}
+\description{A wrapper function for running hierarchical clustering using consensus clustering.}
 \usage{
-subtype.by.h.clustering(aberration.matrix, distance.metric, parent.output.dir,
+subtype.by.h.clustering(data.matrix, distance.metric, parent.output.dir,
 new.result.dir, subtype.table.file = NULL, max.num.subtypes = 12, 
 clustering.reps = 1000, pFeature = 0.8, pItem = 0.8, verbose = FALSE, 
 consensus.cluster.write.table = TRUE);
 }
 \arguments{
-  \item{aberration.matrix}{A matrix of patients (rows) by features (columns)}
-  \item{distance.metric}{The distance metric for comparing patient profiles. ex. eucliean}
-  \item{parent.output.dir}{The directory where the consensus clustering function will create a directory of results}
-  \item{new.result.dir}{The name of the directory for results that the consensus clustering function will create}
-  \item{subtype.table.file}{Filename for subtype assignment table for different number of clusters}
-  \item{max.num.subtypes}{The maximum number of clusters to separate patients into}
-  \item{clustering.reps}{Number of subsamples for consensus clustering function}
+  \item{data.matrix}{a matrix of patients (rows) by features (columns)}
+  \item{distance.metric}{the distance metric for comparing patient profiles. ex. euclidean}
+  \item{parent.output.dir}{the directory where the consensus clustering function will create a directory of results}
+  \item{new.result.dir}{the name of the directory for results that the consensus clustering function will create}
+  \item{subtype.table.file}{filename for subtype assignment table for different number of clusters}
+  \item{max.num.subtypes}{the maximum number of clusters to separate patients into}
+  \item{clustering.reps}{number of subsamples for consensus clustering function}
   \item{pFeature}{the proportion of features to sample for each clustering iteration}
   \item{pItem}{the proportion of patients to sample for each clustering iteration}
   \item{verbose}{a boolean specifying whether to print messages to the screen to indicate progress}
@@ -28,6 +28,7 @@ consensus.cluster.write.table = TRUE);
 \author{Natalie Fox}
 \examples{
 
+# Create a data matrix
 set.seed(5);
 ex.matrix <- matrix(
   c(
@@ -48,14 +49,14 @@ ex.matrix <- matrix(
 rownames(ex.matrix) <- paste0('gene',1:130);
 colnames(ex.matrix) <- paste0('patient',LETTERS[1:12]); 
 
-subtypeing.results <- subtype.by.h.clustering(
-  aberration.matrix = ex.matrix,
+# Use hierarchical clustering to cluster the patient profiles
+subtyping.results <- subtype.by.h.clustering(
+  data.matrix = ex.matrix,
   distance.metric = 'euclidean',
   parent.output.dir = './',
   new.result.dir = 'example_subtyping',
   subtype.table.file = 'example_subtyping_assignment.txt',
   max.num.subtypes = 6,
   clustering.reps = 50
-);
-	
+  );	
 }

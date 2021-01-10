@@ -1,13 +1,13 @@
 Package: iSubGen
 Title: Integrative subtype generation
-Version: 0.0.3
-Date: 2020-07-10
+Version: 0.0.4
+Date: 2021-01-05
 Author: Natalie Fox
 Maintainer: Natalie Fox <natalie.fox@oicr.on.ca>
 Description: Multi-modal subtyping.
 Depends: R (>= 3.2.3)
 Imports: ConsensusClusterPlus, cluster (>= 1.14.4), keras, tensorflow, philentropy
-Suggests: knitr
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL-2
 LazyData: true

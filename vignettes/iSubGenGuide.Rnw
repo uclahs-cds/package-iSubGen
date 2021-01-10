@@ -61,11 +61,11 @@ options(formatR.arrow=TRUE,width=90)
 The purpose of integrative subtype generation (iSubGen) is to provide a framework for subtype discovery 
 based on the relationships between molecular aberration profiles (ex. mRNA, single nucleotide variants, copy number alterations, \textit{etc.})
 without filtering to known genes or relationships.
-ISubGen performs pattern discovery on a combination of two types of compressed features. 
-First, we use a collection of reduced features to allow emphasis of obvious patterns in the individual aberration types. 
+iSubGen performs pattern discovery on a combination of two types of compressed features. 
+First, we use a collection of reduced features to allow emphasis of obvious patterns in the individual data types. 
 The reduced features could be a small number of compressed features from autoencoders or the top principle components or even a handful of selected important characteristics of the profiles.
-The second type of compressed feature is pairwise comparison of the aberration types.
-This will allow patient classification based on whether the same relationships are observed in the different aberration types.
+The second type of compressed feature is pairwise comparison of the data types.
+This will allow patient classification based on whether the same relationships are observed in the different data types.
 
 \begin{figure}[H]
 	\centering
@@ -91,13 +91,12 @@ The first step is to load the data. Here the genomic features are rows and patie
 <<load-data>>=
 # Load the library and the data included with the package
 library(iSubGen);
-path.to.data <- '~/iSubGen/inst/exdata/';
 molecular.data <- list();
 for(i in c('cna','methy','csnvs')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
-    paste0(path.to.data,i,'_profiles.txt'),
-    patients=c(paste0('EP00',1:9),paste0('EP0',10:30))
-  );
+    system.file('exdata',paste0(i,'_profiles.txt'), package='iSubGen'),
+    patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
+    );
 }
 
 # Check what the data looks like
@@ -107,17 +106,16 @@ molecular.data$csnvs[1:5,1:5];
 @
 
 
-\section{Feature reduction}
+\section{Independent feature reduction}
 
 \subsection{Autoencoders}
 
-
 To be able to emphasize the main patterns in the individual aberration profiles, 
-we compressed the full sets of features to a smaller set that capture the overarching patterns of each aberration type.
-In this case, we use autoencoders to reduce the features to a handful of compressed features representing the main patterns of each aberration type. \\
+we compressed the full sets of features to a smaller set that capture the overarching patterns of each data type. 
+These features are called independent reduced features (IRFs).
+In this case, we use autoencoders to reduce the features to a handful of compressed features representing the main patterns of each data type. \\
 
-
-An autoencoder is a neural net which is trained the output to the input it was given generally for the purpose of feature reduction. 
+\noindent An autoencoder is a neural net which is trained the output to the input it was given generally for the purpose of feature reduction. 
 The number of nodes will decrease in the first layers to "encode" the data 
 and then the number of nodes will increase in the following layers to "decode" the data.
 In this way, if we take the values from the smallest number of nodes at the interface of the encoding and decoding layers, 
@@ -126,15 +124,15 @@ A benefit of using autoencoders for compressing features is that autoencoders ca
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodolody_autoencoders.png}
+		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodology_autoencoders.png}
 		\caption{\textbf{Schematic for iSubGen feature reduction using autoencoders.}}
 		\label{fig:isopure}
 \end{figure}
 
 \newpage
-\subsection{Create the compressed autoencoder features}
+\subsection{Create independent reduced features (IRFs)}
 
-We create autoencoders individually for each aberration type.
+We create autoencoders individually for each data type.
 The create.autoencoder function is a wrapper function to create an autoencoder using the \href{https://cran.r-project.org/package=keras}{keras} package.
 Here we create two compressed features for the CNA feature set and one compressed feature for each of the SNV and methylation feature sets.
 
@@ -144,101 +142,99 @@ autoencoders <- list();
 
 # Create and train an autoencoder using CNA data
 autoencoders[['cna']] <- create.autoencoder(
-  aberration.type = 'cna',
-  aberration.matrix = molecular.data$cna,
+  data.type = 'cna',
+  data.matrix = molecular.data$cna,
   encoder.layers.node.nums = c(20,2)
-)$autoencoder;
+  )$autoencoder;
 # take a look at the layers/number of nodes in the autoencoder
 str(autoencoders$cna);
 
 # Create and train an autoencoder using methylation data
 autoencoders[['methy']] <- create.autoencoder(
-  aberration.type = 'methy',
-  aberration.matrix = molecular.data$methy,
+  data.type = 'methy',
+  data.matrix = molecular.data$methy,
   encoder.layers.node.nums = c(15,1)
-)$autoencoder;
+  )$autoencoder;
 # take a look at the layers/number of nodes in the autoencoder
 str(autoencoders$methy);
 
 # Create and train an autoencoder using coding SNV data
 autoencoders[['csnvs']] <- create.autoencoder(
-  aberration.type = 'csnvs',
-  aberration.matrix = molecular.data$csnvs,
+  data.type = 'csnvs',
+  data.matrix = molecular.data$csnvs,
   encoder.layers.node.nums = c(15,1)
-)$autoencoder;
+  )$autoencoder;
 
 # Get the compressed features from the autoencoders
-compressed.feature.matrix <- create.compressed.autoencoder.feature.matrix(
-  aberration.types = names(molecular.data),
-  aberration.matrices = molecular.data,
+irf.matrix <- create.autoencoder.irf.matrix(
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
   autoencoders = autoencoders
-);
+  );
 
 # Check what the data looks like
-str(compressed.feature.matrix);
+str(irf.matrix);
 @
 
 \section{Pairwise similarity matrix}
 
 In this example, we describe using correlations to compare the distances between patient profiles, but any similarity measure could be substituted. 
 
-\subsection{Correlation matrix}
+\subsection{Similarity matrix}
 
-Importantly, iSubGen assesses variation between aberration types.
-The correlation matrix is created by first creating the distance matrix for each aberration type.
-This is the standard first step for clustering based on a single aberration type.
-However, instead of clustering each distance matrix, the distances from a single patient to the other patients is correlated between aberration types.
-This provides an assessment of how similar the relationships between patients are in the different aberration types 
+Importantly, iSubGen assesses variation between data types by evaluating consensus integrative similarity (CIS).
+The similarity matrix is created by first creating the distance matrix for each data type.
+This is the standard first step for clustering based on a single data type.
+However, instead of clustering each distance matrix, the distances from a single patient to the other patients is correlated between data types.
+This provides an assessment of how similar the relationships between patients are in the different data types 
 and might elucidate whether there are different biological regulation subgroups of the cancers.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodolody_correlations.png}
+		\includegraphics[width=9.8cm]{Figures/iSubGen_figure_methodology_correlations.png}
 		\caption{\textbf{Schematic for creating iSubGen pairwise similarity measures.}}
 		\label{fig:isopure}
 \end{figure}
 
 \newpage
-\subsection{Create the correlation matrix}
+\subsection{Create a correlation matrix}
 
 <<correlation-matrix>>=
-# Calculate the correlation matrix
-corr.matrix <- calculate.integrative.correlation.matrix(
-  aberration.types=names(molecular.data),
-  aberration.matrices=molecular.data,
-  dist.metrics=list(
-    cna='euclidean',
-    csnvs='euclidean',
-    methy='euclidean'
-  )
-);
+# Calculate a similarity matrix using correlations
+corr.matrix <- calculate.integrative.similarity.matrix(
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
+  dist.metrics = list(
+    cna = 'euclidean',
+    csnvs = 'euclidean',
+    methy = 'euclidean'
+    )
+  );
 
 # Check what the data looks like
 str(corr.matrix);
 @
 
-\subsection{Consensus correlation matrix}
+\subsection{Consensus integrative similarity (CIS) matrix}
 
-Either a correlation matrix or a consensus correlation matrix can be identically used to create subtypes.
-A consensus correlation matrix simply includes resampling of the samples while creating the correlation matrix.
+Either a integrative similarity matrix or a CIS matrix can be identically used to create subtypes.
+A CIS matrix simply includes resampling of the samples while creating the correlation matrix.
 
 <<consensus-correlation-matrix>>=
-# Calculate the correlation matrix
-consensus.corr.matrix <- calculate.consensus.integrative.correlation.matrix(
-  aberration.types=names(molecular.data),
-  aberration.matrices=molecular.data,
-  dist.metrics=list(
-    cna='euclidean',
-    csnvs='euclidean',
-    methy='euclidean'
-  )
-);
+# Calculate the CIS matrix
+cis.matrix <- calculate.cis.matrix(
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
+  dist.metrics = list(
+    cna = 'euclidean',
+    csnvs = 'euclidean',
+    methy = 'euclidean'
+    )
+  );
 
 # Check what the data looks like
-str(consensus.corr.matrix);
-
+str(cis.matrix);
 @
-
 
 \section{Combine features and create integrative subtypes}
 
@@ -252,9 +248,9 @@ Similarly, we use Spearman's correlation and correlations return values in the -
 <<integrative-matrix>>=
 # Combine autoencoder compressed features and the correlation matrix into one matrix
 integrative.features.matrix <- combine.compressed.features(
-  compressed.feature.matrix,
-  corr.matrix
-)$compressed.feature.matrix;
+  irf.matrix,
+  cis.matrix
+ )$compressed.feature.matrix;
 
 # Check what the data looks like
 str(integrative.features.matrix);
@@ -269,13 +265,13 @@ In this example, we use \href{https://bioconductor.org/packages/release/bioc/htm
 <<cluster>>=
 # Perform consensus clustering to get integrative subtypes
 subtyping.results <- subtype.by.h.clustering(
-  aberration.matrix=integrative.features.matrix,
-  distance.metric='euclidean',
-  parent.output.dir='./',
-  new.result.dir='vignettes_subtypes',
-  max.num.subtypes=5,
-  clustering.reps=50,
-  consensus.cluster.write.table=FALSE
+  data.matrix = integrative.features.matrix,
+  distance.metric = 'euclidean',
+  parent.output.dir = './',
+  new.result.dir = 'vignette_subtypes',
+  max.num.subtypes = 5,
+  clustering.reps = 50,
+  consensus.cluster.write.table = FALSE
   );
 
 # Check subtyping results
@@ -289,6 +285,8 @@ head(subtyping.results$subtype_table);
 
 \noindent \textbf{Autoencoder:} an unsupervised approach for neural networks where the neural network tries to reconstruct its input. \\
 
+\noindent \textbf{CIS:} Consensus Integrative Similarity. \\
+
 \noindent \textbf{CNA:} Copy Number Alteration. A change in the number of copies of a segment of DNA. 
 Generally, humans have 2 copies of each gene; one from their mother and one from their father. 
 In cancer, DNA segments can be duplicated so there are more than 2 copies or 
@@ -296,13 +294,15 @@ DNA segments can be deleted so there are less than 2 copies. \\
 
 \noindent \textbf{Consensus clustering:} a process of iteratively clustering to essentially bootstrap the clustering result. \url{https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html} \\
 
+\noindent \textbf{IRF:} Independent Reduced Features. \\
+
 \noindent \textbf{iSubGen:} integrative Subtype Generation. This tool!\\
 
 \noindent \textbf{Keras R package:} \url{https://cran.r-project.org/package=keras} \\ 
 
 \noindent \textbf{Methylation:} a DNA modification where methyl groups of are added to cytosines in DNA to help regulate DNA transcription. \\
 
-\noindent \textbf{Molecular aberration type (or aberration type):} encapsulates the different changes that occur the DNA, RNA and other biomolecules during cancer. For example: CNAs, SNVs, methylation, mRNA abundance, miRNA abundance.\\
+\noindent \textbf{Molecular aberration type:} encapsulates the different changes that occur the DNA, RNA and other biomolecules during cancer. For example: CNAs, SNVs, methylation, mRNA abundance, miRNA abundance.\\
 
 \noindent \textbf{SNV:} Single Nucleotide Variant. a nucleotide base (A,C,G,T) change in DNA.\\
 
