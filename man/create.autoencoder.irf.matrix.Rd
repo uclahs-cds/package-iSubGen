@@ -1,7 +1,7 @@
 \name{create.autoencoder.irf.matrix}
 \alias{create.autoencoder.irf.matrix}
-\title{Create matrix of compressed autoencoder features}
-\description{Create matrix of compressed autoencoder features}
+\title{Create matrix of independent reduced features}
+\description{Create matrix of independent reduced features using autoencoders}
 \usage{
 create.autoencoder.irf.matrix(data.types, data.matrices,
 autoencoders, filter.to.common.patients = FALSE,
@@ -34,7 +34,7 @@ for(i in c('cna','csnvs','methy')) {
   }
 
 # Create a matrix of the bottleneck layers 
-compressed.feature.matrix <- create.autoencoder.irf.matrix(
+irf.matrix <- create.autoencoder.irf.matrix(
   data.types = names(molecular.data),
   data.matrices = molecular.data,
   autoencoders = ae.result

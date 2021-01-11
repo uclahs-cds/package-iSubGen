@@ -61,10 +61,10 @@ options(formatR.arrow=TRUE,width=90)
 The purpose of integrative subtype generation (iSubGen) is to provide a framework for subtype discovery 
 based on the relationships between molecular aberration profiles (ex. mRNA, single nucleotide variants, copy number alterations, \textit{etc.})
 without filtering to known genes or relationships.
-iSubGen performs pattern discovery on a combination of two types of compressed features. 
+iSubGen performs pattern discovery on a combination of two types of integrative features. 
 First, we use a collection of reduced features to allow emphasis of obvious patterns in the individual data types. 
 The reduced features could be a small number of compressed features from autoencoders or the top principle components or even a handful of selected important characteristics of the profiles.
-The second type of compressed feature is pairwise comparison of the data types.
+The second type of integrative feature is pairwise comparison of the data types.
 This will allow patient classification based on whether the same relationships are observed in the different data types.
 
 \begin{figure}[H]
@@ -165,7 +165,7 @@ autoencoders[['csnvs']] <- create.autoencoder(
   encoder.layers.node.nums = c(15,1)
   )$autoencoder;
 
-# Get the compressed features from the autoencoders
+# Get the independent reduced features from the autoencoders
 irf.matrix <- create.autoencoder.irf.matrix(
   data.types = names(molecular.data),
   data.matrices = molecular.data,
@@ -242,15 +242,15 @@ str(cis.matrix);
 
 Depending on where you want the emphasis for your subtype discovery, features may need to be reweighted when combined into one matrix. 
 There may also need to be rescaling performed if the feature reduction and pairwise similarity return features which are not in similar spaces.
-Here we use tanh on our activation function for the autoencoders so that our compressed autoencoder features are in -1 to 1 range. 
+Here we use tanh on our activation function for the autoencoders so that our independent reduced features are in -1 to 1 range. 
 Similarly, we use Spearman's correlation and correlations return values in the -1 to 1 range.
 
 <<integrative-matrix>>=
-# Combine autoencoder compressed features and the correlation matrix into one matrix
-integrative.features.matrix <- combine.compressed.features(
+# Combine IRFs and CISs into one matrix
+integrative.features.matrix <- combine.integrative.features(
   irf.matrix,
   cis.matrix
- )$compressed.feature.matrix;
+ )$integrative.feature.matrix;
 
 # Check what the data looks like
 str(integrative.features.matrix);

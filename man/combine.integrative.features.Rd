@@ -1,9 +1,9 @@
-\name{combine.compressed.features}
-\alias{combine.compressed.features}
-\title{Combine compressed features}
-\description{Combine a independent reduced features matrix (ex. from autoencoders) and pairwise integrative similarity matrices into one compressed feature matrix.}
+\name{combine.integrative.features}
+\alias{combine.integrative.features}
+\title{Combine iSubGen integrative features}
+\description{Combine a independent reduced features matrix (ex. from autoencoders) and pairwise integrative similarity matrices into one integrative feature matrix.}
 \usage{
-combine.compressed.features(irf, cis,
+combine.integrative.features(irf, cis,
 irf.rescale.recenter = NA, cis.rescale.recenter = NA, 
 irf.rescale.denominator = NA, cis.rescale.denominator = NA,
 irf.weights = rep(1, ncol(irf)), 
@@ -20,7 +20,7 @@ cis.weights = rep(1, ncol(cis)))
   \item{cis.weights}{single number or vector of numbers of length equal to the number of columns of cis}
 }
 \value{
-  \item{compressed.feature.matrix}{a matrix of compressed features with patients as rows and features as columns}
+  \item{integrative.feature.matrix}{a matrix of compressed features with patients as rows and features as columns}
   \item{irf.rescale.recenter}{a numeric vector with length equal to the number of columns of irf}
   \item{cis.rescale.recenter}{a numeric vector with length equal to the number of columns of cis}
   \item{irf.rescale.denominator}{a numeric vector with length equal to the number of columns of irf}
@@ -41,13 +41,13 @@ cis.matrix <- matrix(runif(25*6), ncol=6);
 rownames(cis.matrix) <- c(paste0('EP00',1:9), paste0('EP0',10:25));
 
 # Example 1: Join the matrices without any weighting adjustments
-compressed.feature.matrix <- combine.compressed.features(
+isubgen.feature.matrix <- combine.integrative.features(
   irf.matrix,
   cis.matrix
-  )$compressed.feature.matrix;
+  )$integrative.feature.matrix;
 
 # Example 2: Combine matrices after scaling each column by subtracting the mean and dividing by the standard devation of the column
-compressed.feature.matrix.rescaled.result <- combine.compressed.features(
+isubgen.feature.matrix.rescaled.result <- combine.integrative.features(
   irf.matrix,
   cis.matrix,
   irf.rescale.recenter = 'mean',
@@ -55,14 +55,14 @@ compressed.feature.matrix.rescaled.result <- combine.compressed.features(
   irf.rescale.denominator = 'sd',
   cis.rescale.denominator = 'sd'
   );
-compressed.feature.matrix.rescaled <- compressed.feature.matrix.rescaled.result$compressed.feature.matrix;
+isubgen.feature.matrix.rescaled <- isubgen.feature.matrix.rescaled.result$integrative.feature.matrix;
 
 # Example 3: Combine matrices 
-compressed.feature.matrix.reweighted.result <- combine.compressed.features(
+isubgen.feature.matrix.reweighted.result <- combine.integrative.features(
   irf.matrix,
   cis.matrix,
   irf.weights = 1/4,
   cis.weights = 1/6
   );
-compressed.feature.matrix.reweighted <- compressed.feature.matrix.reweighted.result$compressed.feature.matrix;
+isubgen.feature.matrix.reweighted <- isubgen.feature.matrix.reweighted.result$integrative.feature.matrix;
 }

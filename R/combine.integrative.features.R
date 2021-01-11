@@ -1,4 +1,4 @@
-combine.compressed.features <- function(
+combine.integrative.features <- function(
 	irf,
 	cis,
 	irf.rescale.recenter = NA,
@@ -109,11 +109,11 @@ combine.compressed.features <- function(
 		}
 
 	# combine the matrices into one matrix
-	compressed.feature.matrix <- cbind(irf, cis);
+	integrative.feature.matrix <- cbind(irf, cis);
 
-	# return the re-scaling and re-weighting parameter along with the compressed.feature.matrix for the matrix can be reproduced
+	# return the re-scaling and re-weighting parameter along with the integrative.feature.matrix for the matrix can be reproduced
 	return(list(
-		compressed.feature.matrix = compressed.feature.matrix,
+		integrative.feature.matrix = integrative.feature.matrix,
 		irf.rescale.recenter = irf.rescale.recenter,
 		cis.rescale.recenter = cis.rescale.recenter,
 		irf.rescale.denominator = irf.rescale.denominator,
