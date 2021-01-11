@@ -10,14 +10,14 @@ irf.weights = rep(1, ncol(irf)),
 cis.weights = rep(1, ncol(cis)))
 }
 \arguments{
-  \item{irf}{a matrix of independent reduced features with patients as rows and features as columns}
-  \item{cis}{a matrix of consensus integrative similarity or integrative similarity features with patients as rows and features as columns}
+  \item{irf}{matrix of independent reduced features with patients as rows and features as columns}
+  \item{cis}{matrix of consensus integrative similarity or integrative similarity features with patients as rows and features as columns}
   \item{irf.rescale.recenter}{either NA, "mean", a single number or a vector of numbers of length equal to the number of columns of irf}
   \item{cis.rescale.recenter}{either NA, "mean", a single number or a vector of numbers of length equal to the number of columns of cis}
   \item{irf.rescale.denominator}{either NA, "sd", a single number or a vector of numbers of length equal to the number of columns of irf}
   \item{cis.rescale.denominator}{either NA, "sd", a single number or a vector of numbers of length equal to the number of columns of cis}
-  \item{irf.weights}{a single number or a vector of numbers of length equal to the number of columns of irf}
-  \item{cis.weights}{a single number or a vector of numbers of length equal to the number of columns of cis}
+  \item{irf.weights}{single number or vector of numbers of length equal to the number of columns of irf}
+  \item{cis.weights}{single number or vector of numbers of length equal to the number of columns of cis}
 }
 \value{
   \item{compressed.feature.matrix}{a matrix of compressed features with patients as rows and features as columns}

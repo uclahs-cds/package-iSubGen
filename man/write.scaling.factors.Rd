@@ -6,7 +6,7 @@
 write.scaling.factors(scaling.factors, scaling.factor.files.dir)
 }
 \arguments{
-  \item{scaling.factors}{a list with the scaling factors created by calculate.scaling}
+  \item{scaling.factors}{list with the scaling factors created by calculate.scaling}
   \item{scaling.factor.files.dir}{directory to output scaling factor files}
 }
 \details{Creates two files for each data type key. One file for the recentering values and one file for the rescaling values. Files have the names <data type>_gene_recenter.txt or <data type>_gene_rescale.txt}

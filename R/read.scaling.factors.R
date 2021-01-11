@@ -1,4 +1,5 @@
 read.scaling.factors <- function(scaling.factor.files.dir, data.types) {
+	# read two scaling files for each data type
 	scaling.factors <- list(center = list(), scale = list());
 	for(data.type in data.types) {
 		scaling.matrix <- read.table(

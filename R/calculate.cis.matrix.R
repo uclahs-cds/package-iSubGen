@@ -9,7 +9,7 @@ calculate.cis.matrix <- function(
 	patient.proportion = 0.8,
 	feature.proportion = 1,
 	num.iterations = 10,
-	print.intermediary.correlation.matrices.to.file = TRUE,
+	print.intermediary.similarity.matrices.to.file = TRUE,
 	print.dir = '.'
 	) {
 
@@ -36,6 +36,7 @@ calculate.cis.matrix <- function(
 		patients.for.correlations <- intersect(patients.for.correlations, patients);
 		}
 
+	# repeatly subsample the dataset and calculate integrative similarity
 	per.patient.data.type.corr <- list(); 
 	for(i in 1:num.iterations) {
 		set.seed(i);
@@ -57,7 +58,7 @@ calculate.cis.matrix <- function(
 			patients.to.return = patients.to.return,
 			patients.for.correlations = selected.patients
 			);
-		if(print.intermediary.similiarity.matrices.to.file) {
+		if(print.intermediary.similarity.matrices.to.file) {
 			write.table(
 				per.patient.data.type.corr[[i]],
 				file = paste0(print.dir,'/',Sys.Date(),'_correlation_matrix_seed_',i,'.txt'),
@@ -68,6 +69,8 @@ calculate.cis.matrix <- function(
 				);
 			}
 		}
+
+	# combine iterations to calculate CIS by taking the median similarity 
 	median.per.patient.data.type.corr <- matrix(NA, nrow = nrow(per.patient.data.type.corr[[1]]), ncol = ncol(per.patient.data.type.corr[[1]]));
 	for(i in 1:nrow(median.per.patient.data.type.corr)) {
 		for(j in 1:ncol(median.per.patient.data.type.corr)) {

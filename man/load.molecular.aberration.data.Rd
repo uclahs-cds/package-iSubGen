@@ -6,9 +6,9 @@
 load.molecular.aberration.data(file, patients = NULL, annotation.fields = NULL);
 }
 \arguments{
-  \item{file}{the file name of the matrix containing molecular and annotation data}
-  \item{patients}{a vector of patients ids. Must match colnames from aberration file}
-  \item{annotation.fields}{a vector referencing the column names for the feature annotation columns}
+  \item{file}{file name of the matrix containing molecular and annotation data}
+  \item{patients}{vector of patients IDs. Must match colnames from aberration file}
+  \item{annotation.fields}{vector referencing the column names for the feature annotation columns}
 }
 \details{The annotation.fields argument will look for any colnames which contain the values specified in annotation.fields and then the column will be renamed to the value that matched from annotation.fields.}
 \value{If the patients argument is specified then the patient molecular aberration profiles are returned. If the annotation.fields argument is specified then the feature annotation is returned. If both are specified then the two matrices are returned in a list. If neither is specified then the entire matrix with the mix of patients and annotation is returned.}

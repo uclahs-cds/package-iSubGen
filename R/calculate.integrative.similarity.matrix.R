@@ -12,6 +12,7 @@ calculate.integrative.similarity.matrix <- function(
 	patients <- NULL;
 	for(data.type in data.types) {
 		if(filter.to.common.patients) {
+			# assume patient IDs have at least one number in them and annotation columns don't
 			if(is.null(patients)) {
 				patients <- colnames(data.matrices[[data.type]])[grep('\\d', colnames(data.matrices[[data.type]]))];
 				}
@@ -20,7 +21,6 @@ calculate.integrative.similarity.matrix <- function(
 				}
 			} 
 		else {
-			# assume patient ids have at least one number in them and annotation columns don't
 			patients <- union(patients, colnames(data.matrices[[data.type]]));
 			}
 		}
@@ -71,7 +71,7 @@ calculate.integrative.similarity.matrix <- function(
 				}
 			}
 
-		# calculate distances and fill in matrix
+		# calculate distances and fill in patient by patient distance matrix
 		for(dist.op in 1:length(dist.calc.operations)) {
 			if(class(dist.metrics[[data.type]]) == 'character') {
 				if(dist.metrics[[data.type]] %in% c('pearson','spearman')) {
@@ -115,7 +115,7 @@ calculate.integrative.similarity.matrix <- function(
 	pair.patient1 <- sapply(1:length(split.rownames), function(i) {split.rownames[[i]][1]});
 	pair.patient2 <- sapply(1:length(split.rownames), function(i) {split.rownames[[i]][2]});
 
-	# calculate distance correlations between data types
+	# calculate correlations (or integrative similarity) between data types
 	per.patient.data.type.corr <- matrix(NA, nrow = length(patients.to.return), ncol = length(data.types)*(length(data.types)-1)/2);
 	rownames(per.patient.data.type.corr) <- patients.to.return;
 	colnames(per.patient.data.type.corr) <- seq(1, ncol(per.patient.data.type.corr));

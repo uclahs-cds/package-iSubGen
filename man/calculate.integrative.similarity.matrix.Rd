@@ -8,13 +8,13 @@ correlation.method = "spearman", filter.to.common.patients = FALSE,
 patients.to.return = NULL, patients.for.correlations = NULL)
 }
 \arguments{
-  \item{data.types}{a vector of the ids for the different data types that are the names of the lists for the data.matrices and dist.metrics}
-  \item{data.matrices}{a list of the matrices with features (rows) by patients (columns)}
-  \item{dist.metrics}{a list of the distance metrics for comparing patient profiles. ex. euclidean. Options are from philentropy::distance}
+  \item{data.types}{vector, where each element is a data type ID matching the names in data.matrices and dist.metrics}
+  \item{data.matrices}{list, where each element is a matrix with features as rows and patients as columns}
+  \item{dist.metrics}{list, where each element is the distance metric to use for comparing patient profiles. ex. euclidean. Options are from philentropy::distance}
   \item{correlation.method}{specifies the type of correlation. Options are pearson, spearman or kendall.}
-  \item{filter.to.common.patients}{a boolean whether to remove patients that don't have all data types}
-  \item{patients.to.return}{a vector of patients to calculate integrative similarity for. For example, this is the testing cohort patients when calculating integrative similarity for the testing cohort using the training cohort patients. If NULL all patients/columns will be used.}
-  \item{patients.for.correlations}{a vector of patients to use to calculate the similarities. For example, this would be the training cohort patients when calculating integrative similarity for the testing cohort. If NULL all patients/columns will be used.}
+  \item{filter.to.common.patients}{logical, where TRUE indicates to filter out patients that don't have all data types}
+  \item{patients.to.return}{vector, where each element a patient ID specifying the patients to calculate integrative similarity for. For example, this is the testing cohort patients when calculating integrative similarity for the testing cohort using the training cohort patients. If NULL all patients/columns will be used.}
+  \item{patients.for.correlations}{vector, where each element a patient ID specifying the patients to use to calculate the similarities. For example, this would be the training cohort patients when calculating integrative similarity for the testing cohort. If NULL all patients/columns will be used.}
 }
 \value{matrix where rows are patients and columns are pairs of data types}
 \author{Natalie Fox}

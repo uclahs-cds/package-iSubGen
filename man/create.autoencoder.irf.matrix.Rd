@@ -4,16 +4,15 @@
 \description{Create matrix of compressed autoencoder features}
 \usage{
 create.autoencoder.irf.matrix(data.types, data.matrices,
-autoencoders, number.of.layers.in.decode = 2, filter.to.common.patients = FALSE,
+autoencoders, filter.to.common.patients = FALSE,
 patients.to.return = NULL)
 }
 \arguments{
-  \item{data.types}{a vector of the ids for the different data types that are the names of the lists for the data.matrices and dist.metrics}
-  \item{data.matrices}{a list of the matrices with features (rows) by patients (columns)}
-  \item{autoencoders}{a list of an autoencoder corresponding to each data type. Can be either an keras autoencoder object or the file where the autoencoder was saved.}
-  \item{number.of.layers.in.decode}{number of layers to decode in the autoencoder}
-  \item{filter.to.common.patients}{a boolean whether to remove patients that don't have all data types}
-  \item{patients.to.return}{a vector patients to return correlations for. If NULL all patients/columns will be used.}
+  \item{data.types}{vector, where each element is a data type ID matching the names in data.matrices and dist.metrics}
+  \item{data.matrices}{list, where each element is a matrix with features as rows and patients as columns}
+  \item{autoencoders}{list, where each element is an autoencoder corresponding to each data type. Can be either an keras autoencoder object or the file where the autoencoder was saved.}
+  \item{filter.to.common.patients}{logical, where TRUE indicates to filter out patients that don't have all data types.}
+  \item{patients.to.return}{vector of patients to return correlations for. If NULL all patients/columns will be used.}
 }
 \value{matrix where rows are patients and columns are pairs of data types}
 \author{Natalie Fox}

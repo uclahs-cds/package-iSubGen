@@ -9,13 +9,13 @@ patients.to.return = NULL, patients.for.correlations = NULL, patient.proportion 
 feature.proportion = 1, num.iterations = 10, print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.')
 }
 \arguments{
-  \item{data.types}{a vector of the IDs for the different data types that are the names of the lists for the data.matrices and dist.metrics}
-  \item{data.matrices}{a list of the matrices with features (rows) by patients (columns)}
-  \item{dist.metrics}{a list of the distance metrics for comparing patient profiles. ex. euclidean. Options are from philentropy::distance}
+  \item{data.types}{vector of the IDs for the different data types that are the names of the lists for the data.matrices and dist.metrics}
+  \item{data.matrices}{list of the matrices with features (rows) by patients (columns)}
+  \item{dist.metrics}{list of the distance metrics for comparing patient profiles. ex. euclidean. Options are from philentropy::distance}
   \item{correlation.method}{specifies the type of correlation for similarity comparison. Options are pearson, spearman or kendall.}
-  \item{filter.to.common.patients}{a boolean whether to remove patients that don't have all data types}
-  \item{patients.to.return}{a vector of patients to calculate CIS for. For example, this is the testing cohort patients when calculating CIS for the testing cohort using the training cohort patients. If NULL all patients/columns will be used.}
-  \item{patients.for.correlations}{a vector of patients to use to calculate the similarities. For example, this would be the training cohort patients when calculating CIS for the testing cohort.  If NULL all patients/columns will be used.}
+  \item{filter.to.common.patients}{logical, where TRUE indicates to filter out patients that don't have all data types}
+  \item{patients.to.return}{vector of patients to calculate CIS for. For example, this is the testing cohort patients when calculating CIS for the testing cohort using the training cohort patients. If NULL all patients/columns will be used.}
+  \item{patients.for.correlations}{vector of patients to use to calculate the similarities. For example, this would be the training cohort patients when calculating CIS for the testing cohort.  If NULL all patients/columns will be used.}
   \item{patient.proportion}{proportion of patients.for.correlations to sample for each iteration (sampled without replacement).}
   \item{feature.proportion}{proportion of the features to sample for each iteration (sampled without replacement).}
   \item{num.iterations}{number of iterations to take the median from}

@@ -32,7 +32,7 @@ combine.compressed.features <- function(
 		else {
 			warning('irf.rescale.recenter is not a valid length so no recentering was completed for irf');
 			}
-	}
+		}
 	if(length(cis.rescale.recenter) != 1 || !is.na(cis.rescale.recenter)) {
 		if(length(cis.rescale.recenter) == 1 && cis.rescale.recenter == 'mean') {
 			cis.rescale.recenter <- apply(cis, 2, mean);

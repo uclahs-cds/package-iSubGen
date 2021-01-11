@@ -201,7 +201,7 @@ and might elucidate whether there are different biological regulation subgroups 
 
 <<correlation-matrix>>=
 # Calculate a similarity matrix using correlations
-corr.matrix <- calculate.integrative.similarity.matrix(
+similarity.matrix <- calculate.integrative.similarity.matrix(
   data.types = names(molecular.data),
   data.matrices = molecular.data,
   dist.metrics = list(
@@ -212,7 +212,7 @@ corr.matrix <- calculate.integrative.similarity.matrix(
   );
 
 # Check what the data looks like
-str(corr.matrix);
+str(similarity.matrix);
 @
 
 \subsection{Consensus integrative similarity (CIS) matrix}
@@ -264,7 +264,7 @@ In this example, we use \href{https://bioconductor.org/packages/release/bioc/htm
 
 <<cluster>>=
 # Perform consensus clustering to get integrative subtypes
-subtyping.results <- subtype.by.h.clustering(
+subtyping.results <- cluster.patients(
   data.matrix = integrative.features.matrix,
   distance.metric = 'euclidean',
   parent.output.dir = './',

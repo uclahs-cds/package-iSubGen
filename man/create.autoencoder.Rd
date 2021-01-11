@@ -8,12 +8,12 @@ autoencoder.activation = 'tanh', optimization.loss.function = 'mean_squared_erro
 model.file.output.dir = '.')
 }
 \arguments{
-  \item{data.type}{the data type id. The id will be used for naming the output file}
-  \item{data.matrix}{a matrix with data features (rows) by patients (columns)}
-  \item{encoder.layers.node.nums}{a vector with the number of nodes for each layer when the reducing the feature dimensions within the autoencoder. The autoencoder will be made symmetrically so the number of nodes in each layer will be used in reverse, not repeating the last layer to re encode the features in the autoencoder} 
-  \item{autoencoder.activation}{the type of activation function to use in the autoencoder}
-  \item{optimization.loss.function}{the loss function used for optimization while fitting the autoencoder}
-  \item{model.file.output.dir}{the file location for outputting the autoencoder file}
+  \item{data.type}{data type ID. The ID will be used for naming the output file}
+  \item{data.matrix}{matrix with data features as rows and patients as columns}
+  \item{encoder.layers.node.nums}{vector with the number of nodes for each layer when the reducing the feature dimensions within the autoencoder. The autoencoder will be made symmetrically so the number of nodes in each layer will be used in reverse, not repeating the last layer to re encode the features in the autoencoder} 
+  \item{autoencoder.activation}{activation function to use in the autoencoder}
+  \item{optimization.loss.function}{loss function used for optimization while fitting the autoencoder}
+  \item{model.file.output.dir}{file location for the autoencoder file}
 }
 \value{
   \item{autoencoder}{the autoencoder created by the keras package}

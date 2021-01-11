@@ -2,7 +2,6 @@ create.autoencoder.irf.matrix <- function(
 	data.types,
 	data.matrices,
 	autoencoders,
-	number.of.layers.in.decode = 2,
 	filter.to.common.patients = FALSE,
 	patients.to.return = NULL
 	) { 
@@ -11,6 +10,7 @@ create.autoencoder.irf.matrix <- function(
 	patients <- NULL;
 	for(data.type in data.types) {
 		if(filter.to.common.patients) {
+			# assume patient ids have at least one number in them and annotation columns don't
 			if(is.null(patients)) {
 				patients <- colnames(data.matrices[[data.type]])[grep('\\d', colnames(data.matrices[[data.type]]))];
 				}
@@ -19,7 +19,6 @@ create.autoencoder.irf.matrix <- function(
 				}
 			}
 		else {
-			# assume patient ids have at least one number in them and annotation columns don't
 			patients <- union(patients, colnames(data.matrices[[data.type]]));
 			}
 		}
@@ -32,7 +31,7 @@ create.autoencoder.irf.matrix <- function(
 		}
 
 	# go through each data.type and get the corresponding compressed autoencoder features
-	autoencoder.results <- NULL;
+	irf <- NULL;
 	for(data.type in data.types) {
 		if(data.type %in% names(autoencoders)) {
 			# load the neural net for the data.type
@@ -43,19 +42,23 @@ create.autoencoder.irf.matrix <- function(
 					compile = FALSE);
 				}
 
-			# remove the decoding layers
-			for(i in 1:number.of.layers.in.decode) {
-				pop_layer(model);
+			# create the autoencoder encoding layers from input to the bottleneck layer
+			intermediate.layer.model <- keras_model(inputs = model$input, outputs = get_layer(model, "bottleneck")$output)
+
+			# get the bottleneck values from the autoencoder
+			bottleneck.values <- predict(intermediate.layer.model,x=t(data.matrices[[data.type]]));
+			rownames(bottleneck.values) <- colnames(data.matrices[[data.type]]);
+			colnames(bottleneck.values) <- paste0(data.type,1:ncol(bottleneck.values));
+
+			# add the IRF features from this data type to the IRF matrix
+			if(is.null(irf)) {
+				irf <- bottleneck.values;
 				}
-
-			autoencoder.data.matrix <- t(data.matrices[[data.type]]);
-			reduced.features.autoencoder.predictions <- predict(model, x = autoencoder.data.matrix);
-			rownames(reduced.features.autoencoder.predictions) <- rownames(autoencoder.data.matrix);
-			colnames(reduced.features.autoencoder.predictions) <- paste0(data.type, 1:ncol(reduced.features.autoencoder.predictions));
-
-			autoencoder.results <- cbind(autoencoder.results, reduced.features.autoencoder.predictions);
+			else {
+				irf <- cbind(irf,bottleneck.values);
+				}	
 			}
 		}
 
-	return(autoencoder.results);
+	return(irf);
 	}

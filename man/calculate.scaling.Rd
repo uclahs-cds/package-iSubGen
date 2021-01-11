@@ -6,10 +6,10 @@
 calculate.scaling(data.matrices);
 }
 \arguments{
-  \item{data.matrices}{a list of matrices. The list has one matrix for each data type to be scaled}
+  \item{data.matrices}{list, where each element is a matrix. The list has one matrix for each data type to be scaled}
 }
-\details{The keys for the data.matrices and the center and scale list match}
-\value{a list with a key \\"center\\" list and a key \\"scale\\" list. The center and scale list keys match the data.matrices list keys}
+\details{The names for the data matrices and the center and scale lists all must match. }
+\value{a list with two elements named: \\"center\\" and \\"scale\\", and each of these element is a named numerical vector or a list of named numerical vectors. If scaling.factors$center or scaling.factors$scale are a list then each element will correspond to a one of the data matrices. Finally, the named numerical vectors will match the row and rownames from the data matrices.}
 \author{Natalie Fox}
 \examples{
 

@@ -1,4 +1,4 @@
-subtype.by.h.clustering <- function(
+cluster.patients <- function(
 	data.matrix,
 	distance.metric,
 	parent.output.dir,
@@ -17,7 +17,7 @@ subtype.by.h.clustering <- function(
 	setwd(parent.output.dir);
 
 	if(nrow(data.matrix) > 1) {
-		dianaHook <- function(this_dist,k) {
+		dianaWithMissingPatients <- function(this_dist,k) {
 			num.patients <- nrow(as.matrix(this_dist));
 			assignment <- rep(NA, num.patients);
 			missing.patient <- apply(is.na(as.matrix(this_dist)),1,sum) == (num.patients - 1);
@@ -47,7 +47,7 @@ subtype.by.h.clustering <- function(
 			seed = 17,
 			finalLinkage = 'ward.D',
 			innerLinkage = 'ward.D',
-			clusterAlg = ifelse(any(is.na(data.matrix)),'dianaHook','hc'),
+			clusterAlg = ifelse(any(is.na(data.matrix)),'dianaWithMissingPatients','hc'),
 			pFeature = pFeature,
 			pItem = pItem,
 			reps = clustering.reps
