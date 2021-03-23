@@ -5,8 +5,9 @@
 \usage{
 calculate.cis.matrix(data.types, data.matrices, dist.metrics,
 correlation.method = "spearman", filter.to.common.patients = FALSE, 
-patients.to.return = NULL, patients.for.correlations = NULL, patient.proportion = 0.8,
-feature.proportion = 1, num.iterations = 10, print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.')
+patients.to.return = NULL, patients.for.correlations = NULL, 
+patient.proportion = 0.8, feature.proportion = 1, num.iterations = 10, 
+print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.')
 }
 \arguments{
   \item{data.types}{vector of the IDs for the different data types that are the names of the lists for the data.matrices and dist.metrics}
@@ -47,9 +48,10 @@ corr.matrix <- calculate.cis.matrix(
     )
   );
 
-# Example 2: calculate the CIS matrix for patients EP001 through EP009 in relation to patients EP010 through EP030
-# meaning the profile of EP001 is correlated to the profiles of EP010 through EP030
-# so when assessing new patients, they can be compared to the training profiles
+# Example 2: calculate the CIS matrix for patients EP001 through EP009 in relation 
+# to patients EP010 through EP030 meaning the profile of EP001 is correlated to 
+# the profiles of EP010 through EP030 so when assessing new patients, they can be 
+# compared to the training profiles
 corr.matrix2 <- calculate.cis.matrix(
   data.types = names(molecular.data),
   data.matrices = molecular.data,
@@ -62,7 +64,8 @@ corr.matrix2 <- calculate.cis.matrix(
   patients.for.correlations = paste0('EP0',10:30)
   );
 
-# Example 3: Adjusting the proportion of the features that will be used to correlate the patient profiles
+# Example 3: Adjusting the proportion of the features that will be used to correlate 
+# the patient profiles
 corr.matrix3 <- calculate.cis.matrix(
   data.types=names(molecular.data),
   data.matrices=molecular.data,

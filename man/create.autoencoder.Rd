@@ -28,7 +28,8 @@ ae.result <- create.autoencoder(
   data.type = 'cna',
   data.matrix = load.molecular.aberration.data(
     paste0(example.molecular.data.dir,'cna_profiles.txt'),
-    patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
-    )
+    patients = paste0('EP00',1:8)
+    ),
+  encoder.layers.node.nums = c(4,2)
   );
 }

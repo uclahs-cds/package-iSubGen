@@ -1,10 +1,10 @@
 Package: iSubGen
 Title: Integrative Subtype Generation
-Version: 0.0.4
-Date: 2021-01-05
+Version: 1.0.0
+Date: 2021-03-22
 Author: Natalie Fox
-Maintainer: Natalie Fox <natalie.fox@oicr.on.ca>
-Description: Multi-modal subtyping.
+Maintainer: Natalie Fox <nfox@mednet.ucla.edu>
+Description: iSubGen is a multi-data type subtyping approach which is data type agnostic and accepts missing data. Subtyping is performed using intermediary assessments created with autoencoders and similarity calculations.
 Depends: R (>= 3.2.3)
 Imports: ConsensusClusterPlus, cluster (>= 1.14.4), keras, tensorflow, philentropy
 Suggests: knitr, rmarkdown

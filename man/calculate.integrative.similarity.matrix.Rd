@@ -41,9 +41,10 @@ corr.matrix <- calculate.integrative.similarity.matrix(
     )
   );
 
-# Example 2: calculate the integrative similarity for patients EP001 through EP009 in relation to patients EP010 through EP030
-# meaning the profile of EP001 is correlated to the profiles of EP010 through EP030
-# so when assessing new patients, they can be compared to the training profiles
+# Example 2: calculate the integrative similarity for patients EP001 through EP009 
+# in relation to patients EP010 through EP030 meaning the profile of EP001 is 
+# correlated to the profiles of EP010 through EP030 so when assessing new patients,
+# they can be compared to the training profiles
 corr.matrix2 <- calculate.integrative.similarity.matrix(
   data.types = names(molecular.data),
   data.matrices = molecular.data,

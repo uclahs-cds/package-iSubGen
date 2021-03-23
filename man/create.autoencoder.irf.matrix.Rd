@@ -25,18 +25,19 @@ ae.result <- list();
 for(i in c('cna','csnvs','methy')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(example.molecular.data.dir,i,'_profiles.txt'),
-    patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
+    patients = paste0('EP00',1:8)
     );
   ae.result[[i]] <- create.autoencoder(
     data.type = i,
-    data.matrix = molecular.data[[i]]
+    data.matrix = molecular.data[[i]],
+    encoder.layers.node.nums = c(4,2)
     )$autoencoder;
   }
 
 # Create a matrix of the bottleneck layers 
-irf.matrix <- create.autoencoder.irf.matrix(
-  data.types = names(molecular.data),
-  data.matrices = molecular.data,
-  autoencoders = ae.result
-  );
+#irf.matrix <- create.autoencoder.irf.matrix(
+#  data.types = names(molecular.data),
+#  data.matrices = molecular.data,
+#  autoencoders = ae.result
+#  );
 }

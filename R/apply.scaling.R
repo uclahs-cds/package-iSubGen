@@ -4,8 +4,8 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 		stop('data.matrices needs to be a matrix or a list of matrices');
 		}
 
-	# check that scaling.factors is the correct format
-	if(all(! names(scaling.factors) %in% c('center','scale'))) {
+	# check that scaling.factors is have elements with the names "center" and "scale"
+	if(all(!c('center','scale') %in% names(scaling.factors))) {
 		stop('scaling.factor needs to be a list with center and scale ');
 		}
 
@@ -15,10 +15,10 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 		
 		# check that scaling.factors are the correct format
 		if(length(scaling.factors$center) != nrow(data.matrices)) {
-			stop('scaling.factors$center match the number of rows in data.matrices');
+			stop('the length of scaling.factors$center match the number of rows in data.matrices');
 			}
 		if(length(scaling.factors$scale) != nrow(data.matrices)) {
-			stop('scaling.factors$scale match the number of rows in data.matrices');
+			stop('the length of scaling.factors$scale match the number of rows in data.matrices');
 			}
 
 		# if necessary adjust the format of the scaling factors for a single matrix

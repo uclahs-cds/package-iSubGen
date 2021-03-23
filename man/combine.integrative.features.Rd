@@ -46,7 +46,8 @@ isubgen.feature.matrix <- combine.integrative.features(
   cis.matrix
   )$integrative.feature.matrix;
 
-# Example 2: Combine matrices after scaling each column by subtracting the mean and dividing by the standard devation of the column
+# Example 2: Combine matrices after scaling each column by subtracting the mean
+# and dividing by the standard devation of the column
 isubgen.feature.matrix.rescaled.result <- combine.integrative.features(
   irf.matrix,
   cis.matrix,
@@ -55,7 +56,7 @@ isubgen.feature.matrix.rescaled.result <- combine.integrative.features(
   irf.rescale.denominator = 'sd',
   cis.rescale.denominator = 'sd'
   );
-isubgen.feature.matrix.rescaled <- isubgen.feature.matrix.rescaled.result$integrative.feature.matrix;
+isubgen.feature.matrix.2 <- isubgen.feature.matrix.rescaled.result$integrative.feature.matrix;
 
 # Example 3: Combine matrices 
 isubgen.feature.matrix.reweighted.result <- combine.integrative.features(
@@ -64,5 +65,5 @@ isubgen.feature.matrix.reweighted.result <- combine.integrative.features(
   irf.weights = 1/4,
   cis.weights = 1/6
   );
-isubgen.feature.matrix.reweighted <- isubgen.feature.matrix.reweighted.result$integrative.feature.matrix;
+isubgen.feature.matrix.3 <- isubgen.feature.matrix.reweighted.result$integrative.feature.matrix;
 }
