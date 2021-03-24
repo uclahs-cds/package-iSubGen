@@ -12,7 +12,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 	# data.matrices can be a single matrix or a list of matrices
 	# if the data is a single matrix then the class will be 'matrix'
 	if(class(data.matrices) == 'matrix') {
-		
+
 		# check that scaling.factors are the correct format
 		if(length(scaling.factors$center) != nrow(data.matrices)) {
 			stop('the length of scaling.factors$center match the number of rows in data.matrices');
@@ -30,7 +30,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			scaling.factors$scale <- scaling.factors$scale[[1]];
 			warning('the first item from the scaling.factor$scale list was used for scaling');
 			}
-		
+
 		# scale each row in the matrix by the corresponding scaling factors
 		for(i in nrow(data.matrices)) {
 			center.adjustment <- scaling.factors$center[rownames(data.matrices)[i]];
@@ -38,7 +38,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			if(scaling.factors$scale[rownames(data.matrices)[i]] > 0) {
 				scale.adjustment <- scaling.factors$scale[rownames(data.matrices)[i]];
 				}
-			data.matrices[i,] <- (data.matrices[i,] - center.adjustment)/scale.adjustment;
+			data.matrices[i,] <- (data.matrices[i,] - center.adjustment) / scale.adjustment;
 			}
 
 		# return the scaled single matrix
@@ -58,10 +58,10 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 
 		# check that scaling.factors are the correct format
 		if(length(scaling.factors$center[[data.type]]) != nrow(data.matrices[[data.type]])) {
-			stop(paste0('scaling.factors$center$',data.type,' match the number of rows in data.matrices$',data.type));
+			stop(paste0('scaling.factors$center$',data.type,' does not match the number of rows in data.matrices$',data.type));
 			}
 		if(length(scaling.factors$scale[[data.type]]) != nrow(data.matrices[[data.type]])) {
-			stop(paste0('scaling.factors$scale$',data.type,' match the number of rows in data.matrices$',data.type));
+			stop(paste0('scaling.factors$scale$',data.type,' does not match the number of rows in data.matrices$',data.type));
 			}
 
 		# scale each row in each matrix by the corresponding scaling factors
@@ -71,10 +71,10 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			if(scaling.factors$scale[[data.type]][rownames(data.matrices[[data.type]])[i]] > 0) {
 				scale.adjustment <- scaling.factors$scale[[data.type]][rownames(data.matrices[[data.type]])[i]];
 				}
-			data.matrices[[data.type]][i,] <- (data.matrices[[data.type]][i,] - center.adjustment)/scale.adjustment;
+			data.matrices[[data.type]][i,] <- (data.matrices[[data.type]][i,] - center.adjustment) / scale.adjustment;
 			}
 		}
 
 	# return the scaled list of matrices
 	return(data.matrices);
-	}	
+	}

@@ -19,7 +19,7 @@ calculate.integrative.similarity.matrix <- function(
 			else {
 				patients <- intersect(patients, colnames(data.matrices[[data.type]])[grep('\\d', colnames(data.matrices[[data.type]]))]);
 				}
-			} 
+			}
 		else {
 			patients <- union(patients, colnames(data.matrices[[data.type]]));
 			}
@@ -27,13 +27,13 @@ calculate.integrative.similarity.matrix <- function(
 	patients <- sort(patients);
 	if(is.null(patients.to.return)) {
 		patients.to.return <- patients;
-		} 
+		}
 	else {
 		patients.to.return <- intersect(patients.to.return, patients);
 		}
 	if(is.null(patients.for.correlations)) {
 		patients.for.correlations <- patients;
-		} 
+		}
 	else {
 		patients.for.correlations <- intersect(patients.for.correlations, patients);
 		}
@@ -46,7 +46,7 @@ calculate.integrative.similarity.matrix <- function(
 	colnames(patient.paired.dists.matrix) <- data.types;
 	rownames(patient.paired.dists.matrix) <- patient.pairs;
 	for(data.type in data.types) {
-		# filter to required patients 
+		# filter to required patients
 		data.matrices[[data.type]] <- data.matrices[[data.type]][,sort(colnames(data.matrices[[data.type]])[colnames(data.matrices[[data.type]]) %in% patients])];
 
 		# set up the matrix of distance pairs that are required
@@ -56,25 +56,30 @@ calculate.integrative.similarity.matrix <- function(
 
 		# determine the most efficient approach for calculating the distances
 		dist.calc.operations <- list();
-		pr <- length(patients.to.return);
-		pc <- length(patients.for.correlations);
-		opt.num.of.return.to.calc.at.once <- order(sapply(1:pr, function(k) {(pc + k)^2 * (ceiling(pr/k)-1) + (pc + ifelse((pr%%k) == 0, k, pr%%k))^2}))[1];
+		pr.num <- length(patients.to.return);
+		pc.num <- length(patients.for.correlations);
+		opt.num.of.return.to.calc.at.once <- order(sapply(
+			1:pr.num,
+			function(k) {(pc.num + k)^2 * (ceiling(pr.num/k)-1) + (pc.num + ifelse((pr.num%%k) == 0, k, pr.num%%k))^2}
+			))[1];
 		pr.tracker <- 0;
-		while(pr.tracker < pr) {
-			if((pr.tracker + opt.num.of.return.to.calc.at.once) < pr) {
+		while(pr.tracker < pr.num) {
+			if((pr.tracker + opt.num.of.return.to.calc.at.once) < pr.num) {
 				dist.calc.operations[[as.character(pr.tracker)]] <- patients.to.return[(pr.tracker+1):(pr.tracker+opt.num.of.return.to.calc.at.once)];
 				pr.tracker <- pr.tracker + opt.num.of.return.to.calc.at.once;
 				}
 			else {
-				dist.calc.operations[[as.character(pr.tracker)]] <- patients.to.return[(pr.tracker+1):pr];
-				pr.tracker <- pr;
+				dist.calc.operations[[as.character(pr.tracker)]] <- patients.to.return[(pr.tracker+1):pr.num];
+				pr.tracker <- pr.num;
 				}
 			}
 
 		# calculate distances and fill in patient by patient distance matrix
 		for(dist.op in 1:length(dist.calc.operations)) {
 			if(class(dist.metrics[[data.type]]) == 'character') {
+
 				if(dist.metrics[[data.type]] %in% c('pearson','spearman')) {
+					# if the distance metric is a correlation, convert the correlation into a distance
 					dist.result <- as.dist(
 						1 - cor(data.matrices[[data.type]][,intersect(colnames(data.matrices[[data.type]]),unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations)))],
 						use = 'pairwise',
@@ -82,12 +87,12 @@ calculate.integrative.similarity.matrix <- function(
 						);
 					}
 				else {
+					# for distances other than correlations use the distance function
 					dist.result <- distance(
 						t(data.matrices[[data.type]][,intersect(colnames(data.matrices[[data.type]]),unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations)))]),
 						method = dist.metrics[[data.type]],
 						use.row.names = TRUE
 						);
-					
 					}
 				}
 			else if(class(dist.metrics[[data.type]]) == 'function') {
@@ -123,7 +128,7 @@ calculate.integrative.similarity.matrix <- function(
 	for(i in 1:(length(data.types)-1)) {
 		for(j in (i+1):length(data.types)) {
 
-			data.type.pair.counter <- data.type.pair.counter +1;
+			data.type.pair.counter <- data.type.pair.counter + 1;
 			colnames(per.patient.data.type.corr)[data.type.pair.counter] <- paste0(data.types[i], ':', data.types[j]);
 			not.na.rows <- (!is.na(patient.paired.dists.matrix[,i])) & (!is.na(patient.paired.dists.matrix[,j]));
 

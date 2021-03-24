@@ -3,15 +3,15 @@
 \title{Combine iSubGen integrative features}
 \description{Combine a independent reduced features matrix (ex. from autoencoders) and pairwise integrative similarity matrices into one integrative feature matrix.}
 \usage{
-combine.integrative.features(irf, cis,
+combine.integrative.features(irf.matrix, cis.matrix,
 irf.rescale.recenter = NA, cis.rescale.recenter = NA, 
 irf.rescale.denominator = NA, cis.rescale.denominator = NA,
 irf.weights = rep(1, ncol(irf)), 
 cis.weights = rep(1, ncol(cis)))
 }
 \arguments{
-  \item{irf}{matrix of independent reduced features with patients as rows and features as columns}
-  \item{cis}{matrix of consensus integrative similarity or integrative similarity features with patients as rows and features as columns}
+  \item{irf.matrix}{matrix of independent reduced features with patients as rows and features as columns}
+  \item{cis.matrix}{matrix of consensus integrative similarity or integrative similarity features with patients as rows and features as columns}
   \item{irf.rescale.recenter}{either NA, "mean", a single number or a vector of numbers of length equal to the number of columns of irf}
   \item{cis.rescale.recenter}{either NA, "mean", a single number or a vector of numbers of length equal to the number of columns of cis}
   \item{irf.rescale.denominator}{either NA, "sd", a single number or a vector of numbers of length equal to the number of columns of irf}

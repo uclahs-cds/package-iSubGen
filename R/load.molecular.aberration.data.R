@@ -1,5 +1,8 @@
-# returns the molecular aberration profiles/feature annotation
-load.molecular.aberration.data <- function(file, patients = NULL, annotation.fields = NULL) {
+load.molecular.aberration.data <- function(
+	file,
+	patients = NULL,
+	annotation.fields = NULL
+	) {
 
 	# read in matrix with patient annotation and aberration data
 	aberration.data.and.anno <- read.table(
@@ -11,12 +14,21 @@ load.molecular.aberration.data <- function(file, patients = NULL, annotation.fie
 	### pull out the aberration data ###
 	aberration.profiles <- NULL;
 	if(!is.null(patients)) {
-		# remove the aberration data and format as a matrix instead of a data frame
+		# select aberration data and format as a matrix instead of a data frame
 		if(any(!patients %in% colnames(aberration.data.and.anno))) {
-			warning(paste0('the following patients were not found in the given file:', paste(patients[which(!patients %in% colnames(aberration.data.and.anno))], collapse=',')));
+			warning(paste0(
+				'the following patients were not found in the given file:',
+				paste(
+					patients[which(!patients %in% colnames(aberration.data.and.anno))],
+					collapse = ','
+					)
+				));
 			patients <- patients[which(patients %in% colnames(aberration.data.and.anno))];
 			}
-		aberration.profiles <- matrix(as.numeric(as.matrix(aberration.data.and.anno[,patients])), nrow=nrow(aberration.data.and.anno));
+		aberration.profiles <- matrix(
+			data = as.numeric(as.matrix(aberration.data.and.anno[,patients])), 
+			nrow = nrow(aberration.data.and.anno)
+			);
 		colnames(aberration.profiles) <- patients;
 		rownames(aberration.profiles) <- rownames(aberration.data.and.anno);
 		}
@@ -34,7 +46,14 @@ load.molecular.aberration.data <- function(file, patients = NULL, annotation.fie
 			colname.repl <- c(colname.repl, i);
 			}
 		if(length(match.idx) > 1) {
-			colname.repl <- c(colname.repl, paste(rep(i,length(match.idx)), colnames(aberration.data.and.anno)[match.idx],sep='.'));
+			colname.repl <- c(
+				colname.repl, 
+				paste(
+					rep(i,length(match.idx)),
+					colnames(aberration.data.and.anno)[match.idx],
+					sep = '.'
+					)
+				);
 			}
 		}
 
@@ -47,9 +66,14 @@ load.molecular.aberration.data <- function(file, patients = NULL, annotation.fie
 		if(length(colname.matches) > 1) {
 			colnames(aberration.anno) <- colname.repl;
 			}
-		} 
+		}
 	else if(!is.null(annotation.fields)) {
-		warning(paste('annotation.fields (',annotation.fields,') didn\'t match any of the column names. The options for ',file,' are: ', paste(colnames(aberration.data.and.anno)[grep('\\d\\d\\d', colnames(aberration.data.and.anno), invert=TRUE)], collapse=', '), sep=''));
+		warning(paste(
+			'annotation.fields (',annotation.fields,') didn\'t match any of the column names. The options for ',
+			file,' are: ', paste(colnames(aberration.data.and.anno)[grep('\\d\\d\\d', colnames(aberration.data.and.anno),
+			invert=TRUE)], collapse=', '),
+			sep = ''
+			));
 		}
 
 	### return the aberration data or feature annotation or both depending what was passed to the function ###
@@ -63,5 +87,4 @@ load.molecular.aberration.data <- function(file, patients = NULL, annotation.fie
 		return(aberration.anno);
 		}
 	return(aberration.data.and.anno);
-}
-
+	}

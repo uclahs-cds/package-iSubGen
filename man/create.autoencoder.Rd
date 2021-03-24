@@ -21,6 +21,7 @@ model.file.output.dir = '.')
 }
 \author{Natalie Fox}
 \examples{
+\dontrun{
 
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 
@@ -28,8 +29,9 @@ ae.result <- create.autoencoder(
   data.type = 'cna',
   data.matrix = load.molecular.aberration.data(
     paste0(example.molecular.data.dir,'cna_profiles.txt'),
-    patients = paste0('EP00',1:8)
+    patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
     ),
-  encoder.layers.node.nums = c(4,2)
+  encoder.layers.node.nums = c(15,5,2)
   );
+}
 }

@@ -5,7 +5,7 @@ create.autoencoder <- function(
 	autoencoder.activation = 'tanh',
 	optimization.loss.function = 'mean_squared_error',
 	model.file.output.dir = '.'
-	) { 
+	) {
 
 	# if the same activation function is going to be used for all layers expand it to a vector
 	if(length(autoencoder.activation) == 1) {
@@ -32,7 +32,7 @@ create.autoencoder <- function(
 		model %>% layer_dense(
 			units = encoder.layers.node.nums[length(encoder.layers.node.nums)],
 			activation = autoencoder.activation[length(encoder.layers.node.nums)],
-			name='bottleneck'
+			name = 'bottleneck'
 			);
 		# decoding layers
 		for(i in (length(encoder.layers.node.nums)-1):1) {

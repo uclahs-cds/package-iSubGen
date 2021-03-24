@@ -19,11 +19,11 @@ calculate.cis.matrix <- function(
 		if(filter.to.common.patients) {
 			if(is.null(patients)) {
 				patients <- colnames(data.matrices[[data.type]])[grep('\\d', colnames(data.matrices[[data.type]]))];
-				} 
+				}
 			else {
 				patients <- intersect(patients, colnames(data.matrices[[data.type]])[grep('\\d', colnames(data.matrices[[data.type]]))]);
 				}
-			} 
+			}
 		else {
 			# assume patient ids have at least one number in them and annotation columns don't
 			patients <- union(patients, colnames(data.matrices[[data.type]]));
@@ -37,7 +37,7 @@ calculate.cis.matrix <- function(
 		}
 
 	# repeatly subsample the dataset and calculate integrative similarity
-	per.patient.data.type.corr <- list(); 
+	per.patient.data.type.corr <- list();
 	for(i in 1:num.iterations) {
 		set.seed(i);
 		selected.patients <- sample(patients.for.correlations,round(length(patients.for.correlations)*patient.proportion));
@@ -70,8 +70,12 @@ calculate.cis.matrix <- function(
 			}
 		}
 
-	# combine iterations to calculate CIS by taking the median similarity 
-	median.per.patient.data.type.corr <- matrix(NA, nrow = nrow(per.patient.data.type.corr[[1]]), ncol = ncol(per.patient.data.type.corr[[1]]));
+	# combine iterations to calculate CIS by taking the median similarity
+	median.per.patient.data.type.corr <- matrix(
+		data = NA,
+		nrow = nrow(per.patient.data.type.corr[[1]]),
+		ncol = ncol(per.patient.data.type.corr[[1]])
+		);
 	for(i in 1:nrow(median.per.patient.data.type.corr)) {
 		for(j in 1:ncol(median.per.patient.data.type.corr)) {
 			median.per.patient.data.type.corr[i,j] <- median(sapply(per.patient.data.type.corr, function(x) {x[i,j]}));

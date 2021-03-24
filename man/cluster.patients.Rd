@@ -5,8 +5,8 @@
 \usage{
 cluster.patients(data.matrix, distance.metric, parent.output.dir,
 new.result.dir, subtype.table.file = NULL, max.num.subtypes = 12, 
-clustering.reps = 1000, pFeature = 0.8, pItem = 0.8, verbose = FALSE, 
-consensus.cluster.write.table = TRUE);
+clustering.reps = 1000, proportion.features = 0.8, proportion.patients = 0.8, 
+verbose = FALSE, consensus.cluster.write.table = TRUE);
 }
 \arguments{
   \item{data.matrix}{matrix with patients as rows and features as columns}
@@ -16,8 +16,8 @@ consensus.cluster.write.table = TRUE);
   \item{subtype.table.file}{filename for subtype assignment table for different number of clusters}
   \item{max.num.subtypes}{maximum number of clusters to separate patients into}
   \item{clustering.reps}{number of subsamples for consensus clustering function}
-  \item{pFeature}{proportion of features to sample for each clustering iteration}
-  \item{pItem}{proportion of patients to sample for each clustering iteration}
+  \item{proportion.features}{proportion of features to sample for each clustering iteration}
+  \item{proportion.patients}{proportion of patients to sample for each clustering iteration}
   \item{verbose}{logical, where TRUE indicates to print messages to the screen to indicate progress}
   \item{consensus.cluster.write.table}{logical, where TRUE indicates for the ConsensusClusterPlus function to writeTable}
 }

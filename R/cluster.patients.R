@@ -6,8 +6,8 @@ cluster.patients <- function(
 	subtype.table.file = NULL,
 	max.num.subtypes = 12,
 	clustering.reps = 1000,
-	pFeature = 0.8,
-	pItem = 0.8,
+	proportion.features = 0.8,
+	proportion.patients = 0.8,
 	verbose = FALSE,
 	consensus.cluster.write.table = TRUE
 	) {
@@ -17,26 +17,26 @@ cluster.patients <- function(
 	setwd(parent.output.dir);
 
 	if(nrow(data.matrix) > 1) {
-		dianaWithMissingPatients <- function(this_dist,k) {
-			num.patients <- nrow(as.matrix(this_dist));
+		dianaWithMissingPatients <- function(dist,k) {
+			num.patients <- nrow(as.matrix(dist));
 			assignment <- rep(NA, num.patients);
-			missing.patient <- apply(is.na(as.matrix(this_dist)),1,sum) == (num.patients - 1);
+			missing.patient <- apply(is.na(as.matrix(dist)),1,sum) == (num.patients - 1);
 			missing.idx <- (num.patients - 1);
-			while(any(is.na(as.matrix(this_dist)[!missing.patient,!missing.patient]))) {
-				missing.patient <- apply(is.na(as.matrix(this_dist)), 1, sum) >= missing.idx;
+			while(any(is.na(as.matrix(dist)[!missing.patient,!missing.patient]))) {
+				missing.patient <- apply(is.na(as.matrix(dist)), 1, sum) >= missing.idx;
 				missing.idx <- missing.idx - 1;
 				}
 			if(sum(!missing.patient) >= 2) {
-				tmp <- diana(as.dist(as.matrix(this_dist)[!missing.patient,!missing.patient]), metric = distance.metric);
+				clusters <- diana(as.dist(as.matrix(dist)[!missing.patient,!missing.patient]), metric = distance.metric);
 				if(sum(!missing.patient) >= k) {
-					assignment[!missing.patient] <- cutree(tmp, k);
+					assignment[!missing.patient] <- cutree(clusters, k);
 					}
 				}
 			return(assignment);
 			}
 
 		# run ConsensusCluster Plus and have it output the analysis plots to a pdf
-		results <- ConsensusClusterPlus(
+		cluster.result <- ConsensusClusterPlus(
 			d = t(data.matrix),
 			plot = 'pdf',
 			maxK = max.num.subtypes,
@@ -48,8 +48,8 @@ cluster.patients <- function(
 			finalLinkage = 'ward.D',
 			innerLinkage = 'ward.D',
 			clusterAlg = ifelse(any(is.na(data.matrix)),'dianaWithMissingPatients','hc'),
-			pFeature = pFeature,
-			pItem = pItem,
+			pFeature = proportion.features,
+			pItem = proportion.patients,
 			reps = clustering.reps
 			);
 
@@ -67,7 +67,7 @@ cluster.patients <- function(
 		# create a table of the subtypes determined for each number of clusters
 		subtype.list <- list();
 		for(i in 2:max.num.subtypes) {
-			subtype.list[[paste('num_subtypes_', i, sep='')]] <- cutree(results, i);
+			subtype.list[[paste('num_subtypes_', i, sep='')]] <- cutree(cluster.result, i);
 			}
 		subtype.table <- as.data.frame(subtype.list);
 		rownames(subtype.table) <- colnames(data.matrix);
@@ -87,5 +87,5 @@ cluster.patients <- function(
 			);
 		}
 
-	return(list(clustering_result = results, subtype_table = subtype.table));
+	return(list(clustering_result = cluster.result, subtype_table = subtype.table));
 	}

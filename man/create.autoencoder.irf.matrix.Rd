@@ -17,6 +17,7 @@ patients.to.return = NULL)
 \value{matrix where rows are patients and columns are pairs of data types}
 \author{Natalie Fox}
 \examples{
+\dontrun{
 
 # Load three data types and create an autoencder for each
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
@@ -25,19 +26,20 @@ ae.result <- list();
 for(i in c('cna','csnvs','methy')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(example.molecular.data.dir,i,'_profiles.txt'),
-    patients = paste0('EP00',1:8)
+    patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
     );
   ae.result[[i]] <- create.autoencoder(
     data.type = i,
     data.matrix = molecular.data[[i]],
-    encoder.layers.node.nums = c(4,2)
+    encoder.layers.node.nums = c(10,2)
     )$autoencoder;
   }
 
 # Create a matrix of the bottleneck layers 
-#irf.matrix <- create.autoencoder.irf.matrix(
-#  data.types = names(molecular.data),
-#  data.matrices = molecular.data,
-#  autoencoders = ae.result
-#  );
+irf.matrix <- create.autoencoder.irf.matrix(
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
+  autoencoders = ae.result
+  );
+}
 }

@@ -4,7 +4,7 @@ create.autoencoder.irf.matrix <- function(
 	autoencoders,
 	filter.to.common.patients = FALSE,
 	patients.to.return = NULL
-	) { 
+	) {
 
 	# pull out the patients to use
 	patients <- NULL;
@@ -31,7 +31,7 @@ create.autoencoder.irf.matrix <- function(
 		}
 
 	# go through each data.type and get the corresponding compressed autoencoder features
-	irf <- NULL;
+	irf.matrix <- NULL;
 	for(data.type in data.types) {
 		if(data.type %in% names(autoencoders)) {
 			# load the neural net for the data.type
@@ -51,12 +51,12 @@ create.autoencoder.irf.matrix <- function(
 			colnames(bottleneck.values) <- paste0(data.type,1:ncol(bottleneck.values));
 
 			# add the IRF features from this data type to the IRF matrix
-			if(is.null(irf)) {
-				irf <- bottleneck.values;
+			if(is.null(irf.matrix)) {
+				irf.matrix <- bottleneck.values;
 				}
 			else {
-				irf <- cbind(irf,bottleneck.values);
-				}	
+				irf.matrix <- cbind(irf.matrix, bottleneck.values);
+				}
 			}
 		}
 

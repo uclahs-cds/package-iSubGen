@@ -8,12 +8,12 @@ calculate.scaling <- function(data.matrices) {
 			));
 		}
 	# if there are multiple data types to scale
-	scale.factors.center <- list();
-	scale.factors.scale <- list();
+	# return the mean and sd of each row for each data matrix
+	factors.center <- list();
+	factors.scale <- list();
 	for(data.type in names(data.matrices)) {
-		# return the mean and sd of each row for each data matrix
-		scale.factors.center[[data.type]] <- apply(data.matrices[[data.type]],1,mean);
-		scale.factors.scale[[data.type]] <- apply(data.matrices[[data.type]],1,sd);
+		factors.center[[data.type]] <- apply(data.matrices[[data.type]],1,mean);
+		factors.scale[[data.type]] <- apply(data.matrices[[data.type]],1,sd);
 		}
-	return(list(center = scale.factors.center, scale = scale.factors.scale));
+	return(list(center = factors.center, scale = factors.scale));
 	}
