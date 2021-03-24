@@ -56,13 +56,13 @@ cluster.patients <- function(
 		# create a table of the subtypes determined for each number of clusters
 		subtype.list <- list();
 		for(i in 2:max.num.subtypes) {
-			subtype.list[[paste('num_subtypes_', i ,sep='')]] <- results[[i]]$consensusClass;
+			subtype.list[[paste('num_subtypes_', i ,sep='')]] <- cluster.result[[i]]$consensusClass;
 			}
 		subtype.table <- as.data.frame(subtype.list);
 
 		}
 	else if(nrow(data.matrix) == 1){
-		results <- diana(t(data.matrix));
+		cluster.result <- diana(t(data.matrix));
 
 		# create a table of the subtypes determined for each number of clusters
 		subtype.list <- list();

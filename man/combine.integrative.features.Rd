@@ -6,8 +6,8 @@
 combine.integrative.features(irf.matrix, cis.matrix,
 irf.rescale.recenter = NA, cis.rescale.recenter = NA, 
 irf.rescale.denominator = NA, cis.rescale.denominator = NA,
-irf.weights = rep(1, ncol(irf)), 
-cis.weights = rep(1, ncol(cis)))
+irf.weights = rep(1, ncol(irf.matrix)), 
+cis.weights = rep(1, ncol(cis.matrix)))
 }
 \arguments{
   \item{irf.matrix}{matrix of independent reduced features with patients as rows and features as columns}

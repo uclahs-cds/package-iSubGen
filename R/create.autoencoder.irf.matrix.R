@@ -60,5 +60,5 @@ create.autoencoder.irf.matrix <- function(
 			}
 		}
 
-	return(irf);
+	return(irf.matrix);
 	}
