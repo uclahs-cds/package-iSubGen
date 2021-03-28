@@ -11,7 +11,7 @@ The reduced features could be a small number of compressed features from autoenc
 The second type of integrative feature is pairwise comparison of the data types.
 This will allow patient classification based on whether the same relationships are observed in the different data types.
 
-![iSubGen overview diagram](Figures/iSubGen_figure_methodology_overview.png)
+![iSubGen overview diagram](vignettes/Figures/iSubGen_figure_methodology_overview.png)
 
 ### Applying {\emph{iSubGen}} to an example
 
@@ -59,7 +59,7 @@ In this way, if we take the values from the smallest number of nodes at the inte
 all the data of the input features should be represented in a smaller number of features.
 A benefit of using autoencoders for compressing features is that autoencoders can capture non-linear relationships.
 
-![Schematic for iSubGen feature reduction using autoencoders.](Figures/iSubGen_figure_methodology_autoencoders.png)
+![Schematic for iSubGen feature reduction using autoencoders.](vignettes/Figures/iSubGen_figure_methodology_autoencoders.png)
 
 ### Create independent reduced features (IRFs)
 
@@ -120,7 +120,7 @@ However, instead of clustering each distance matrix, the distances from a single
 This provides an assessment of how similar the relationships between patients are in the different data types 
 and might elucidate whether there are different biological regulation subgroups of the cancers.
 
-![Schematic for creating iSubGen pairwise similarity measures.](Figures/iSubGen_figure_methodology_correlations.png)
+![Schematic for creating iSubGen pairwise similarity measures.](vignettes/Figures/iSubGen_figure_methodology_correlations.png)
 
 ### Create a correlation matrix
 
