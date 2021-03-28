@@ -25,7 +25,7 @@ The coding SNV data is gene based with 0 if there is no SNVs in the gene and 1 i
 
 The first step is to load the data. Here the genomic features are rows and patients are columns.  
 
-```{r load-data```
+```{r load-data}
 # Load the library and the data included with the package
 library(iSubGen);
 molecular.data <- list();
