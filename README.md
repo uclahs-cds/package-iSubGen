@@ -1,5 +1,12 @@
 # iSubGen R package
 
+- [iSubGen](#pipeline-name)
+  - [Overview](#overview)
+  - [Independent feature reduction](#irf)
+  - [Pairwise similarity matrix](#cis)
+  - [Combine features and create integrative subtypes](#subtypes)
+  - [Glossary/Acronyms](#glossary)
+
 ## Overview
 
 The purpose of integrative subtype generation (iSubGen) is to provide a framework for subtype discovery 
@@ -13,9 +20,9 @@ This will allow patient classification based on whether the same relationships a
 
 ![iSubGen overview diagram](vignettes/Figures/iSubGen_figure_methodology_overview.png)
 
-### Applying {\emph{iSubGen}} to an example
+### Applying iSubGen to an example
 
-We will demonstrate how to use **iSubGen** with a small example dataset. 
+We will demonstrate how to use iSubGen with a small example dataset. 
 This example has copy number (CNA) profiles, methylation profiles and coding single nucleotide variant (SNV) data for 30 patients.
 The CNA data is gene based with -1 for a deletion, 0 for neutral and 1 for a gain.
 The methylation data is probe based and is continuous values between -1 and 1.
