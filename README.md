@@ -2,10 +2,10 @@
 
 - [iSubGen](#pipeline-name)
   - [Overview](#overview)
-  - [Independent feature reduction](#irf)
-  - [Pairwise similarity matrix](#cis)
-  - [Combine features and create integrative subtypes](#subtypes)
-  - [Glossary/Acronyms](#glossary)
+  - [Independent feature reduction](#independent-feature-reduction)
+  - [Pairwise similarity matrix](#pairwise-similarity-matrix)
+  - [Combine features and create integrative subtypes](#combine-features-and-create-integrative-subtypes)
+  - [Glossary/Acronyms](#glossary/acronyms)
 
 ## Overview
 
