@@ -8,20 +8,20 @@ create.autoencoder <- function(
 	) {
 
 	# if the same activation function is going to be used for all layers expand it to a vector
-	if(length(autoencoder.activation) == 1) {
+	if (length(autoencoder.activation) == 1) {
 		autoencoder.activation <- rep(autoencoder.activation, length(encoder.layers.node.nums));
 		}
 
 	# create an empty neural net and add the first/input layer
 	model <- keras_model_sequential();
 	model %>% layer_dense(
-			units = encoder.layers.node.nums[1],
-			activation = autoencoder.activation[1],
-			input_shape = nrow(data.matrix)
-			);
+		units = encoder.layers.node.nums[1],
+		activation = autoencoder.activation[1],
+		input_shape = nrow(data.matrix)
+		);
 
 	# add the rest of the neural net layers
-	if(length(encoder.layers.node.nums) > 1) {
+	if (length(encoder.layers.node.nums) > 1) {
 		# encoding layers
 		for(i in 2:(length(encoder.layers.node.nums)-1)) {
 			model %>% layer_dense(
@@ -62,7 +62,7 @@ create.autoencoder <- function(
 	early.stopping <- callback_early_stopping(patience = 5);
 
 	batch.size <- 50;
-	if(batch.size > ncol(data.matrix)) {
+	if (batch.size > ncol(data.matrix)) {
 		batch.size <- ncol(data.matrix) -1;
 		}
 

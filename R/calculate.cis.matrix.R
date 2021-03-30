@@ -10,14 +10,16 @@ calculate.cis.matrix <- function(
 	feature.proportion = 1,
 	num.iterations = 10,
 	print.intermediary.similarity.matrices.to.file = TRUE,
-	print.dir = '.'
+	print.dir = '.',
+	patient.proportion.seeds = seq(1,num.iterations),
+	feature.proportion.seeds = seq(1,num.iterations)
 	) {
 
 	# pull out the patients to use
 	patients <- NULL;
 	for(data.type in data.types) {
-		if(filter.to.common.patients) {
-			if(is.null(patients)) {
+		if (filter.to.common.patients) {
+			if (is.null(patients)) {
 				patients <- colnames(data.matrices[[data.type]])[grep('\\d', colnames(data.matrices[[data.type]]))];
 				}
 			else {
@@ -29,7 +31,7 @@ calculate.cis.matrix <- function(
 			patients <- union(patients, colnames(data.matrices[[data.type]]));
 			}
 		}
-	if(is.null(patients.for.correlations)) {
+	if (is.null(patients.for.correlations)) {
 		patients.for.correlations <- patients;
 		}
 	else {
@@ -39,12 +41,14 @@ calculate.cis.matrix <- function(
 	# repeatly subsample the dataset and calculate integrative similarity
 	per.patient.data.type.corr <- list();
 	for(i in 1:num.iterations) {
-		set.seed(i);
+		set.seed(patient.proportion.seeds[i]);
 		selected.patients <- sample(patients.for.correlations,round(length(patients.for.correlations)*patient.proportion));
 		data.matrices.subset <- data.matrices;
-		if(feature.proportion != 1) {
+		# if the feature proportion is 1, then we don't need to filter the features
+		# if its not 1, then the features need to be selected for the iteration
+		if (feature.proportion != 1) {
 			for(data.type in data.types) {
-				set.seed(i);
+				set.seed(feature.proportion.seeds[i]);
 				selected.features <- sample(rownames(data.matrices[[data.type]]), ceiling(nrow(data.matrices[[data.type]])*feature.proportion));
 				data.matrices.subset[[data.type]] <- data.matrices.subset[[data.type]][selected.features,];
 				}
@@ -58,7 +62,7 @@ calculate.cis.matrix <- function(
 			patients.to.return = patients.to.return,
 			patients.for.correlations = selected.patients
 			);
-		if(print.intermediary.similarity.matrices.to.file) {
+		if (print.intermediary.similarity.matrices.to.file) {
 			write.table(
 				per.patient.data.type.corr[[i]],
 				file = paste0(print.dir,'/',Sys.Date(),'_correlation_matrix_seed_',i,'.txt'),

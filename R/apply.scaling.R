@@ -1,32 +1,28 @@
 apply.scaling <- function(data.matrices, scaling.factors) {
-	# check that data.matrices is the correct class
-	if(! class(data.matrices) %in% c('matrix','list')) {
-		stop('data.matrices needs to be a matrix or a list of matrices');
-		}
 
 	# check that scaling.factors is have elements with the names "center" and "scale"
-	if(all(!c('center','scale') %in% names(scaling.factors))) {
+	if (all(!c('center','scale') %in% names(scaling.factors))) {
 		stop('scaling.factor needs to be a list with center and scale ');
 		}
 
 	# data.matrices can be a single matrix or a list of matrices
-	# if the data is a single matrix then the class will be 'matrix'
-	if(class(data.matrices) == 'matrix') {
+	# if the data is a single matrix then the class will be 'matrix'	
+	if (class(data.matrices) == 'matrix') {
 
 		# check that scaling.factors are the correct format
-		if(length(scaling.factors$center) != nrow(data.matrices)) {
+		if (length(scaling.factors$center) != nrow(data.matrices)) {
 			stop('the length of scaling.factors$center match the number of rows in data.matrices');
 			}
-		if(length(scaling.factors$scale) != nrow(data.matrices)) {
+		if (length(scaling.factors$scale) != nrow(data.matrices)) {
 			stop('the length of scaling.factors$scale match the number of rows in data.matrices');
 			}
 
 		# if necessary adjust the format of the scaling factors for a single matrix
-		if(class(scaling.factors$center) == 'list') {
+		if (class(scaling.factors$center) == 'list') {
 			scaling.factors$center <- scaling.factors$center[[1]];
 			warning('the first item from the scaling.factor$center list was used for scaling');
 			}
-		if(class(scaling.factors$scale) == 'list') {
+		if (class(scaling.factors$scale) == 'list') {
 			scaling.factors$scale <- scaling.factors$scale[[1]];
 			warning('the first item from the scaling.factor$scale list was used for scaling');
 			}
@@ -44,12 +40,16 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 		# return the scaled single matrix
 		return(data.matrices);
 		}
+	else if (! class(data.matrices) == 'list') {
+		stop('data.matrices needs to be a matrix or a list of matrices');
+		}
+	# if you make it to this point then data.matrices is a list
 
 	# check that scaling.factors are the correct format
-	if(any(sort(names(data.matrices)) != sort(names(scaling.factors$center)))) {
+	if (any(sort(names(data.matrices)) != sort(names(scaling.factors$center)))) {
 		stop('the scaling.factors$center list needs to have the same names as the data.matrices list');
 		}
-	if(any(sort(names(data.matrices)) != sort(names(scaling.factors$scale)))) {
+	if (any(sort(names(data.matrices)) != sort(names(scaling.factors$scale)))) {
 		stop('the scaling.factors$scale list needs to have the same names as the data.matrices list');
 		}
 
@@ -57,10 +57,10 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 	for(data.type in names(data.matrices)) {
 
 		# check that scaling.factors are the correct format
-		if(length(scaling.factors$center[[data.type]]) != nrow(data.matrices[[data.type]])) {
+		if (length(scaling.factors$center[[data.type]]) != nrow(data.matrices[[data.type]])) {
 			stop(paste0('scaling.factors$center$',data.type,' does not match the number of rows in data.matrices$',data.type));
 			}
-		if(length(scaling.factors$scale[[data.type]]) != nrow(data.matrices[[data.type]])) {
+		if (length(scaling.factors$scale[[data.type]]) != nrow(data.matrices[[data.type]])) {
 			stop(paste0('scaling.factors$scale$',data.type,' does not match the number of rows in data.matrices$',data.type));
 			}
 

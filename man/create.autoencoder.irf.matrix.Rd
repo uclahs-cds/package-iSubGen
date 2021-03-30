@@ -23,7 +23,7 @@ patients.to.return = NULL)
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 molecular.data <- list();
 ae.result <- list();
-for(i in c('cna','csnvs','methy')) {
+for(i in c('cna','snv','methy')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(example.molecular.data.dir,i,'_profiles.txt'),
     patients = c(paste0('EP00',1:9), paste0('EP0',10:30))

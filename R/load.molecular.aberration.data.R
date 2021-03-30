@@ -13,9 +13,9 @@ load.molecular.aberration.data <- function(
 
 	### pull out the aberration data ###
 	aberration.profiles <- NULL;
-	if(!is.null(patients)) {
+	if (!is.null(patients)) {
 		# select aberration data and format as a matrix instead of a data frame
-		if(any(!patients %in% colnames(aberration.data.and.anno))) {
+		if (any(!patients %in% colnames(aberration.data.and.anno))) {
 			warning(paste0(
 				'the following patients were not found in the given file:',
 				paste(
@@ -42,10 +42,10 @@ load.molecular.aberration.data <- function(
 		match.idx <- grep(tolower(i), tolower(colnames(aberration.data.and.anno)));
 
 		colname.matches <- c(colname.matches, match.idx);
-		if(length(match.idx) == 1) {
+		if (length(match.idx) == 1) {
 			colname.repl <- c(colname.repl, i);
 			}
-		if(length(match.idx) > 1) {
+		if (length(match.idx) > 1) {
 			colname.repl <- c(
 				colname.repl, 
 				paste(
@@ -61,13 +61,13 @@ load.molecular.aberration.data <- function(
 	colname.matches <- unique(colname.matches);
 	colname.repl <- unique(colname.repl);
 	aberration.anno <- NULL;
-	if(length(colname.matches) > 0) {
+	if (length(colname.matches) > 0) {
 		aberration.anno <- aberration.data.and.anno[,colname.matches];
-		if(length(colname.matches) > 1) {
+		if (length(colname.matches) > 1) {
 			colnames(aberration.anno) <- colname.repl;
 			}
 		}
-	else if(!is.null(annotation.fields)) {
+	else if (!is.null(annotation.fields)) {
 		warning(paste(
 			'annotation.fields (',annotation.fields,') didn\'t match any of the column names. The options for ',
 			file,' are: ', paste(colnames(aberration.data.and.anno)[grep('\\d\\d\\d', colnames(aberration.data.and.anno),
@@ -77,13 +77,13 @@ load.molecular.aberration.data <- function(
 		}
 
 	### return the aberration data or feature annotation or both depending what was passed to the function ###
-	if(!is.null(aberration.profiles) & !is.null(aberration.anno)) {
+	if (!is.null(aberration.profiles) & !is.null(aberration.anno)) {
 		return(list( aberration.profiles = aberration.profiles, feature.annotation = aberration.anno));
 		}
-	if(!is.null(aberration.profiles)) {
+	if (!is.null(aberration.profiles)) {
 		return(aberration.profiles);
 		}
-	if(!is.null(aberration.anno)) {
+	if (!is.null(aberration.anno)) {
 		return(aberration.anno);
 		}
 	return(aberration.data.and.anno);

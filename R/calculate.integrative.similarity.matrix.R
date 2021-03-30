@@ -11,9 +11,9 @@ calculate.integrative.similarity.matrix <- function(
 	# pull out the patients to use
 	patients <- NULL;
 	for(data.type in data.types) {
-		if(filter.to.common.patients) {
+		if (filter.to.common.patients) {
 			# assume patient IDs have at least one number in them and annotation columns don't
-			if(is.null(patients)) {
+			if (is.null(patients)) {
 				patients <- colnames(data.matrices[[data.type]])[grep('\\d', colnames(data.matrices[[data.type]]))];
 				}
 			else {
@@ -25,13 +25,13 @@ calculate.integrative.similarity.matrix <- function(
 			}
 		}
 	patients <- sort(patients);
-	if(is.null(patients.to.return)) {
+	if (is.null(patients.to.return)) {
 		patients.to.return <- patients;
 		}
 	else {
 		patients.to.return <- intersect(patients.to.return, patients);
 		}
-	if(is.null(patients.for.correlations)) {
+	if (is.null(patients.for.correlations)) {
 		patients.for.correlations <- patients;
 		}
 	else {
@@ -64,7 +64,7 @@ calculate.integrative.similarity.matrix <- function(
 			))[1];
 		pr.tracker <- 0;
 		while(pr.tracker < pr.num) {
-			if((pr.tracker + opt.num.of.return.to.calc.at.once) < pr.num) {
+			if ((pr.tracker + opt.num.of.return.to.calc.at.once) < pr.num) {
 				dist.calc.operations[[as.character(pr.tracker)]] <- patients.to.return[(pr.tracker+1):(pr.tracker+opt.num.of.return.to.calc.at.once)];
 				pr.tracker <- pr.tracker + opt.num.of.return.to.calc.at.once;
 				}
@@ -76,9 +76,9 @@ calculate.integrative.similarity.matrix <- function(
 
 		# calculate distances and fill in patient by patient distance matrix
 		for(dist.op in 1:length(dist.calc.operations)) {
-			if(class(dist.metrics[[data.type]]) == 'character') {
+			if (class(dist.metrics[[data.type]]) == 'character') {
 
-				if(dist.metrics[[data.type]] %in% c('pearson','spearman')) {
+				if (dist.metrics[[data.type]] %in% c('pearson','spearman')) {
 					# if the distance metric is a correlation, convert the correlation into a distance
 					dist.result <- as.dist(
 						1 - cor(data.matrices[[data.type]][,intersect(colnames(data.matrices[[data.type]]),unique(c(dist.calc.operations[dist.op][[1]],patients.for.correlations)))],
@@ -95,7 +95,7 @@ calculate.integrative.similarity.matrix <- function(
 						);
 					}
 				}
-			else if(class(dist.metrics[[data.type]]) == 'function') {
+			else if (class(dist.metrics[[data.type]]) == 'function') {
 				dist.result <- as.dist((dist.metrics[[data.type]])(t(data.matrices[[data.type]][,intersect(colnames(dist.metrics[[data.type]]), unique(c(dist.calc.operations[dist.op][[1]], patients.for.correlations)))])));
 				}
 			else {
@@ -134,7 +134,7 @@ calculate.integrative.similarity.matrix <- function(
 
 			for(patient in rownames(per.patient.data.type.corr)) {
 				rows.to.use <- which(pair.patient2 == patient & not.na.rows);
-				if(length(rows.to.use) > 1) {
+				if (length(rows.to.use) > 1) {
 					per.patient.data.type.corr[patient,data.type.pair.counter] <- cor(
 						c(0, patient.paired.dists.matrix[rows.to.use,i]),
 						c(0, patient.paired.dists.matrix[rows.to.use,j]),

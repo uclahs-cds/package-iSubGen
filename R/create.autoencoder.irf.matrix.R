@@ -9,9 +9,9 @@ create.autoencoder.irf.matrix <- function(
 	# pull out the patients to use
 	patients <- NULL;
 	for(data.type in data.types) {
-		if(filter.to.common.patients) {
+		if (filter.to.common.patients) {
 			# assume patient ids have at least one number in them and annotation columns don't
-			if(is.null(patients)) {
+			if (is.null(patients)) {
 				patients <- colnames(data.matrices[[data.type]])[grep('\\d', colnames(data.matrices[[data.type]]))];
 				}
 			else {
@@ -23,7 +23,7 @@ create.autoencoder.irf.matrix <- function(
 			}
 		}
 	patients <- sort(patients);
-	if(is.null(patients.to.return)) {
+	if (is.null(patients.to.return)) {
 		patients.to.return <- patients;
 		}
 	else {
@@ -33,17 +33,17 @@ create.autoencoder.irf.matrix <- function(
 	# go through each data.type and get the corresponding compressed autoencoder features
 	irf.matrix <- NULL;
 	for(data.type in data.types) {
-		if(data.type %in% names(autoencoders)) {
+		if (data.type %in% names(autoencoders)) {
 			# load the neural net for the data.type
 			model <- autoencoders[[data.type]];
-			if(is.character(autoencoders[[data.type]]) && grep('hdf5$',autoencoders[[data.type]]) == 1) {
+			if (is.character(autoencoders[[data.type]]) && grep('hdf5$',autoencoders[[data.type]]) == 1) {
 				model <- load_model_hdf5(
 					autoencoders[[data.type]], 
 					compile = FALSE);
 				}
 
 			# create the autoencoder encoding layers from input to the bottleneck layer
-			intermediate.layer.model <- keras_model(inputs = model$input, outputs = get_layer(model, "bottleneck")$output)
+			intermediate.layer.model <- keras_model(inputs = model$input, outputs = get_layer(model, "bottleneck")$output);
 
 			# get the bottleneck values from the autoencoder
 			bottleneck.values <- predict(intermediate.layer.model,x=t(data.matrices[[data.type]]));
@@ -51,7 +51,7 @@ create.autoencoder.irf.matrix <- function(
 			colnames(bottleneck.values) <- paste0(data.type,1:ncol(bottleneck.values));
 
 			# add the IRF features from this data type to the IRF matrix
-			if(is.null(irf.matrix)) {
+			if (is.null(irf.matrix)) {
 				irf.matrix <- bottleneck.values;
 				}
 			else {

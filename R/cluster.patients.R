@@ -26,9 +26,9 @@ cluster.patients <- function(
 				missing.patient <- apply(is.na(as.matrix(dist)), 1, sum) >= missing.idx;
 				missing.idx <- missing.idx - 1;
 				}
-			if(sum(!missing.patient) >= 2) {
+			if (sum(!missing.patient) >= 2) {
 				clusters <- diana(as.dist(as.matrix(dist)[!missing.patient,!missing.patient]), metric = distance.metric);
-				if(sum(!missing.patient) >= k) {
+				if (sum(!missing.patient) >= k) {
 					assignment[!missing.patient] <- cutree(clusters, k);
 					}
 				}
@@ -61,7 +61,7 @@ cluster.patients <- function(
 		subtype.table <- as.data.frame(subtype.list);
 
 		}
-	else if(nrow(data.matrix) == 1){
+	else if (nrow(data.matrix) == 1){
 		cluster.result <- diana(t(data.matrix));
 
 		# create a table of the subtypes determined for each number of clusters
@@ -75,7 +75,7 @@ cluster.patients <- function(
 
 	setwd(curr.dir);
 
-	if(!is.null(subtype.table.file)) {
+	if (!is.null(subtype.table.file)) {
 		# save subtype table to file
 		write.table(
 			subtype.table,

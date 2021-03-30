@@ -23,7 +23,7 @@ patients.to.return = NULL, patients.for.correlations = NULL)
 # Load molecular profiles for three data types
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 molecular.data <- list();
-for(i in c('cna','csnvs','methy')) {
+for(i in c('cna','snv','methy')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(example.molecular.data.dir,i,'_profiles.txt'),
     patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
@@ -36,7 +36,7 @@ corr.matrix <- calculate.integrative.similarity.matrix(
   data.matrices = molecular.data,
   dist.metrics = list(
     cna = 'euclidean',
-    csnvs = 'euclidean',
+    snv = 'euclidean',
     methy = 'euclidean'
     )
   );
@@ -50,7 +50,7 @@ corr.matrix2 <- calculate.integrative.similarity.matrix(
   data.matrices = molecular.data,
   dist.metrics = list(
     cna = 'euclidean',
-    csnvs = 'euclidean',
+    snv = 'euclidean',
     methy = 'euclidean'
     ),
   patients.to.return = paste0('EP00',1:9),
@@ -63,7 +63,7 @@ corr.matrix3 <- calculate.integrative.similarity.matrix(
   data.matrices=molecular.data[c(1,3)],
   dist.metrics=list(
     cna='euclidean',
-    csnvs='euclidean',
+    snv='euclidean',
     methy='euclidean'
     )[c(1,3)],
   patients.to.return=paste0('EP00',1:9),

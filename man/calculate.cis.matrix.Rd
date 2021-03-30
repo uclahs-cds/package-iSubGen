@@ -30,7 +30,7 @@ print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.')
 # Load molecular profiles for three data types
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 molecular.data <- list();
-for(i in c('cna','csnvs','methy')) {
+for(i in c('cna','snv','methy')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(example.molecular.data.dir,i,'_profiles.txt'),
     patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
@@ -43,7 +43,7 @@ corr.matrix <- calculate.cis.matrix(
   data.matrices = molecular.data,
   dist.metrics = list(
     cna = 'euclidean',
-    csnvs = 'euclidean',
+    snv = 'euclidean',
     methy = 'euclidean'
     )
   );
@@ -57,7 +57,7 @@ corr.matrix2 <- calculate.cis.matrix(
   data.matrices = molecular.data,
   dist.metrics = list(
     cna = 'euclidean',
-    csnvs = 'euclidean',
+    snv = 'euclidean',
     methy = 'euclidean'
     ),
   patients.to.return = paste0('EP00',1:9),
@@ -67,16 +67,16 @@ corr.matrix2 <- calculate.cis.matrix(
 # Example 3: Adjusting the proportion of the features that will be used to correlate 
 # the patient profiles
 corr.matrix3 <- calculate.cis.matrix(
-  data.types=names(molecular.data),
-  data.matrices=molecular.data,
-  dist.metrics=list(
-    cna='euclidean',
-    csnvs='euclidean',
-    methy='euclidean'
+  data.types = names(molecular.data),
+  data.matrices = molecular.data,
+  dist.metrics = list(
+    cna = 'euclidean',
+    snv = 'euclidean',
+    methy = 'euclidean'
     ),
-  patients.to.return=paste0('EP00',1:9),
-  patients.for.correlations=paste0('EP0',10:30),
-  feature.proportion=0.6
+  patients.to.return = paste0('EP00',1:9),
+  patients.for.correlations = paste0('EP0',10:30),
+  feature.proportion = 0.6
   );
 
 }
