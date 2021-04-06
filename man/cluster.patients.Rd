@@ -28,7 +28,10 @@ verbose = FALSE, consensus.cluster.write.table = TRUE);
 \author{Natalie Fox}
 \examples{
 
-# Create a data matrix
+# For this example instead of clustering CIS and IRF matrices,
+# create a data matrix to see how the function works without
+# running through the whole iSubGen process.
+# This example is created with to have 4 distinct clusters
 set.seed(5);
 ex.matrix <- matrix(
   c(

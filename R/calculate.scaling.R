@@ -10,13 +10,11 @@ calculate.scaling <- function(data.matrices) {
 	if (class(data.matrices) == 'list') {
 		# if there are multiple data types to scale
 		# return the mean and sd of each row for each data matrix
-		factors.center <- list();
-		factors.scale <- list();
+		scaling.factors <- list();
 		for(data.type in names(data.matrices)) {
-			factors.center[[data.type]] <- apply(data.matrices[[data.type]],1,mean);
-			factors.scale[[data.type]] <- apply(data.matrices[[data.type]],1,sd);
+			scaling.factors[[data.type]] <- calculate.scaling(data.matrices[[data.type]]);
 			}
-		return(list(center = factors.center, scale = factors.scale));
+		return(scaling.factors);
 		}
 	# if not a list or a matrix return an error message to let the user know how to correct the input
 	stop('data.matrices needs to be a matrix or a list');

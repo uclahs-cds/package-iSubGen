@@ -44,6 +44,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 		stop('data.matrices needs to be a matrix or a list of matrices');
 		}
 	# if you make it to this point then data.matrices is a list
+	# so check the format of the input and then recurse on each matrix
 
 	# check that scaling.factors are the correct format
 	if (any(sort(names(data.matrices)) != sort(names(scaling.factors$center)))) {
@@ -63,18 +64,12 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 		if (length(scaling.factors$scale[[data.type]]) != nrow(data.matrices[[data.type]])) {
 			stop(paste0('scaling.factors$scale$',data.type,' does not match the number of rows in data.matrices$',data.type));
 			}
-
-		# scale each row in each matrix by the corresponding scaling factors
-		for(i in 1:nrow(data.matrices[[data.type]])) {
-			center.adjustment <- scaling.factors$center[[data.type]][rownames(data.matrices[[data.type]])[i]];
-			scale.adjustment <- 1;
-			if(scaling.factors$scale[[data.type]][rownames(data.matrices[[data.type]])[i]] > 0) {
-				scale.adjustment <- scaling.factors$scale[[data.type]][rownames(data.matrices[[data.type]])[i]];
-				}
-			data.matrices[[data.type]][i,] <- (data.matrices[[data.type]][i,] - center.adjustment) / scale.adjustment;
-			}
+		
+		# call the function for each data type
+		data.matrices[[data.type]] <- apply.scaling(data.matrices[[data.type]],scaling.factors[[data.type]]);
 		}
 
 	# return the scaled list of matrices
 	return(data.matrices);
 	}
+

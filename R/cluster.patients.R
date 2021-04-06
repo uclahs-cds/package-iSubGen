@@ -17,6 +17,13 @@ cluster.patients <- function(
 	setwd(parent.output.dir);
 
 	if(nrow(data.matrix) > 1) {
+
+		# Defining function for when there is missing data here because
+		# using variables from this function (ex. num.patients, distance.metric)
+		# that are not passed to the function and don't have control of changing
+		# function call within ConsensusCluster to pass more arguments to 
+		# dianaWithMissingPatients. Creating the function here means the variables
+		# be updated before being used.
 		dianaWithMissingPatients <- function(dist,k) {
 			num.patients <- nrow(as.matrix(dist));
 			assignment <- rep(NA, num.patients);

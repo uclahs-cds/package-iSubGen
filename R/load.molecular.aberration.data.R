@@ -19,11 +19,11 @@ load.molecular.aberration.data <- function(
 			warning(paste0(
 				'the following patients were not found in the given file:',
 				paste(
-					patients[which(!patients %in% colnames(aberration.data.and.anno))],
+					patients[!patients %in% colnames(aberration.data.and.anno)],
 					collapse = ','
 					)
 				));
-			patients <- patients[which(patients %in% colnames(aberration.data.and.anno))];
+			patients <- patients[patients %in% colnames(aberration.data.and.anno)];
 			}
 		aberration.profiles <- matrix(
 			data = as.numeric(as.matrix(aberration.data.and.anno[,patients])), 

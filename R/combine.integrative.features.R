@@ -25,7 +25,7 @@ combine.integrative.features <- function(
 			irf.matrix <- irf.matrix - irf.rescale.recenter;
 			}
 		else if (length(irf.rescale.recenter) == ncol(irf.matrix)) {
-			for(j in ncol(irf.matrix)) {
+			for(j in 1:ncol(irf.matrix)) {
 				irf.matrix[,j] <- irf.matrix[,j] - irf.rescale.recenter[j];
 				}
 			}
@@ -41,7 +41,7 @@ combine.integrative.features <- function(
 			cis.matrix <- cis.matrix - cis.rescale.recenter;
 			}
 		else if (length(cis.rescale.recenter) == ncol(cis.matrix)) {
-			for(j in ncol(cis.matrix)) {
+			for(j in 1:ncol(cis.matrix)) {
 				cis.matrix[,j] <- cis.matrix[,j] - cis.rescale.recenter[j];
 				}
 			}
@@ -57,7 +57,7 @@ combine.integrative.features <- function(
 			irf.matrix <- irf.matrix / irf.rescale.denominator;
 			}
 		else if (length(irf.rescale.denominator) == ncol(irf.matrix)) {
-			for(j in ncol(irf.matrix)) {
+			for(j in 1:ncol(irf.matrix)) {
 				irf.matrix[,j] <- irf.matrix[,j] / irf.rescale.denominator[j];
 				}
 			}
@@ -73,7 +73,7 @@ combine.integrative.features <- function(
 			cis.matrix <- cis.matrix / cis.rescale.denominator;
 			}
 		else if (length(cis.rescale.denominator) == ncol(cis.matrix)) {
-			for(j in ncol(cis.matrix)) {
+			for(j in 1:ncol(cis.matrix)) {
 				cis.matrix[,j] <- cis.matrix[,j] / cis.rescale.denominator[j];
 				}
 			}
@@ -86,7 +86,7 @@ combine.integrative.features <- function(
 			irf.weights <- rep(irf.weights, ncol(irf.matrix));
 			}
 		if (length(irf.weights) == ncol(irf.matrix)) {
-			for(j in ncol(irf.matrix)) {
+			for(j in 1:ncol(irf.matrix)) {
 				irf.matrix[,j] <- irf.matrix[,j] * irf.weights[j];
 				}
 			}
@@ -99,7 +99,7 @@ combine.integrative.features <- function(
 			cis.weights <- rep(cis.weights, ncol(cis.matrix));
 			}
 		if (length(cis.weights) == ncol(cis.matrix)) {
-			for(j in ncol(cis.matrix)) {
+			for(j in 1:ncol(cis.matrix)) {
 				cis.matrix[,j] <- cis.matrix[,j] * cis.weights[j];
 				}
 			}

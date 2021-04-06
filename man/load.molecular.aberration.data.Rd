@@ -6,7 +6,7 @@
 load.molecular.aberration.data(file, patients = NULL, annotation.fields = NULL);
 }
 \arguments{
-  \item{file}{file name of the matrix containing molecular and annotation data}
+  \item{file}{file name of the matrix containing molecular and annotation data. If it does not contain an _absolute_ path, the file name is _relative_ to the current working directory, ‘getwd()’ as in read.table.}
   \item{patients}{vector of patients IDs. Must match colnames from aberration file}
   \item{annotation.fields}{vector referencing the column names for the feature annotation columns}
 }

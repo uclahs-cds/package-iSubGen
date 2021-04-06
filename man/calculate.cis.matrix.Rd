@@ -27,7 +27,8 @@ print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.')
 \author{Natalie Fox}
 \examples{
 
-# Load molecular profiles for three data types
+# Load molecular profiles for three data types from example files saved 
+# in the package as <data type>_profiles.txt
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 molecular.data <- list();
 for(i in c('cna','snv','methy')) {

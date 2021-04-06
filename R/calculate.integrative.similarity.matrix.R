@@ -55,6 +55,8 @@ calculate.integrative.similarity.matrix <- function(
 		rownames(dist.matrix) <- patients.to.return;
 
 		# determine the most efficient approach for calculating the distances
+		# The patients.to.return
+		# and a set of patients 
 		dist.calc.operations <- list();
 		pr.num <- length(patients.to.return);
 		pc.num <- length(patients.for.correlations);
