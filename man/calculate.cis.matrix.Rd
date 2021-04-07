@@ -7,7 +7,9 @@ calculate.cis.matrix(data.types, data.matrices, dist.metrics,
 correlation.method = "spearman", filter.to.common.patients = FALSE, 
 patients.to.return = NULL, patients.for.correlations = NULL, 
 patient.proportion = 0.8, feature.proportion = 1, num.iterations = 10, 
-print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.')
+print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.',
+patient.proportion.seeds = seq(1,num.iterations), 
+feature.proportion.seeds = seq(1,num.iterations))
 }
 \arguments{
   \item{data.types}{vector of the IDs for the different data types that are the names of the lists for the data.matrices and dist.metrics}
@@ -22,6 +24,8 @@ print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.')
   \item{num.iterations}{number of iterations to take the median from}
   \item{print.intermediary.similarity.matrices.to.file}{logical, where TRUE indicates that created intermediary integrative similarity matrix from each iteration should be printed to file}
   \item{print.dir}{directory for where to print the intermediary similarity matrices to file}
+  \item{patient.proportion.seeds}{vector of scalars of the length num.iterations specifying the seeds used for random sampling for selecting the patient subsets at each iteration}
+  \item{feature.proportion.seeds}{vector of scalars of the length num.iterations specifying the seeds used for random sampling for selecting the feature subsets at each iteration}
 }
 \value{CIS matrix where rows are patients and columns are pairs of data types}
 \author{Natalie Fox}

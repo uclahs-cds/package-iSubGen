@@ -1,20 +1,21 @@
 apply.scaling <- function(data.matrices, scaling.factors) {
 
-	# check that scaling.factors is have elements with the names "center" and "scale"
-	if (all(!c('center','scale') %in% names(scaling.factors))) {
-		stop('scaling.factor needs to be a list with center and scale ');
-		}
-
 	# data.matrices can be a single matrix or a list of matrices
 	# if the data is a single matrix then the class will be 'matrix'	
 	if (class(data.matrices) == 'matrix') {
+	
+		# check that scaling.factors is have elements with the names "center" and "scale"
+		if (all(!c('center','scale') %in% names(scaling.factors))) {
+			stop('for each data matrix, scaling.factor needs to be a list with center and scale ');
+			}
+
 
 		# check that scaling.factors are the correct format
 		if (length(scaling.factors$center) != nrow(data.matrices)) {
-			stop('the length of scaling.factors$center match the number of rows in data.matrices');
+			stop('the length of scaling.factors$center needs to match the number of rows in data.matrices');
 			}
 		if (length(scaling.factors$scale) != nrow(data.matrices)) {
-			stop('the length of scaling.factors$scale match the number of rows in data.matrices');
+			stop('the length of scaling.factors$scale needs to match the number of rows in data.matrices');
 			}
 
 		# if necessary adjust the format of the scaling factors for a single matrix
@@ -47,22 +48,19 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 	# so check the format of the input and then recurse on each matrix
 
 	# check that scaling.factors are the correct format
-	if (any(sort(names(data.matrices)) != sort(names(scaling.factors$center)))) {
-		stop('the scaling.factors$center list needs to have the same names as the data.matrices list');
-		}
-	if (any(sort(names(data.matrices)) != sort(names(scaling.factors$scale)))) {
-		stop('the scaling.factors$scale list needs to have the same names as the data.matrices list');
+	if (any(sort(names(data.matrices)) != sort(names(scaling.factors)))) {
+		stop('the scaling.factors list needs to have the same names as the data.matrices list');
 		}
 
 	# if you get to this point then data.matrices is a list of matrices
 	for(data.type in names(data.matrices)) {
 
 		# check that scaling.factors are the correct format
-		if (length(scaling.factors$center[[data.type]]) != nrow(data.matrices[[data.type]])) {
-			stop(paste0('scaling.factors$center$',data.type,' does not match the number of rows in data.matrices$',data.type));
+		if (length(scaling.factors[[data.type]]$center) != nrow(data.matrices[[data.type]])) {
+			stop(paste0('scaling.factors$',data.type,'$center does not match the number of rows in data.matrices$',data.type));
 			}
-		if (length(scaling.factors$scale[[data.type]]) != nrow(data.matrices[[data.type]])) {
-			stop(paste0('scaling.factors$scale$',data.type,' does not match the number of rows in data.matrices$',data.type));
+		if (length(scaling.factors[[data.type]]$scale) != nrow(data.matrices[[data.type]])) {
+			stop(paste0('scaling.factors$',data.type,'$scale does not match the number of rows in data.matrices$',data.type));
 			}
 		
 		# call the function for each data type

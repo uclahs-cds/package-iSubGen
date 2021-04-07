@@ -17,10 +17,7 @@ apply.scaling(data.matrices, scaling.factors);
 # Load molecular profiles for three data types and calculate scaling for each
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 molecular.data <- list();
-scaling.factors <- list(
-  center = list(),
-  scale = list()
-  );
+scaling.factors <- list();
 for(i in c('cna','snv','methy')) {
   # Load molecular profiles from example files saved 
   # in the package as <data type>_profiles.txt
@@ -29,8 +26,10 @@ for(i in c('cna','snv','methy')) {
     patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
     );
 
-  scaling.factors$center[[i]] <- apply(molecular.data[[i]], 1, mean);
-  scaling.factors$scale[[i]] <- apply(molecular.data[[i]], 1, sd);
+  scaling.factors[[i]] <- list();
+
+  scaling.factors[[i]]$center <- apply(molecular.data[[i]], 1, mean);
+  scaling.factors[[i]]$scale <- apply(molecular.data[[i]], 1, sd);
   }
 
 # Example 1: Transform the molecular profiles by the scaling factors
@@ -39,9 +38,6 @@ scaled.molecular.data <- apply.scaling(molecular.data, scaling.factors);
 # Example 2: Transform one of the data types based on the scaling factors
 scaled.molecular.data2 <- apply.scaling(
   molecular.data[[1]],
-  list(
-    center = scaling.factors$center[[1]],
-    scale = scaling.factors$scale[[1]]
-    )
+  scaling.factors[[1]]
   );
 }
