@@ -25,12 +25,18 @@ calculate.integrative.similarity.matrix <- function(
 			}
 		}
 	patients <- sort(patients);
+
+	# to calculate integrative similarity values the set of patients that you want values for
+	# does not need to be the same set of patients used for comparison when calculating the values
+	# patients.to.return are the patients that you want similarity values for
+	# patients.for.correlations are the patients to use for calculating similarity values
+	# first we need to find the overlap with the patients in the data matrices
 	if (is.null(patients.to.return)) {
 		patients.to.return <- patients;
 		}
 	else {
 		patients.to.return <- intersect(patients.to.return, patients);
-		}
+		} 
 	if (is.null(patients.for.correlations)) {
 		patients.for.correlations <- patients;
 		}
@@ -55,8 +61,14 @@ calculate.integrative.similarity.matrix <- function(
 		rownames(dist.matrix) <- patients.to.return;
 
 		# determine the most efficient approach for calculating the distances
-		# The patients.to.return
-		# and a set of patients 
+		# we need pr.num x pc.num distances but calculating distances creates 
+		# matrix with the same columns and rows which would be (pr.num + pc.num)^2
+		# calculating distances in sets can mean less unnecessary calculations are done
+		# comparing the each of the patients.to.return to the patients.for.correlation
+		# select the number of patients.to.return to compare to patients.for.correlation at a time
+		# (pc.num + k) is the patients per comparison
+		# then there will be (ceiling(pr.num/k)-1) comparisons
+		# and then an additional (pc.num + j) where j is the remainder not calculated
 		dist.calc.operations <- list();
 		pr.num <- length(patients.to.return);
 		pc.num <- length(patients.for.correlations);
@@ -116,7 +128,8 @@ calculate.integrative.similarity.matrix <- function(
 		patient.pairs <- as.character(sapply(1:(ncol(dist.matrix)),function(x) {paste0(colnames(dist.matrix)[x], ':', rownames(dist.matrix))}));
 		patient.paired.dists.matrix[patient.pairs,data.type] <- as.numeric(dist.matrix);
 		}
-	patient.paired.dists.matrix <- patient.paired.dists.matrix[apply(patient.paired.dists.matrix, 1, function(x) {sum(!is.na(x))}) >= 2,];
+	# find the rows with at least one value (not na) beyond the patient by patient comparison
+	patient.paired.dists.matrix <- patient.paired.dists.matrix[apply(patient.paired.dists.matrix, 1, function(x) {sum(!is.na(x))}) > 1,];
 
 	split.rownames <- strsplit(rownames(patient.paired.dists.matrix), ':');
 	pair.patient1 <- sapply(1:length(split.rownames), function(i) {split.rownames[[i]][1]});

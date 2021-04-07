@@ -16,6 +16,7 @@ combine.integrative.features <- function(
 	if (all(rownames(irf.matrix) != rownames(cis.matrix))) {
 		stop('irf.matrix and cis.matrix rownames do not match');
 		}
+
 	# check for the right length and adjust by each parameter
 	if (length(irf.rescale.recenter) != 1 || !is.na(irf.rescale.recenter)) {
 		if (length(irf.rescale.recenter) == 1 && irf.rescale.recenter == 'mean') {
@@ -57,6 +58,12 @@ combine.integrative.features <- function(
 			irf.matrix <- irf.matrix / irf.rescale.denominator;
 			}
 		else if (length(irf.rescale.denominator) == ncol(irf.matrix)) {
+			if (any(is.na(irf.rescale.denominator))) {
+				warning('irf.rescale.denominator contains NAs');
+				}
+			if (any(irf.rescale.denominator == 0)) {
+				warning('irf.rescale.denominator contains zeros');
+				}
 			for(j in 1:ncol(irf.matrix)) {
 				irf.matrix[,j] <- irf.matrix[,j] / irf.rescale.denominator[j];
 				}
@@ -73,6 +80,12 @@ combine.integrative.features <- function(
 			cis.matrix <- cis.matrix / cis.rescale.denominator;
 			}
 		else if (length(cis.rescale.denominator) == ncol(cis.matrix)) {
+			if (any(is.na(cis.rescale.denominator))) {
+				warning('cis.rescale.denominator contains NAs');
+				}
+			if (any(cis.rescale.denominator == 0)) {
+				warning('cis.rescale.denominator contains zeros');
+				}
 			for(j in 1:ncol(cis.matrix)) {
 				cis.matrix[,j] <- cis.matrix[,j] / cis.rescale.denominator[j];
 				}

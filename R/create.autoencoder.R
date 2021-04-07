@@ -7,6 +7,14 @@ create.autoencoder <- function(
 	model.file.output.dir = '.'
 	) {
 
+	# input checks
+	if (class(data.matrix) != 'matrix') {
+		stop('data.matrix needs to be a matrix');
+		}
+	if (any(is.na(data.matrix))) {
+		stop('data matrix contains NA(s)');
+		}	
+
 	# if the same activation function is going to be used for all layers expand it to a vector
 	if (length(autoencoder.activation) == 1) {
 		autoencoder.activation <- rep(autoencoder.activation, length(encoder.layers.node.nums));
