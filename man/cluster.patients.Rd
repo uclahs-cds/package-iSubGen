@@ -27,6 +27,7 @@ verbose = FALSE, consensus.cluster.write.table = TRUE);
 }
 \author{Natalie Fox}
 \examples{
+\dontrun{
 
 # For this example instead of clustering CIS and IRF matrices,
 # create a data matrix to see how the function works without
@@ -58,8 +59,9 @@ subtyping.results <- cluster.patients(
   distance.metric = 'euclidean',
   parent.output.dir = './',
   new.result.dir = 'example_subtyping',
-  subtype.table.file = 'example_subtyping_assignment.txt',
   max.num.subtypes = 6,
-  clustering.reps = 50
+  clustering.reps = 50,
+  consensus.cluster.write.table = FALSE
   );	
+}
 }

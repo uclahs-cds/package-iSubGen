@@ -88,7 +88,7 @@ The coding SNV data is gene based with 0 if there is no SNVs in the gene and 1 i
 
 The first step is to load the data. Here the genomic features are rows and patients are columns.  
 
-<<load-data>>=
+<<load-data, eval=FALSE>>=
 # Load the library and the data included with the package
 library(iSubGen);
 molecular.data <- list();
@@ -98,11 +98,6 @@ for(i in c('cna','methy','snv')) {
     patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
     );
 }
-
-# Check what the data looks like
-str(molecular.data);
-molecular.data$methy[1:5,1:5];
-molecular.data$snv[1:5,1:5];
 @
 
 
@@ -136,7 +131,7 @@ We create autoencoders individually for each data type.
 The create.autoencoder function is a wrapper function to create an autoencoder using the \href{https://cran.r-project.org/package=keras}{keras} package.
 Here we create two compressed features for the CNA feature set and one compressed feature for each of the SNV and methylation feature sets.
 
-<<ae-matrix>>=
+<<ae-matrix, eval=FALSE>>=
 # Create a list to store the autoencoders
 autoencoders <- list();
 
@@ -171,9 +166,6 @@ irf.matrix <- create.autoencoder.irf.matrix(
   data.matrices = molecular.data,
   autoencoders = autoencoders
   );
-
-# Check what the data looks like
-str(irf.matrix);
 @
 
 \section{Pairwise similarity matrix}
@@ -199,7 +191,7 @@ and might elucidate whether there are different biological regulation subgroups 
 \newpage
 \subsection{Create a correlation matrix}
 
-<<correlation-matrix>>=
+<<correlation-matrix, eval=FALSE>>=
 # Calculate a similarity matrix using correlations
 similarity.matrix <- calculate.integrative.similarity.matrix(
   data.types = names(molecular.data),
@@ -210,9 +202,6 @@ similarity.matrix <- calculate.integrative.similarity.matrix(
     methy = 'euclidean'
     )
   );
-
-# Check what the data looks like
-str(similarity.matrix);
 @
 
 \subsection{Consensus integrative similarity (CIS) matrix}
@@ -220,7 +209,7 @@ str(similarity.matrix);
 Either a integrative similarity matrix or a CIS matrix can be identically used to create subtypes.
 A CIS matrix simply includes resampling of the samples while creating the correlation matrix.
 
-<<consensus-correlation-matrix>>=
+<<consensus-correlation-matrix, eval=FALSE>>=
 # Calculate the CIS matrix
 cis.matrix <- calculate.cis.matrix(
   data.types = names(molecular.data),
@@ -231,9 +220,6 @@ cis.matrix <- calculate.cis.matrix(
     methy = 'euclidean'
     )
   );
-
-# Check what the data looks like
-str(cis.matrix);
 @
 
 \section{Combine features and create integrative subtypes}
@@ -245,16 +231,12 @@ There may also need to be rescaling performed if the feature reduction and pairw
 Here we use tanh on our activation function for the autoencoders so that our independent reduced features are in -1 to 1 range. 
 Similarly, we use Spearman's correlation and correlations return values in the -1 to 1 range.
 
-<<integrative-matrix>>=
+<<integrative-matrix, eval=FALSE>>=
 # Combine IRFs and CISs into one matrix
 integrative.features.matrix <- combine.integrative.features(
   irf.matrix,
   cis.matrix
  )$integrative.feature.matrix;
-
-# Check what the data looks like
-str(integrative.features.matrix);
-head(integrative.features.matrix);
 @
 
 \subsection{Find patterns in integrative features}
@@ -262,7 +244,7 @@ head(integrative.features.matrix);
 Finally, pattern discovery must be performed on the integrative feature matrix to determine cancer subtypes. 
 In this example, we use \href{https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html}{consensus clustering} to iteratively run hierarchical clustering.
 
-<<cluster>>=
+<<cluster, eval=FALSE>>=
 # Perform consensus clustering to get integrative subtypes
 subtyping.results <- cluster.patients(
   data.matrix = integrative.features.matrix,
@@ -273,10 +255,6 @@ subtyping.results <- cluster.patients(
   clustering.reps = 50,
   consensus.cluster.write.table = FALSE
   );
-
-# Check subtyping results
-str(subtyping.results$subtype_table);
-head(subtyping.results$subtype_table);
 @
 
 \section{Glossary/Acronyms}

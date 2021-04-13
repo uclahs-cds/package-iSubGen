@@ -1,6 +1,6 @@
 calculate.scaling <- function(data.matrices) {
 	# if there is only one data type to scale
-	if (class(data.matrices) == 'matrix') {
+	if (class(data.matrices)[1] == 'matrix') {
 		# return the mean and sd of each row
 		return(list(
 			center = apply(data.matrices,1,mean),

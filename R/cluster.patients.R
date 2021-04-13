@@ -13,8 +13,9 @@ cluster.patients <- function(
 	) {
 
 	# move to the directory that we want the plots output to
-	curr.dir <- getwd();
+	func.start.dir <- getwd();
 	setwd(parent.output.dir);
+	on.exit(setwd(func.start.dir));
 
 	if(nrow(data.matrix) > 1) {
 
@@ -80,7 +81,7 @@ cluster.patients <- function(
 		rownames(subtype.table) <- colnames(data.matrix);
 		}
 
-	setwd(curr.dir);
+	setwd(func.start.dir);
 
 	if (!is.null(subtype.table.file)) {
 		# save subtype table to file

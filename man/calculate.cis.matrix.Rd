@@ -50,7 +50,8 @@ corr.matrix <- calculate.cis.matrix(
     cna = 'euclidean',
     snv = 'euclidean',
     methy = 'euclidean'
-    )
+    ),
+  print.intermediary.similarity.matrices.to.file = FALSE
   );
 
 # Example 2: calculate the CIS matrix for patients EP001 through EP009 in relation 
@@ -66,7 +67,8 @@ corr.matrix2 <- calculate.cis.matrix(
     methy = 'euclidean'
     ),
   patients.to.return = paste0('EP00',1:9),
-  patients.for.correlations = paste0('EP0',10:30)
+  patients.for.correlations = paste0('EP0',10:30),
+  print.intermediary.similarity.matrices.to.file = FALSE
   );
 
 # Example 3: Adjusting the proportion of the features that will be used to correlate 
@@ -81,7 +83,8 @@ corr.matrix3 <- calculate.cis.matrix(
     ),
   patients.to.return = paste0('EP00',1:9),
   patients.for.correlations = paste0('EP0',10:30),
-  feature.proportion = 0.6
+  feature.proportion = 0.6,
+  print.intermediary.similarity.matrices.to.file = FALSE
   );
 
 }

@@ -10,6 +10,7 @@ write.scaling.factors(scaling.factors, scaling.factor.files.dir)
   \item{scaling.factor.files.dir}{directory to output scaling factor files}
 }
 \details{Creates two files for each data type key. One file for the recentering values and one file for the rescaling values. Files have the names <data type>_gene_recenter.txt or <data type>_gene_rescale.txt}
+\value{No return value, called for side effects}
 \author{Natalie Fox}
 \examples{
 
