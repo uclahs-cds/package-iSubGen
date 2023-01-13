@@ -1,9 +1,9 @@
 apply.scaling <- function(data.matrices, scaling.factors) {
 
 	# data.matrices can be a single matrix or a list of matrices
-	# if the data is a single matrix then the class will be 'matrix'	
-	if (class(data.matrices)[1] == 'matrix') {
-	
+	# if the data is a single matrix then the class will be 'matrix'
+	if (class(data.matrices)[1] == 'matrix' || class(data.matrices)[1] == 'data.frame') {
+
 		# check that scaling.factors is have elements with the names "center" and "scale"
 		if (all(!c('center','scale') %in% names(scaling.factors))) {
 			stop('for each data matrix, scaling.factor needs to be a list with center and scale ');
@@ -60,7 +60,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			if (length(scaling.factors[[data.type]]$scale) != nrow(data.matrices[[data.type]])) {
 				stop(paste0('scaling.factors$',data.type,'$scale does not match the number of rows in data.matrices$',data.type));
 				}
-		
+
 			# call the function for each data type
 			data.matrices[[data.type]] <- apply.scaling(data.matrices[[data.type]],scaling.factors[[data.type]]);
 			}
