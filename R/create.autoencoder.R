@@ -8,12 +8,12 @@ create.autoencoder <- function(
 	) {
 
 	# input checks
-	if (class(data.matrix) != 'matrix') {
+	if (class(data.matrix) != 'matrix' && class(data.matrix) != 'data.frame') {
 		stop('data.matrix needs to be a matrix');
 		}
 	if (any(is.na(data.matrix))) {
 		stop('data matrix contains NA(s)');
-		}	
+		}
 
 	# if the same activation function is going to be used for all layers expand it to a vector
 	if (length(autoencoder.activation) == 1) {
@@ -49,20 +49,20 @@ create.autoencoder <- function(
 				activation = autoencoder.activation[i]
 				);
 			}
-		
+
 		# output layer
 		model %>% layer_dense(units = nrow(data.matrix));
 		}
 
 	# set up training parameters
 	model %>% compile(
-		loss = optimization.loss.function, 
+		loss = optimization.loss.function,
 		optimizer = 'adam'
 		);
 
 	ae.output.file <- paste0(sub('/$','',model.file.output.dir),'/',data.type,'_model.hdf5');
 	checkpoint <- callback_model_checkpoint(
-		filepath = ae.output.file, 
+		filepath = ae.output.file,
 		save_best_only = TRUE,
 		verbose = 1
 		);
@@ -76,11 +76,11 @@ create.autoencoder <- function(
 
 	# train the neural net
 	model %>% fit(
-		x = t(data.matrix), 
-		y = t(data.matrix), 
-		epochs = 350, 
+		x = t(data.matrix),
+		y = t(data.matrix),
+		epochs = 350,
 		batch_size = 50,
-		validation_data = list(t(data.matrix), t(data.matrix)), 
+		validation_data = list(t(data.matrix), t(data.matrix)),
 		callbacks = list(checkpoint, early.stopping)
 		);
 
