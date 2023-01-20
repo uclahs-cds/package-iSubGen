@@ -6,7 +6,7 @@ read.scaling.factors <- function(scaling.factor.files.dir, data.types) {
 
 		# re-centering values
 		filename <- paste0(scaling.factor.files.dir, data.type, '_gene_recenter.txt');
-		if(exists(filename)) {
+		if(file.exists(filename)) {
 			scaling.matrix <- read.table(
 				filename,
 				sep = '\t',
@@ -20,9 +20,9 @@ read.scaling.factors <- function(scaling.factor.files.dir, data.types) {
 			warning(paste0("cannot open file '",filename,"': No such file or directory"));
 			}
 
-		# re-scaling values 
+		# re-scaling values
 		filename <- paste0(scaling.factor.files.dir, data.type, '_gene_rescale.txt');
-		if(exists(filename)) {
+		if(file.exists(filename)) {
 			scaling.matrix <- read.table(
 				filename,
 				sep = '\t',
