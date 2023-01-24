@@ -26,8 +26,8 @@ combine.integrative.features <- function(
 			irf.matrix <- irf.matrix - irf.rescale.recenter;
 			}
 		else if (length(irf.rescale.recenter) == ncol(irf.matrix)) {
-			for(j in 1:ncol(irf.matrix)) {
-				irf.matrix[,j] <- irf.matrix[,j] - irf.rescale.recenter[j];
+			for (j in 1:ncol(irf.matrix)) {
+				irf.matrix[, j] <- irf.matrix[, j] - irf.rescale.recenter[j];
 				}
 			}
 		else {
@@ -42,8 +42,8 @@ combine.integrative.features <- function(
 			cis.matrix <- cis.matrix - cis.rescale.recenter;
 			}
 		else if (length(cis.rescale.recenter) == ncol(cis.matrix)) {
-			for(j in 1:ncol(cis.matrix)) {
-				cis.matrix[,j] <- cis.matrix[,j] - cis.rescale.recenter[j];
+			for (j in 1:ncol(cis.matrix)) {
+				cis.matrix[, j] <- cis.matrix[, j] - cis.rescale.recenter[j];
 				}
 			}
 		else {
@@ -64,8 +64,8 @@ combine.integrative.features <- function(
 			if (any(irf.rescale.denominator == 0)) {
 				warning('irf.rescale.denominator contains zeros');
 				}
-			for(j in 1:ncol(irf.matrix)) {
-				irf.matrix[,j] <- irf.matrix[,j] / irf.rescale.denominator[j];
+			for (j in 1:ncol(irf.matrix)) {
+				irf.matrix[, j] <- irf.matrix[, j] / irf.rescale.denominator[j];
 				}
 			}
 		else {
@@ -86,8 +86,8 @@ combine.integrative.features <- function(
 			if (any(cis.rescale.denominator == 0)) {
 				warning('cis.rescale.denominator contains zeros');
 				}
-			for(j in 1:ncol(cis.matrix)) {
-				cis.matrix[,j] <- cis.matrix[,j] / cis.rescale.denominator[j];
+			for (j in 1:ncol(cis.matrix)) {
+				cis.matrix[, j] <- cis.matrix[, j] / cis.rescale.denominator[j];
 				}
 			}
 		else {
@@ -99,8 +99,8 @@ combine.integrative.features <- function(
 			irf.weights <- rep(irf.weights, ncol(irf.matrix));
 			}
 		if (length(irf.weights) == ncol(irf.matrix)) {
-			for(j in 1:ncol(irf.matrix)) {
-				irf.matrix[,j] <- irf.matrix[,j] * irf.weights[j];
+			for (j in 1:ncol(irf.matrix)) {
+				irf.matrix[, j] <- irf.matrix[, j] * irf.weights[j];
 				}
 			}
 		else {
@@ -112,8 +112,8 @@ combine.integrative.features <- function(
 			cis.weights <- rep(cis.weights, ncol(cis.matrix));
 			}
 		if (length(cis.weights) == ncol(cis.matrix)) {
-			for(j in 1:ncol(cis.matrix)) {
-				cis.matrix[,j] <- cis.matrix[,j] * cis.weights[j];
+			for (j in 1:ncol(cis.matrix)) {
+				cis.matrix[, j] <- cis.matrix[, j] * cis.weights[j];
 				}
 			}
 		else {

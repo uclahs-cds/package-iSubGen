@@ -3,14 +3,14 @@ calculate.scaling <- function(data.matrices) {
 	if (class(data.matrices)[1] == 'matrix' || class(data.matrices)[1] == 'data.frame') {
 		# return the mean and sd of each row
 		return(list(
-			center = apply(data.matrices,1,mean),
-			scale = apply(data.matrices,1,sd)
+			center = apply(data.matrices, 1, mean),
+			scale = apply(data.matrices, 1, sd)
 			));
 		} else if (class(data.matrices) == 'list') {
 			# if there are multiple data types to scale
 			# return the mean and sd of each row for each data matrix
 			scaling.factors <- list();
-			for(data.type in names(data.matrices)) {
+			for (data.type in names(data.matrices)) {
 				scaling.factors[[data.type]] <- calculate.scaling(data.matrices[[data.type]]);
 				}
 			return(scaling.factors);

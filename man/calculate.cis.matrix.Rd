@@ -4,11 +4,11 @@
 \description{Calculate consensus pairwise correlations between patient distances}
 \usage{
 calculate.cis.matrix(data.types, data.matrices, dist.metrics,
-correlation.method = "spearman", filter.to.common.patients = FALSE, 
-patients.to.return = NULL, patients.for.correlations = NULL, 
-patient.proportion = 0.8, feature.proportion = 1, num.iterations = 10, 
+correlation.method = "spearman", filter.to.common.patients = FALSE,
+patients.to.return = NULL, patients.for.correlations = NULL,
+patient.proportion = 0.8, feature.proportion = 1, num.iterations = 10,
 print.intermediary.similarity.matrices.to.file = TRUE, print.dir = '.',
-patient.proportion.seeds = seq(1,num.iterations), 
+patient.proportion.seeds = seq(1,num.iterations),
 feature.proportion.seeds = seq(1,num.iterations))
 }
 \arguments{
@@ -31,11 +31,11 @@ feature.proportion.seeds = seq(1,num.iterations))
 \author{Natalie Fox}
 \examples{
 
-# Load molecular profiles for three data types from example files saved 
+# Load molecular profiles for three data types from example files saved
 # in the package as <data type>_profiles.txt
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 molecular.data <- list();
-for(i in c('cna','snv','methy')) {
+for (i in c('cna','snv','methy')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(example.molecular.data.dir,i,'_profiles.txt'),
     patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
@@ -54,9 +54,9 @@ corr.matrix <- calculate.cis.matrix(
   print.intermediary.similarity.matrices.to.file = FALSE
   );
 
-# Example 2: calculate the CIS matrix for patients EP001 through EP009 in relation 
-# to patients EP010 through EP030 meaning the profile of EP001 is correlated to 
-# the profiles of EP010 through EP030 so when assessing new patients, they can be 
+# Example 2: calculate the CIS matrix for patients EP001 through EP009 in relation
+# to patients EP010 through EP030 meaning the profile of EP001 is correlated to
+# the profiles of EP010 through EP030 so when assessing new patients, they can be
 # compared to the training profiles
 corr.matrix2 <- calculate.cis.matrix(
   data.types = names(molecular.data),
@@ -71,7 +71,7 @@ corr.matrix2 <- calculate.cis.matrix(
   print.intermediary.similarity.matrices.to.file = FALSE
   );
 
-# Example 3: Adjusting the proportion of the features that will be used to correlate 
+# Example 3: Adjusting the proportion of the features that will be used to correlate
 # the patient profiles
 corr.matrix3 <- calculate.cis.matrix(
   data.types = names(molecular.data),

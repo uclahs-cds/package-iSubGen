@@ -29,13 +29,13 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			}
 
 		# scale each row in the matrix by the corresponding scaling factors
-		for(i in 1:nrow(data.matrices)) {
+		for (i in 1:nrow(data.matrices)) {
 			center.adjustment <- scaling.factors$center[rownames(data.matrices)[i]];
 			scale.adjustment <- 1;
-			if(scaling.factors$scale[rownames(data.matrices)[i]] > 0) {
+			if (scaling.factors$scale[rownames(data.matrices)[i]] > 0) {
 				scale.adjustment <- scaling.factors$scale[rownames(data.matrices)[i]];
 				}
-			data.matrices[i,] <- (data.matrices[i,] - center.adjustment) / scale.adjustment;
+			data.matrices[i, ] <- (data.matrices[i, ] - center.adjustment) / scale.adjustment;
 			}
 
 		# return the scaled single matrix
@@ -51,18 +51,18 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			}
 
 		# if you get to this point then data.matrices is a list of matrices
-		for(data.type in names(data.matrices)) {
+		for (data.type in names(data.matrices)) {
 
 			# check that scaling.factors are the correct format
 			if (length(scaling.factors[[data.type]]$center) != nrow(data.matrices[[data.type]])) {
-				stop(paste0('scaling.factors$',data.type,'$center does not match the number of rows in data.matrices$',data.type));
+				stop(paste0('scaling.factors$', data.type,'$center does not match the number of rows in data.matrices$',data.type));
 				}
 			if (length(scaling.factors[[data.type]]$scale) != nrow(data.matrices[[data.type]])) {
-				stop(paste0('scaling.factors$',data.type,'$scale does not match the number of rows in data.matrices$',data.type));
+				stop(paste0('scaling.factors$', data.type,'$scale does not match the number of rows in data.matrices$',data.type));
 				}
 
 			# call the function for each data type
-			data.matrices[[data.type]] <- apply.scaling(data.matrices[[data.type]],scaling.factors[[data.type]]);
+			data.matrices[[data.type]] <- apply.scaling(data.matrices[[data.type]], scaling.factors[[data.type]]);
 			}
 
 		# return the scaled list of matrices
@@ -70,4 +70,3 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 		}
 	stop('data.matrices needs to be a matrix or a list of matrices');
 	}
-
