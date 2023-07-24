@@ -224,7 +224,7 @@ Generally, humans have 2 copies of each gene; one from their mother and one from
 In cancer, DNA segments can be duplicated so there are more than 2 copies or 
 DNA segments can be deleted so there are less than 2 copies.
 
-Consensus clustering: a process of iteratively clustering to essentially bootstrap the clustering result. [https://cran.r-project.org/package=keras](https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html)
+Consensus clustering: a process of iteratively clustering to essentially bootstrap the clustering result. [https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html](https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html)
 
 IRF: Independent Reduced Features.
 
