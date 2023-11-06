@@ -1,0 +1,8 @@
+---
+Category: 'tool'
+Description: 'Multi-data type subtyping, which is data type agnostic and accepts missing data. Subtyping is performed using intermediary assessments created with autoencoders and similarity calculations.'
+Maintainers: 'pboutros@mednet.ucla.edu'
+Contributors: ['Natalie Fox', 'Paul C. Boutros']
+Languages: 'R'
+Dependencies: ['ConsensusClusterPlus', 'cluster', 'keras', 'tensorflow', 'philentropy']
+References: ''
