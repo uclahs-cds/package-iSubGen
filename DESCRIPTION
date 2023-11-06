@@ -10,3 +10,5 @@ Imports: ConsensusClusterPlus, cluster (>= 1.14.4), keras, tensorflow, philentro
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL-2
+URL: https://github.com/uclahs-cds/package-iSubGen
+BugReports: https://github.com/uclahs-cds/package-iSubGen/issues
