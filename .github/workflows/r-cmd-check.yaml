@@ -19,5 +19,5 @@ jobs:
         run: |
           tlmgr install \
           mathpazo \
-          tikz
+          pgf
       - uses: uclahs-cds/tool-R-CMD-check-action@stable
