@@ -18,5 +18,6 @@ jobs:
       - name: Install LaTeX packages
         run: |
           tlmgr install \
-          mathpazo
+          mathpazo \
+          tikz
       - uses: uclahs-cds/tool-R-CMD-check-action@stable
