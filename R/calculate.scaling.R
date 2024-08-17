@@ -1,12 +1,12 @@
 calculate.scaling <- function(data.matrices) {
 	# if there is only one data type to scale
-	if (class(data.matrices)[1] == 'matrix' || class(data.matrices)[1] == 'data.frame') {
+	if ('matrix' == class(data.matrices)[1] || 'data.frame' == class(data.matrices)[1]) {
 		# return the mean and sd of each row
 		return(list(
 			center = apply(data.matrices, 1, mean),
 			scale = apply(data.matrices, 1, sd)
 			));
-		} else if (class(data.matrices) == 'list') {
+		} else if ('list' == class(data.matrices)) {
 			# if there are multiple data types to scale
 			# return the mean and sd of each row for each data matrix
 			scaling.factors <- list();
@@ -16,6 +16,6 @@ calculate.scaling <- function(data.matrices) {
 			return(scaling.factors);
 		} else {
 			# if not a list or a matrix return an error message to let the user know how to correct the input
-			stop('data.matrices needs to be a matrix or a list');
+			stop('data.matrices needs to be a matrix, or a data.frame, or a list');
 		}
 	}
