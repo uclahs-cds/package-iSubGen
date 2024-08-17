@@ -18,7 +18,6 @@ cluster.patients <- function(
 	on.exit(setwd(func.start.dir));
 
 	if (nrow(data.matrix) > 1) {
-		print('create dianaWithMissingPatients function');
 		# Defining function for when there is missing data here because
 		# using variables from this function (ex. num.patients, distance.metric)
 		# that are not passed to the function and don't have control of changing
