@@ -1,6 +1,6 @@
 apply.scaling <- function(data.matrices, scaling.factors) {
 
-	# data.matrices can be a single matrix/data frame or a list of matrices/data frames
+	# `data.matrices` can be either 1. a single matrix or data frame, or 2. a list of matrices or data frames
 	# if the data is a single matrix / data.frame, then the class will be 'matrix' or 'data.frame'
 	if (class(data.matrices)[1] == 'matrix' || class(data.matrices)[1] == 'data.frame') {
 
@@ -67,5 +67,5 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 		# return the scaled list of matrices
 		return(data.matrices);
 		}
-	stop('data.matrices needs to be a matrix or data.frame or a list of matrices or data.frames');
+	stop('`data.matrices` needs to be a matrix or data frame, or a list of matrices or data frames');
 	}
