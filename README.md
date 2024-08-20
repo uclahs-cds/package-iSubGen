@@ -240,7 +240,7 @@ SNV: Single Nucleotide Variant. a nucleotide base (A,C,G,T) change in DNA.
 
 ## License
 
-Author: Natalie Fox, Paul C. Boutros(pboutros@mednet.ucla.edu)
+Author: Natalie Fox, Paul C. Boutros
 
 iSubGen is licensed under the GNU General Public License version 2. See the file LICENSE.md for the terms of the GNU GPL license.
 
