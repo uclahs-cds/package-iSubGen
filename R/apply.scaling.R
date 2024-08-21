@@ -2,7 +2,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 
 	# `data.matrices` can be either 1. a single matrix or data frame, or 2. a list of matrices or data frames
 	# when the data is a single matrix or a data.frame
-	if (class(data.matrices)[1] == 'matrix' || class(data.matrices)[1] == 'data.frame') {
+	if ('matrix' == class(data.matrices)[1] || 'data.frame' == class(data.matrices)[1]) {
 
 		# check that scaling.factors is have elements with the names "center" and "scale"
 		if (all(!c('center','scale') %in% names(scaling.factors))) {
@@ -18,11 +18,11 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			}
 
 		# if necessary adjust the format of the scaling factors for a single matrix
-		if (class(scaling.factors$center) == 'list') {
+		if ('list' == class(scaling.factors$center)) {
 			scaling.factors$center <- scaling.factors$center[[1]];
 			warning('the first item from the scaling.factor$center list was used for scaling');
 			}
-		if (class(scaling.factors$scale) == 'list') {
+		if ('list' == class(scaling.factors$scale)) {
 			scaling.factors$scale <- scaling.factors$scale[[1]];
 			warning('the first item from the scaling.factor$scale list was used for scaling');
 			}
@@ -39,7 +39,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 
 		# return the scaled single matrix
 		return(data.matrices);
-		} else if (class(data.matrices) == 'list') {
+		} else if ('list' == class(data.matrices)) {
 			# if you make it to this point then data.matrices is a list
 			# so check the format of the input and then recurse on each matrix
 
