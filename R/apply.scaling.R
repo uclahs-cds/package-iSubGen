@@ -66,5 +66,5 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			# return the scaled list of matrices
 			return(data.matrices);
 			}
-		stop('`data.matrices` needs to be a matrix or data frame, or a list of matrices or data frames');
+		stop('`data.matrices` must be a matrix, a data frame, or a list of matrices or data frames');
 		}
