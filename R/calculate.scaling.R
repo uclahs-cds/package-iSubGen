@@ -15,7 +15,7 @@ calculate.scaling <- function(data.matrices) {
 			}
 		return(scaling.factors);
 		}
-	# if `data.matrices` is not a list, a matrix, or a data.frame return an error message to let the user know how to correct the input
+	# if `data.matrices` is not a list, a matrix, or a data frame, return an error message to let the user know how to correct the input
 	stop('`data.matrices` must be a matrix, a data frame or a list');
 	}
 }
