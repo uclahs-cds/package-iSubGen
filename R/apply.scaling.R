@@ -18,11 +18,11 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 			}
 
 		# if necessary adjust the format of the scaling factors for a single matrix
-		if ('list' == class(scaling.factors$center)) {
+		if (is.list(scaling.factors$center)) {
 			scaling.factors$center <- scaling.factors$center[[1]];
 			warning('the first item from the scaling.factor$center list was used for scaling');
 			}
-		if ('list' == class(scaling.factors$scale)) {
+		if (is.list(scaling.factors$scale)) {
 			scaling.factors$scale <- scaling.factors$scale[[1]];
 			warning('the first item from the scaling.factor$scale list was used for scaling');
 			}
