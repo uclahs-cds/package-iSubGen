@@ -46,7 +46,7 @@ for(i in c('cna','methy','snv')) {
 # Check what the data looks like
 str(molecular.data);
 molecular.data$methy[1:5,1:5];
-molecular.data$csnvs[1:5,1:5];
+molecular.data$snv[1:5,1:5];
 ```
 
 
@@ -97,9 +97,9 @@ autoencoders[['methy']] <- create.autoencoder(
 str(autoencoders$methy);
 
 # Create and train an autoencoder using coding SNV data
-autoencoders[['csnvs']] <- create.autoencoder(
-  data.type = 'csnvs',
-  data.matrix = molecular.data$csnvs,
+autoencoders[['snv']] <- create.autoencoder(
+  data.type = 'snv',
+  data.matrix = molecular.data$snv,
   encoder.layers.node.nums = c(15,1)
   )$autoencoder;
 
@@ -138,7 +138,7 @@ similarity.matrix <- calculate.integrative.similarity.matrix(
   data.matrices = molecular.data,
   dist.metrics = list(
     cna = 'euclidean',
-    csnvs = 'euclidean',
+    snv = 'euclidean',
     methy = 'euclidean'
     )
   );
@@ -159,7 +159,7 @@ cis.matrix <- calculate.cis.matrix(
   data.matrices = molecular.data,
   dist.metrics = list(
     cna = 'euclidean',
-    csnvs = 'euclidean',
+    snv = 'euclidean',
     methy = 'euclidean'
     )
   );
