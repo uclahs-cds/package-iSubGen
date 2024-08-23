@@ -10,7 +10,7 @@
 ## Overview
 
 The purpose of integrative subtype generation (iSubGen) is to provide a framework for subtype discovery
-based on the relationships between molecular aberration profiles (ex. mRNA, single nucleotide variants, copy number alterations, _etc._
+based on the relationships between molecular aberration profiles such as mRNA, single nucleotide variants (SNV), copy number alterations (CNA), _etc._
 without filtering to known genes or relationships.
 iSubGen performs pattern discovery on a combination of two types of integrative features.
 First, we use a collection of reduced features to allow emphasis of obvious patterns in the individual data types.
@@ -23,10 +23,11 @@ This will allow patient classification based on whether the same relationships a
 ### Applying iSubGen to an example
 
 We will demonstrate how to use iSubGen with a small example dataset.
-This example has copy number (CNA) profiles, methylation profiles and coding single nucleotide variant (SNV) data for 30 patients.
+
+This example has CNA profiles, methylation profiles and coding SNV data for 30 patients.
 The CNA data is gene based with -1 for a deletion, 0 for neutral and 1 for a gain.
 The methylation data is probe based and is continuous values between -1 and 1.
-The coding SNV data is gene based with 0 if there is no SNVs in the gene and 1 if there is 1 or more SNV(s) in the gene.
+The coding SNV data is gene based with 0 if there is no SNV in the gene and 1 if there is 1 or more SNV(s) in the gene.
 
 ### Load and format data
 

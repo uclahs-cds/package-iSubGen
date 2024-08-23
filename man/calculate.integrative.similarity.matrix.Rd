@@ -4,7 +4,7 @@
 \description{Calculate pairwise correlations between patient distances}
 \usage{
 calculate.integrative.similarity.matrix(data.types, data.matrices, dist.metrics,
-correlation.method = "spearman", filter.to.common.patients = FALSE, 
+correlation.method = "spearman", filter.to.common.patients = FALSE,
 patients.to.return = NULL, patients.for.correlations = NULL)
 }
 \arguments{
@@ -20,11 +20,11 @@ patients.to.return = NULL, patients.for.correlations = NULL)
 \author{Natalie Fox}
 \examples{
 
-# Load molecular profiles for three data types from example files saved 
+# Load molecular profiles for three data types from example files saved
 # in the package as <data type>_profiles.txt
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 molecular.data <- list();
-for(i in c('cna','snv','methy')) {
+for (i in c('cna','snv','methy')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(example.molecular.data.dir,i,'_profiles.txt'),
     patients = c(paste0('EP00',1:9), paste0('EP0',10:30))
@@ -42,8 +42,8 @@ corr.matrix <- calculate.integrative.similarity.matrix(
     )
   );
 
-# Example 2: calculate the integrative similarity for patients EP001 through EP009 
-# in relation to patients EP010 through EP030 meaning the profile of EP001 is 
+# Example 2: calculate the integrative similarity for patients EP001 through EP009
+# in relation to patients EP010 through EP030 meaning the profile of EP001 is
 # correlated to the profiles of EP010 through EP030 so when assessing new patients,
 # they can be compared to the training profiles
 corr.matrix2 <- calculate.integrative.similarity.matrix(

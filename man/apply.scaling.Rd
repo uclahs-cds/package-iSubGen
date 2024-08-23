@@ -18,8 +18,8 @@ apply.scaling(data.matrices, scaling.factors);
 example.molecular.data.dir <- paste0(path.package('iSubGen'),'/exdata/');
 molecular.data <- list();
 scaling.factors <- list();
-for(i in c('cna','snv','methy')) {
-  # Load molecular profiles from example files saved 
+for (i in c('cna','snv','methy')) {
+  # Load molecular profiles from example files saved
   # in the package as <data type>_profiles.txt
   molecular.data[[i]] <- load.molecular.aberration.data(
     paste0(example.molecular.data.dir,i,'_profiles.txt'),

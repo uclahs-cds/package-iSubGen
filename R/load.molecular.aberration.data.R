@@ -26,7 +26,7 @@ load.molecular.aberration.data <- function(
 			patients <- patients[patients %in% colnames(aberration.data.and.anno)];
 			}
 		aberration.profiles <- matrix(
-			data = as.numeric(as.matrix(aberration.data.and.anno[,patients])), 
+			data = as.numeric(as.matrix(aberration.data.and.anno[, patients])),
 			nrow = nrow(aberration.data.and.anno)
 			);
 		colnames(aberration.profiles) <- patients;
@@ -34,11 +34,11 @@ load.molecular.aberration.data <- function(
 		}
 
 	### pull out the feature annotation ###
-	
+
 	# find all the annotation columns that match the requested annotation fields
 	colname.matches <- c();
 	colname.repl <- c();
-	for(i in annotation.fields) {
+	for (i in annotation.fields) {
 		match.idx <- grep(tolower(i), tolower(colnames(aberration.data.and.anno)));
 
 		colname.matches <- c(colname.matches, match.idx);
@@ -47,7 +47,7 @@ load.molecular.aberration.data <- function(
 			}
 		if (length(match.idx) > 1) {
 			colname.repl <- c(
-				colname.repl, 
+				colname.repl,
 				paste(
 					rep(i,length(match.idx)),
 					colnames(aberration.data.and.anno)[match.idx],
@@ -71,7 +71,7 @@ load.molecular.aberration.data <- function(
 		warning(paste(
 			'annotation.fields (',annotation.fields,') didn\'t match any of the column names. The options for ',
 			file,' are: ', paste(colnames(aberration.data.and.anno)[grep('\\d\\d\\d', colnames(aberration.data.and.anno),
-			invert=TRUE)], collapse=', '),
+			invert = TRUE)], collapse = ', '),
 			sep = ''
 			));
 		}

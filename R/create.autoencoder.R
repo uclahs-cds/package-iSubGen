@@ -8,12 +8,12 @@ create.autoencoder <- function(
 	) {
 
 	# input checks
-	if (class(data.matrix) != 'matrix') {
-		stop('data.matrix needs to be a matrix');
+	if (!(is.matrix(data.matrix) || is.data.frame(data.matrix))) {
+		stop('data.matrix needs to be a matrix or a data frame')
 		}
 	if (any(is.na(data.matrix))) {
 		stop('data matrix contains NA(s)');
-		}	
+		}
 
 	# if the same activation function is going to be used for all layers expand it to a vector
 	if (length(autoencoder.activation) == 1) {
@@ -31,7 +31,7 @@ create.autoencoder <- function(
 	# add the rest of the neural net layers
 	if (length(encoder.layers.node.nums) > 1) {
 		# encoding layers
-		for(i in 2:(length(encoder.layers.node.nums)-1)) {
+		for (i in 2:(length(encoder.layers.node.nums) - 1)) {
 			model %>% layer_dense(
 				units = encoder.layers.node.nums[i],
 				activation = autoencoder.activation[i]
@@ -43,26 +43,26 @@ create.autoencoder <- function(
 			name = 'bottleneck'
 			);
 		# decoding layers
-		for(i in (length(encoder.layers.node.nums)-1):1) {
+		for (i in (length(encoder.layers.node.nums) - 1):1) {
 			model %>% layer_dense(
 				units = encoder.layers.node.nums[i],
 				activation = autoencoder.activation[i]
 				);
 			}
-		
+
 		# output layer
 		model %>% layer_dense(units = nrow(data.matrix));
 		}
 
 	# set up training parameters
 	model %>% compile(
-		loss = optimization.loss.function, 
+		loss = optimization.loss.function,
 		optimizer = 'adam'
 		);
 
 	ae.output.file <- paste0(sub('/$','',model.file.output.dir),'/',data.type,'_model.hdf5');
 	checkpoint <- callback_model_checkpoint(
-		filepath = ae.output.file, 
+		filepath = ae.output.file,
 		save_best_only = TRUE,
 		verbose = 1
 		);
@@ -71,16 +71,16 @@ create.autoencoder <- function(
 
 	batch.size <- 50;
 	if (batch.size > ncol(data.matrix)) {
-		batch.size <- ncol(data.matrix) -1;
+		batch.size <- ncol(data.matrix) - 1;
 		}
 
 	# train the neural net
 	model %>% fit(
-		x = t(data.matrix), 
-		y = t(data.matrix), 
-		epochs = 350, 
+		x = t(data.matrix),
+		y = t(data.matrix),
+		epochs = 350,
 		batch_size = 50,
-		validation_data = list(t(data.matrix), t(data.matrix)), 
+		validation_data = list(t(data.matrix), t(data.matrix)),
 		callbacks = list(checkpoint, early.stopping)
 		);
 

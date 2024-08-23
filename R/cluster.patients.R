@@ -17,25 +17,24 @@ cluster.patients <- function(
 	setwd(parent.output.dir);
 	on.exit(setwd(func.start.dir));
 
-	if(nrow(data.matrix) > 1) {
-
+	if (nrow(data.matrix) > 1) {
 		# Defining function for when there is missing data here because
 		# using variables from this function (ex. num.patients, distance.metric)
 		# that are not passed to the function and don't have control of changing
-		# function call within ConsensusCluster to pass more arguments to 
+		# function call within ConsensusCluster to pass more arguments to
 		# dianaWithMissingPatients. Creating the function here means the variables
 		# be updated before being used.
-		dianaWithMissingPatients <- function(dist,k) {
+		dianaWithMissingPatients <- function(dist, k) {
 			num.patients <- nrow(as.matrix(dist));
 			assignment <- rep(NA, num.patients);
-			missing.patient <- apply(is.na(as.matrix(dist)),1,sum) == (num.patients - 1);
+			missing.patient <- apply(is.na(as.matrix(dist)), 1, sum) == (num.patients - 1);
 			missing.idx <- (num.patients - 1);
-			while(any(is.na(as.matrix(dist)[!missing.patient,!missing.patient]))) {
+			while (any(is.na(as.matrix(dist)[!missing.patient, !missing.patient]))) {
 				missing.patient <- apply(is.na(as.matrix(dist)), 1, sum) >= missing.idx;
 				missing.idx <- missing.idx - 1;
 				}
 			if (sum(!missing.patient) >= 2) {
-				clusters <- diana(as.dist(as.matrix(dist)[!missing.patient,!missing.patient]), metric = distance.metric);
+				clusters <- diana(as.dist(as.matrix(dist)[!missing.patient, !missing.patient]), metric = distance.metric);
 				if (sum(!missing.patient) >= k) {
 					assignment[!missing.patient] <- cutree(clusters, k);
 					}
@@ -63,19 +62,18 @@ cluster.patients <- function(
 
 		# create a table of the subtypes determined for each number of clusters
 		subtype.list <- list();
-		for(i in 2:max.num.subtypes) {
-			subtype.list[[paste('num_subtypes_', i ,sep='')]] <- cluster.result[[i]]$consensusClass;
+		for (i in 2:max.num.subtypes) {
+			subtype.list[[paste('num_subtypes_', i ,sep = '')]] <- cluster.result[[i]]$consensusClass;
 			}
 		subtype.table <- as.data.frame(subtype.list);
 
-		}
-	else if (nrow(data.matrix) == 1){
+		} else if (nrow(data.matrix) == 1) {
 		cluster.result <- diana(t(data.matrix));
 
 		# create a table of the subtypes determined for each number of clusters
 		subtype.list <- list();
-		for(i in 2:max.num.subtypes) {
-			subtype.list[[paste('num_subtypes_', i, sep='')]] <- cutree(cluster.result, i);
+		for (i in 2:max.num.subtypes) {
+			subtype.list[[paste('num_subtypes_', i, sep = '')]] <- cutree(cluster.result, i);
 			}
 		subtype.table <- as.data.frame(subtype.list);
 		rownames(subtype.table) <- colnames(data.matrix);
