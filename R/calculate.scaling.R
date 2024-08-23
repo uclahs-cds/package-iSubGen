@@ -11,7 +11,7 @@ calculate.scaling <- function(data.matrices) {
 		# if there are multiple data types to scale
 		# return the mean and sd of each row for each data matrix
 		scaling.factors <- list();
-		for(data.type in names(data.matrices)) {
+		for (data.type in names(data.matrices)) {
 			scaling.factors[[data.type]] <- calculate.scaling(data.matrices[[data.type]]);
 			}
 		return(scaling.factors);
