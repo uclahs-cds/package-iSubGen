@@ -6,6 +6,7 @@ calculate.scaling <- function(data.matrices) {
 			center = apply(data.matrices, 1, mean),
 			scale = apply(data.matrices, 1, sd)
 			))
+		}
 	if ('list' == class(data.matrices)) {
 		# if there are multiple data types to scale
 		# return the mean and sd of each row for each data matrix
@@ -18,4 +19,3 @@ calculate.scaling <- function(data.matrices) {
 	# if `data.matrices` is not a list, a matrix, or a data frame, return an error message to let the user know how to correct the input
 	stop('`data.matrices` must be a matrix, a data frame or a list');
 	}
-}

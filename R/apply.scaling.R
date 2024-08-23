@@ -1,7 +1,7 @@
 apply.scaling <- function(data.matrices, scaling.factors) {
 
 	# `data.matrices` can be either 1. a single matrix or data frame, or 2. a list of matrices or data frames
-	# when the data is a single matrix or a data.frame
+
 	if ('matrix' == class(data.matrices)[1] || 'data.frame' == class(data.matrices)[1]) {
 
 		# check that scaling.factors is have elements with the names "center" and "scale"
