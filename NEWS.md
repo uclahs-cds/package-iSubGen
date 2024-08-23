@@ -1,7 +1,7 @@
 # iSubGen 1.0.2 (2024-08-23)
 
 ## Changed
-* Allow functions to accept data.frame and a list of data.frames
+* Allow functions to accept data frame and a list of data frames
 * Fixed issues caused by R version updates
 
 ## Added
