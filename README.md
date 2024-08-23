@@ -23,6 +23,7 @@ This will allow patient classification based on whether the same relationships a
 ### Applying iSubGen to an example
 
 We will demonstrate how to use iSubGen with a small example dataset.
+
 This example has CNA profiles, methylation profiles and coding SNV data for 30 patients.
 The CNA data is gene based with -1 for a deletion, 0 for neutral and 1 for a gain.
 The methylation data is probe based and is continuous values between -1 and 1.
