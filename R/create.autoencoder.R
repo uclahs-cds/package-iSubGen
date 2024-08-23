@@ -8,8 +8,8 @@ create.autoencoder <- function(
 	) {
 
 	# input checks
-	if ('matrix' != class(data.matrix) && 'data.frame' != class(data.matrix)) {
-		stop('data.matrix needs to be a matrix or a data frame');
+	if (!("matrix" %in% class(data.matrix) || "data.frame" %in% class(data.matrix))) {
+		stop('data.matrix needs to be a matrix or a data frame')
 		}
 	if (any(is.na(data.matrix))) {
 		stop('data matrix contains NA(s)');
