@@ -4,9 +4,9 @@ Version: 1.0.2
 Date: 2024-08-23
 Authors@R: c(
 	person("Paul Boutros", role = "cre", email = "PBoutros@mednet.ucla.edu"),
-	person("Adriana Salcedo", role = "aut"),
-	person("Dan Knight", role = "ctb"),
-	person("Mao Tian", role = "ctb"))
+	person("Natalie Fox", role = "aut"),
+	person("Mao Tian", role = "ctb")),
+	person("Dan Knight", role = "ctb")
 Description: Multi-data type subtyping, which is data type agnostic and accepts missing data. Subtyping is performed using intermediary assessments created with autoencoders and similarity calculations.
 Depends: R (>= 3.2.3)
 Imports: ConsensusClusterPlus, cluster (>= 1.14.4), keras, tensorflow, philentropy
