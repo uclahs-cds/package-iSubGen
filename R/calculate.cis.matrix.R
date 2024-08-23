@@ -82,10 +82,13 @@ calculate.cis.matrix <- function(
 		);
 	for (i in 1:nrow(median.per.patient.data.type.corr)) {
 		for (j in 1:ncol(median.per.patient.data.type.corr)) {
-			median.per.patient.data.type.corr[i,j] <- median(sapply(per.patient.data.type.corr, function(x) {
-																									x[i,j]
-																									}
-																									));
+			median.per.patient.data.type.corr[i, j] <- median(
+				sapply(
+					per.patient.data.type.corr,
+					function(x) {
+						x[i, j]
+						}
+						), na.rm = TRUE);
 			}
 		}
 	rownames(median.per.patient.data.type.corr) <- rownames(per.patient.data.type.corr[[1]]);
