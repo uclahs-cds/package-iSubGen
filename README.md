@@ -36,6 +36,10 @@ The first step is to load the data. Here the genomic features are rows and patie
 ```{r load-data}
 # Load the library and the data included with the package
 library(iSubGen);
+library(tensorflow);
+library(keras3);
+library(reticulate);
+
 molecular.data <- list();
 for(i in c('cna','methy','snv')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
@@ -231,7 +235,7 @@ IRF: Independent Reduced Features.
 
 iSubGen: integrative Subtype Generation. This tool!
 
-Keras R package: [https://cran.r-project.org/package=keras](https://cran.r-project.org/package=keras)
+keras R package: [https://cran.r-project.org/package=keras](https://cran.r-project.org/package=keras)
 
 Methylation: a DNA modification where methyl groups of are added to cytosines in DNA to help regulate DNA transcription.
 

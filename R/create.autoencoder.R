@@ -60,7 +60,7 @@ create.autoencoder <- function(
 		optimizer = 'adam'
 		);
 
-	ae.output.file <- paste0(sub('/$','',model.file.output.dir),'/',data.type,'_model.hdf5');
+	ae.output.file <- paste0(sub('/$','',model.file.output.dir),'/',data.type,'_model.keras');
 	checkpoint <- callback_model_checkpoint(
 		filepath = ae.output.file,
 		save_best_only = TRUE,

@@ -36,8 +36,8 @@ create.autoencoder.irf.matrix <- function(
 		if (data.type %in% names(autoencoders)) {
 			# load the neural net for the data.type
 			model <- autoencoders[[data.type]];
-			if (is.character(autoencoders[[data.type]]) && grep('hdf5$',autoencoders[[data.type]]) == 1) {
-				model <- load_model_hdf5(
+			if (is.character(autoencoders[[data.type]]) && grep('keras$',autoencoders[[data.type]]) == 1) {
+				model <- load_model(
 					autoencoders[[data.type]],
 					compile = FALSE);
 				}

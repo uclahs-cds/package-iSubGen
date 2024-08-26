@@ -4,5 +4,5 @@ Description: 'Multi-data type subtyping, which is data type agnostic and accepts
 Maintainers: 'pboutros@mednet.ucla.edu'
 Contributors: ['Natalie Fox', 'Paul C. Boutros', 'Mao Tian']
 Languages: 'R'
-Dependencies: ['ConsensusClusterPlus', 'cluster', 'keras', 'tensorflow', 'philentropy']
+Dependencies: ['ConsensusClusterPlus', 'cluster', 'keras3', 'tensorflow', 'philentropy']
 References: ''

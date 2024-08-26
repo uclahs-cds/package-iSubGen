@@ -276,7 +276,7 @@ DNA segments can be deleted so there are less than 2 copies. \\
 
 \noindent \textbf{iSubGen:} integrative Subtype Generation. This tool!\\
 
-\noindent \textbf{Keras R package:} \url{https://cran.r-project.org/package=keras} \\
+\noindent \textbf{keras R package:} \url{https://cran.r-project.org/package=keras} \\
 
 \noindent \textbf{Methylation:} a DNA modification where methyl groups of are added to cytosines in DNA to help regulate DNA transcription. \\
 
