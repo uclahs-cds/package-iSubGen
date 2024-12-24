@@ -29,6 +29,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 
 		# scale each row in the matrix by the corresponding scaling factors
 		for (i in 1:nrow(data.matrices)) {
+			print(i);
 			center.adjustment <- scaling.factors$center[rownames(data.matrices)[i]];
 			scale.adjustment <- 1;
 			if (scaling.factors$scale[rownames(data.matrices)[i]] > 0) {
@@ -50,7 +51,7 @@ apply.scaling <- function(data.matrices, scaling.factors) {
 
 			# if you get to this point then data.matrices is a list of matrices
 			for (data.type in names(data.matrices)) {
-
+				print(data.type);
 				# check that scaling.factors are the correct format
 				if (length(scaling.factors[[data.type]]$center) != nrow(data.matrices[[data.type]])) {
 					stop(paste0('scaling.factors$', data.type,'$center does not match the number of rows in data.matrices$',data.type));
