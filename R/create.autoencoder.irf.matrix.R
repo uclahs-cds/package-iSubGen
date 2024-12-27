@@ -43,7 +43,7 @@ create.autoencoder.irf.matrix <- function(
 				}
 
 			# create the autoencoder encoding layers from input to the bottleneck layer
-			intermediate.layer.model <- keras_model(inputs = model$input, outputs = get_layer(model, 'bottleneck')$output);
+			intermediate.layer.model <- keras_model(inputs = model$inputs, outputs = get_layer(model, 'bottleneck')$output);
 
 			# get the bottleneck values from the autoencoder
 			bottleneck.values <- predict(intermediate.layer.model,x = t(data.matrices[[data.type]]));
