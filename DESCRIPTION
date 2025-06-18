@@ -11,6 +11,8 @@ Description: Multi-data type subtyping, which is data type agnostic and accepts 
 Depends: R (>= 3.2.3)
 Imports: ConsensusClusterPlus, cluster (>= 1.14.4), keras, tensorflow, philentropy
 Suggests: knitr, rmarkdown
+Remotes:
+	bioc::ConsensusClusterPlus
 VignetteBuilder: knitr
 License: GPL-2
 URL: https://github.com/uclahs-cds/package-iSubGen
