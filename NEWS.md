@@ -1,3 +1,8 @@
+# iSubGen 1.0.3 (2025-06-18)
+
+## Changed
+* Use updated `R CMD check` CI/CD action with `renv` dependency management
+
 # iSubGen 1.0.2 (2024-08-23)
 
 ## Changed
