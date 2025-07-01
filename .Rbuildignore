@@ -7,3 +7,4 @@
 ^pkgdown$
 ^.*\.{jpeg,png,gif,tiff}$
 .cicd-env
+^LICENSE.md
