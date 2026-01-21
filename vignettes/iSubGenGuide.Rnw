@@ -91,6 +91,9 @@ The first step is to load the data. Here the genomic features are rows and patie
 <<load-data, eval = FALSE>>=
 # Load the library and the data included with the package
 library(iSubGen);
+library(tensorflow);
+library(keras3);
+library(reticulate);
 molecular.data <- list();
 for (i in c('cna','methy','snv')) {
   molecular.data[[i]] <- load.molecular.aberration.data(

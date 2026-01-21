@@ -1,7 +1,7 @@
 \name{create.autoencoder}
 \alias{create.autoencoder}
 \title{Create an autoencoder for dimensionality reduction}
-\description{Create an autoencoder for dimensionality reduction using keras and tensorflow packages}
+\description{Create an autoencoder for dimensionality reduction using keras3 and tensorflow packages}
 \usage{
 create.autoencoder(data.type, data.matrix, encoder.layers.node.nums = c(15,2),
 autoencoder.activation = 'tanh', optimization.loss.function = 'mean_squared_error',
@@ -16,7 +16,7 @@ model.file.output.dir = '.')
   \item{model.file.output.dir}{file location for the autoencoder file}
 }
 \value{
-  \item{autoencoder}{the autoencoder created by the keras package}
+  \item{autoencoder}{the autoencoder created by the keras3 package}
   \item{autoencoder.file}{the keras file that the model was saved in and can be loaded from}
 }
 \author{Natalie Fox}
