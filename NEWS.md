@@ -1,4 +1,4 @@
-# iSubGen 1.0.4 (2026-01-20)
+# iSubGen 1.0.4 (2026-01-21)
 
 ## Changed
 * Update maintainer information and email
