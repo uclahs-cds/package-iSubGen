@@ -1,7 +1,8 @@
-# iSubGen 1.0.4 (2026-01-20)
+# iSubGen 1.1.0 (2026-01-21)
 
 ## Changed
 * Update maintainer information and email
+* Update `keras` package to `keras3`
 
 # iSubGen 1.0.3 (2025-06-18)
 

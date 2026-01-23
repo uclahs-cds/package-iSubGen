@@ -5,4 +5,4 @@ importFrom("grDevices", "colorRampPalette");
 importFrom("cluster","diana");
 importFrom("ConsensusClusterPlus","ConsensusClusterPlus","calcICL");
 importFrom("philentropy","distance");
-import(tensorflow, keras);
+import(tensorflow, keras3);

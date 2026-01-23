@@ -4,5 +4,5 @@ Description: 'Multi-data type subtyping, which is data type agnostic and accepts
 Maintainers: 'mtian@sbpdiscovery.org'
 Contributors: ['Natalie Fox', 'Paul C. Boutros', 'Mao Tian']
 Languages: 'R'
-Dependencies: ['ConsensusClusterPlus', 'cluster', 'keras', 'tensorflow', 'philentropy']
+Dependencies: ['ConsensusClusterPlus', 'cluster', 'keras3', 'tensorflow', 'philentropy']
 References: 'Fox, Natalie S., Mao Tian, Alexander L. Markowitz, Syed Haider, Constance H. Li, and Paul C. Boutros. “iSubGen Generates Integrative Disease Subtypes by Pairwise Similarity Assessment.” Cell Reports Methods 4, no. 11 (2024): 100884. https://doi.org/10.1016/j.crmeth.2024.100884.'

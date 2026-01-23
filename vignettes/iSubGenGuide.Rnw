@@ -91,6 +91,9 @@ The first step is to load the data. Here the genomic features are rows and patie
 <<load-data, eval = FALSE>>=
 # Load the library and the data included with the package
 library(iSubGen);
+library(tensorflow);
+library(keras3);
+library(reticulate);
 molecular.data <- list();
 for (i in c('cna','methy','snv')) {
   molecular.data[[i]] <- load.molecular.aberration.data(
@@ -128,7 +131,7 @@ A benefit of using autoencoders for compressing features is that autoencoders ca
 \subsection{Create independent reduced features (IRFs)}
 
 We create autoencoders individually for each data type.
-The create.autoencoder function is a wrapper function to create an autoencoder using the \href{https://cran.r-project.org/package=keras}{keras} package.
+The create.autoencoder function is a wrapper function to create an autoencoder using the \href{https://cran.r-project.org/package=keras3}{keras3} package.
 Here we create two compressed features for the CNA feature set and one compressed feature for each of the SNV and methylation feature sets.
 
 <<ae-matrix, eval = FALSE>>=
@@ -276,7 +279,7 @@ DNA segments can be deleted so there are less than 2 copies. \\
 
 \noindent \textbf{iSubGen:} integrative Subtype Generation. This tool!\\
 
-\noindent \textbf{Keras R package:} \url{https://cran.r-project.org/package=keras} \\
+\noindent \textbf{keras3 R package:} \url{https://cran.r-project.org/package=keras3} \\
 
 \noindent \textbf{Methylation:} a DNA modification where methyl groups of are added to cytosines in DNA to help regulate DNA transcription. \\
 

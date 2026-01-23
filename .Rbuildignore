@@ -8,3 +8,5 @@
 ^.*\.{jpeg,png,gif,tiff}$
 .cicd-env
 ^LICENSE.md
+^CRAN-SUBMISSION$
+^\.Rcheck$

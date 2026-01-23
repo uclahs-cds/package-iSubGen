@@ -7,3 +7,5 @@
 .RData
 *.Rproj*
 .Rproj.user
+*CRAN-SUBMISSION*
+..Rcheck
