@@ -9,4 +9,4 @@
 .cicd-env
 ^LICENSE.md
 ^CRAN-SUBMISSION$
-..Rcheck
+^\.Rcheck$

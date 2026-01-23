@@ -2,8 +2,12 @@ Package: iSubGen
 Title: Integrative Subtype Generation
 Version: 1.1.0
 Date: 2026-01-21
-Author: Natalie Fox [aut], Paul Boutros [cre], Mao Tian [ctb], Dan Knight [ctb]
-Maintainer: Mao Tian <mtian@sbpdiscovery.org>
+Authors@R: c(
+    person("Natalie", "Fox", role = "aut"),
+    person("Paul", "Boutros", role = "aut"),
+    person("Mao", "Tian", email = "mtian@sbpdiscovery.org", role = c("cre", "ctb")),
+    person("Dan", "Knight", role = "ctb")
+)
 Description: Multi-data type subtyping, which is data type agnostic and accepts missing data. Subtyping is performed using intermediary assessments created with autoencoders and similarity calculations.
 Depends: R (>= 3.2.3)
 Imports: ConsensusClusterPlus, cluster (>= 1.14.4), keras3, tensorflow, philentropy
